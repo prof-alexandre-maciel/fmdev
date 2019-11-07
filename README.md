@@ -3,14 +3,14 @@ Msc. Project from Universidade de Pernambuco
 
 ## Backend
 ```
-cd server
+cd backend
 pip install -r requirements
 python run.py
 ```
 
 ## Frontend
 ```
-cd client
+cd frontend
 npm install
 npm start
 ```
