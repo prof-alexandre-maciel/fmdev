@@ -4,7 +4,9 @@ Msc. Project from Universidade de Pernambuco
 ## Backend
 ```
 cd backend
-pip install -r requirements
+virtualenv -p python3 venv
+source venv/bin/activate
+pip install -r requirements.txt
 python run.py
 ```
 
@@ -13,4 +15,14 @@ python run.py
 cd frontend
 npm install
 npm start
+```
+
+## Analysis
+
+```
+cd analysis
+virtualenv -p python3 venv
+source venv/bin/activate
+pip install -r requirements.txt
+jupyter notebook --ip=127.0.0.1
 ```
