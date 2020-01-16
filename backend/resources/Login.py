@@ -1,6 +1,6 @@
 from flask_restful import Resource
 
 
-class Auth(Resource):
+class Login(Resource):
     def get(self):
         return {"message": "Hello, World!"}
