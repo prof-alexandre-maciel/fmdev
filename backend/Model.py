@@ -2,7 +2,6 @@ from flask import Flask
 from marshmallow import Schema, fields, pre_load, validate
 from flask_marshmallow import Marshmallow
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import DateTime
 
 
 ma = Marshmallow()
@@ -12,7 +11,7 @@ db = SQLAlchemy()
 class User(db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True)
+    username = db.Column(db.String(64), index=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password = db.Column(db.String(128))
     created_at = db.Column(db.DateTime())

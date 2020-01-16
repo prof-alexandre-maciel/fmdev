@@ -13,7 +13,8 @@ class Register(Resource):
 
         user = User(
             username=data['username'],
-            password=bcrypt.generate_password_hash(data['password']),
+            password=bcrypt.generate_password_hash(
+                data['password']).decode('utf-8'),
             email=data['email'],
             created_at=now
         )
