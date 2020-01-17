@@ -39,20 +39,24 @@ export const SignForm = styled.form`
     height: 50px;
     padding: 10px;
     border-radius: 3px;
-    border: 1px solid rgba(0, 0, 0, 0.3);
+    border: none;
     background-color: rgba(0, 0, 0, 0.1);
     margin-top: 8px;
     transition: border 0.15s ease;
     font-size: 16px;
 
     &:focus {
-      border-color: #7289da;
+      border: 1px solid #7289da;
     }
   }
 
   button {
-    margin: 20px 0 0;
+    margin: 30px 0 0;
     color: #4A5173;
+    font-size: 14px;
+    line-height: 21px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     background-color: #FFF;
     border: 1px solid #4A5173;
 
