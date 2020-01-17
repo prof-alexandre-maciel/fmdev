@@ -5,18 +5,21 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import * as AuthActions from '../../../store/ducks/auth/actions';
 
-interface DispatchProps {
+interface Props {
   signInRequest(email: string, password: string): void
 }
 
-type Props = DispatchProps
+interface State {
+  email?: string
+  password?: string
+}
 
-class SignIn extends Component<Props> {
+class SignIn extends Component<Props, State> {
 
   state = {
-    email: 'raniel90@gmail.com',
-    password: '123456'
-  }
+    email: '',
+    password: ''
+  };
 
   handleInputChange = (e: any) => {
     this.setState({ [e.target.name]: e.target.value });
@@ -27,7 +30,6 @@ class SignIn extends Component<Props> {
 
     const { email, password } = this.state;
     const { signInRequest } = this.props;
-
 
     signInRequest(email, password);
 
