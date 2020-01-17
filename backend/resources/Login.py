@@ -24,6 +24,6 @@ class Login(Resource):
                 "token": access_token,
                 "type": "bearer"}
         else:
-            result = {"error": "Invalid username and password"}
+            result = {"error": "Invalid username and password"}, 401
 
         return result

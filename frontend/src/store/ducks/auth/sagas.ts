@@ -1,5 +1,6 @@
 import { call, put } from 'redux-saga/effects';
 import api from '../../../services/api';
+import { actions as toastrActions } from 'react-redux-toastr';
 
 import { signInSuccess, signInFailure } from './actions';
 
@@ -11,6 +12,10 @@ export function* signIn(action: any) {
     localStorage.setItem('@fmdev:token', response.data.token);
     yield put(signInSuccess(response.data.token));
   } catch (err) {
-    yield put(signInFailure());
+    yield put(toastrActions.add({
+      type: 'error',
+      title: 'Falha no login',
+      message: 'Verifique seu e-mail/senha'
+    }));
   }
 }
