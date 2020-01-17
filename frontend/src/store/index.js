@@ -4,7 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 import history from '../routes/history';
 import rootReducer from './ducks/rootReducer';
 import rootSaga from './ducks/rootSaga';
-import { routerMiddleware, connectRouter } from 'connected-react-router';
+import { routerMiddleware } from 'connected-react-router';
 
 const sagaMiddleware = createSagaMiddleware();
 
