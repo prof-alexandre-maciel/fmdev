@@ -1,12 +1,12 @@
 import { createStore, applyMiddleware, Store } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { RepositoriesState } from './ducks/repositories/types';
+import { AuthState } from './ducks/auth/types';
 
 import rootReducer from './ducks/rootReducer';
 import rootSaga from './ducks/rootSaga';
 
 export interface ApplicationState {
-  repositories: RepositoriesState
+  auth: AuthState
 }
 
 const sagaMiddleware = createSagaMiddleware();
