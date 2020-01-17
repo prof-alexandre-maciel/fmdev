@@ -22,9 +22,8 @@ class Login(Resource):
             result = {
                 "refresh_token": None,
                 "token": access_token,
-                "type:" "bearer"
-            }
+                "type": "bearer"}
         else:
             result = {"error": "Invalid username and password"}
 
-        return {"data": result}
+        return result
