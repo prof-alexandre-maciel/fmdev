@@ -2,7 +2,7 @@ import { call, put } from 'redux-saga/effects';
 import api from '../../../services/api';
 import { actions as toastrActions } from 'react-redux-toastr';
 
-import { signInSuccess, signInFailure } from './actions';
+import { signInSuccess } from './actions';
 
 export function* signIn(action: any) {
 
