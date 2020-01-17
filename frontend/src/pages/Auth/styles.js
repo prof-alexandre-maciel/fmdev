@@ -3,16 +3,14 @@ import styled from 'styled-components';
 export const Container = styled.div`
   flex: 1;
   height: 100%;
-  background: #202225;
+  background: #FFF;
   display: flex;
   justify-content: center;
   align-items: center;
 `
 
 export const SignForm = styled.form`
-  background: #36393F;
   border-radius: 5px;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
   padding: 40px;
   width: 400px;
   display: flex;
@@ -20,17 +18,20 @@ export const SignForm = styled.form`
   align-items: stretch;
 
   h1 {
-    font-size: 26px;
     font-weight: 500;
-    text-align: center;
     margin: 0 0 10px;
+    font-weight: 800;
+    font-size: 18px;
+    line-height: 31px;
+    letter-spacing: 0.07em;
+    color: #4A5173;
   }
 
   span {
-    color: #b9bbb3;
-    font-size: 14px;
-    line-height: 16px;
-    font-weight: 600;
+    color: #000;
+    font-size: 16px;
+    line-height: 31px;
+    letter-spacing: 0.07em;
     margin-top: 15px;
   }
 
@@ -40,7 +41,6 @@ export const SignForm = styled.form`
     border-radius: 3px;
     border: 1px solid rgba(0, 0, 0, 0.3);
     background-color: rgba(0, 0, 0, 0.1);
-    color: #F6F6F6;
     margin-top: 8px;
     transition: border 0.15s ease;
     font-size: 16px;
@@ -52,5 +52,12 @@ export const SignForm = styled.form`
 
   button {
     margin: 20px 0 0;
+    color: #4A5173;
+    background-color: #FFF;
+    border: 1px solid #4A5173;
+
+    &:hover {
+      color: #FFF;
+    }
   }
 `

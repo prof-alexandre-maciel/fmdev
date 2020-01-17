@@ -41,15 +41,15 @@ class SignIn extends Component<Props, State> {
     return (
       <Container>
         <SignForm>
-          <h1>Login</h1>
+          <h1>ACESSE A PLATAFORMA</h1>
 
-          <span>E-MAIL</span>
+          <span>Email</span>
           <input type="email" value={email} onChange={this.handleInputChange} name="email" />
 
-          <span>SENHA</span>
+          <span>Senha</span>
           <input type="password" value={password} onChange={this.handleInputChange} name="password" />
 
-          <Button size="big" onClick={this.handleSubmit}>Entrar</Button>
+          <Button size="big" onClick={this.handleSubmit}>Acessar o meu ambiente</Button>
 
         </SignForm>
       </Container>
