@@ -19,7 +19,11 @@ class Login(Resource):
         if bcrypt.check_password_hash(user.password, password):
             access_token = create_access_token(
                 identity={'username': user.username})
-            result = {"token": access_token}
+            result = {
+                "refresh_token": None,
+                "token": access_token,
+                "type:" "bearer"
+            }
         else:
             result = {"error": "Invalid username and password"}
 
