@@ -11,7 +11,7 @@ export default createGlobalStyle`
   }
 
   body {
-    background: #353940;
+    background: #E5E5E5;
     color: #FFF;
     font-family: 'Source Sans Pro', sans-serif;
     text-rendering: optimizeLegibility !important;
