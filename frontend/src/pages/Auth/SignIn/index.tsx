@@ -17,8 +17,8 @@ interface State {
 class SignIn extends Component<Props, State> {
 
   state = {
-    email: '',
-    password: ''
+    email: 'raniel90@gmail.com',
+    password: '123456'
   };
 
   handleInputChange = (e: any) => {
