@@ -7,7 +7,14 @@ export const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+  padding-right: 20vh;
+`;
+
+export const Image = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+`;
 
 export const SignForm = styled.form`
   border-radius: 5px;
@@ -25,6 +32,7 @@ export const SignForm = styled.form`
     line-height: 31px;
     letter-spacing: 0.07em;
     color: #4A5173;
+    justify-content: center;
   }
 
   span {
@@ -46,7 +54,7 @@ export const SignForm = styled.form`
     font-size: 16px;
 
     &:focus {
-      border: 1px solid #7289da;
+      border: 1px solid #4A5173;
     }
   }
 

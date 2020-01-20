@@ -2,7 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css'
 
 export default createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+  @import url('https://fonts.googleapis.com/css?family=Avenir');
 
   * {
     padding: 0;
@@ -14,7 +14,7 @@ export default createGlobalStyle`
   body {
     background: #E5E5E5;
     color: #FFF;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Avenir', sans-serif;
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialised !important;
   }

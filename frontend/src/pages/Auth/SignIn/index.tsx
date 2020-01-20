@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import Button from '../../../styles/Button';
-import { Container, SignForm } from '../styles';
+import { Container, SignForm, } from '../styles';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import * as AuthActions from '../../../store/ducks/auth/actions';
+import logo from '../../../assets/login_logo.svg';
+import squares from '../../../assets/login_squares.svg';
 
 interface Props {
   signInRequest(email: string, password: string): void
@@ -40,7 +42,10 @@ class SignIn extends Component<Props, State> {
 
     return (
       <Container>
+        <img alt="" src={squares} width={200} height={200} />
+
         <SignForm>
+          <img alt="" src={logo} />
           <h1>ACESSE A PLATAFORMA</h1>
 
           <span>Email</span>
