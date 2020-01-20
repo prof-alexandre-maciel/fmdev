@@ -21,3 +21,9 @@ export function* signIn(action: any) {
     }));
   }
 }
+
+export function* signOut() {
+  localStorage.removeItem('@fmdev:token');
+
+  yield put(push('/'));
+}

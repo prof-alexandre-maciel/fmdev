@@ -1,12 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-// import { Container } from './styles';
+import SideMenu from '../../components/SideMenu';
+import { Container } from './styles';
 
-export default class Main extends Component {
-  componentDidMount() {
-  }
+const Main = () => <Container><SideMenu /></Container>
 
-  render() {
-    return <div>Main</div>;
-  }
-}
+export default Main;
