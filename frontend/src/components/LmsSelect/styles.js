@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
   background: #FFFFFF;
@@ -23,6 +23,17 @@ export const CardContainer = styled.div`
   display: flex;
   align-items: center;
 `
+
+export const Image = styled.img`
+  width: 8vw;
+  height: 10vh;
+
+  ${props => props.disabled === true && css`
+    mix-blend-mode: luminosity;
+    opacity: 0.7;
+
+    `}
+`;
 
 export const Card = styled.div`
   display: flex;
