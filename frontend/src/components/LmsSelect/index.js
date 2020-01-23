@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 
-import { Container, Card, CardContainer, Image, ModalForm } from './styles';
+import { Card, CardContainer, Image, ModalForm } from './styles';
 
 import * as WorkflowActions from '../../store/ducks/workflow/actions';
 import { bindActionCreators } from 'redux';
@@ -13,6 +13,7 @@ import totara_learn from '../../assets/totara_learn.svg';
 
 import Modal from '../../components/Modal';
 import Button from '../../styles/Button';
+import { ConfigContainer } from '../../styles/ConfigContainer';
 
 class LmsSelect extends Component {
 
@@ -58,7 +59,7 @@ class LmsSelect extends Component {
 
     return (
       <Fragment>
-        <Container>
+        <ConfigContainer>
           <h1>Escolha o LMS que você vai trabalhar</h1>
           <CardContainer>
             <Card onClick={openLmsModal.bind(this, 'moodle')}>
@@ -78,7 +79,7 @@ class LmsSelect extends Component {
               <span>Última versão: 7.0.1</span>
             </Card>
           </CardContainer>
-        </Container>
+        </ConfigContainer>
         {workflow.openLmsModal ? this.renderModal() : null}
       </Fragment>
     );
