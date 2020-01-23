@@ -1,5 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 import 'react-redux-toastr/lib/css/react-redux-toastr.min.css'
+import { initializeIcons } from '@uifabric/icons';
+
+initializeIcons();
 
 export default createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Avenir');
