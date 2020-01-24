@@ -13,6 +13,7 @@ import {
   ComboBox,
   Checkbox
 } from 'office-ui-fabric-react/lib/index';
+import BreadCrumb from '../BreadCrumb';
 
 const INITIAL_OPTIONS = [
   { key: 'A', text: 'Option A' },
@@ -25,6 +26,7 @@ class Indicators extends Component {
     return (
       <Fragment>
         <ConfigContainer>
+          <BreadCrumb text='Voltar para ESCOLHA LMS' />
           <Header>
             <h1>Selecione os indicadores</h1>
             <div>

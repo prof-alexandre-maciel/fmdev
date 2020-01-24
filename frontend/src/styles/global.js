@@ -34,6 +34,7 @@ initializeIcons();
 
 export default createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Avenir');
+  @import url('https://fonts.googleapis.com/css?family=Mada');
 
   * {
     padding: 0;
