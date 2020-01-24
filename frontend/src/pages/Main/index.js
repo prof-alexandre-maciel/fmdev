@@ -4,7 +4,7 @@ import { Container } from './styles';
 import { connect } from 'react-redux';
 
 import SideMenu from '../../components/SideMenu';
-import Indicators from '../../components/Indicators';
+import PreProcessing from '../../components/PreProcessing';
 
 class Main extends Component {
 
@@ -12,7 +12,7 @@ class Main extends Component {
     return (
       <Container>
         <SideMenu />
-        <Indicators />
+        <PreProcessing />
       </Container>
     )
   }
