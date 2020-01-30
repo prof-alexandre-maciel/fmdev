@@ -26,3 +26,11 @@ export const Header = styled.div`
     }
   }
 `;
+
+export const LmsText = styled.div`
+  display: flex;
+  margin-left: 2rem;
+  color: #000;
+  font-size: 14px;
+  line-height: 23px;
+`;

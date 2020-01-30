@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { ConfigContainer } from '../../styles/ConfigContainer';
 import BreadCrumb from '../BreadCrumb';
-import { Header } from './styles';
+import { Header, LmsText } from './styles';
 import Button from '../../styles/Button';
 
 class PreProcessing extends Component {
@@ -17,6 +17,9 @@ class PreProcessing extends Component {
           </div>
         </Header>
 
+        <LmsText>
+          <span>LMS - Moodle</span>
+        </LmsText>
       </ConfigContainer>
     )
   }
