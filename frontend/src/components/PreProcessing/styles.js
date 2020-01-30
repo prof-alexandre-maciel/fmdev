@@ -34,3 +34,45 @@ export const LmsText = styled.div`
   font-size: 14px;
   line-height: 23px;
 `;
+
+export const Table = styled.table`
+  color: black;
+  width: 100%;
+  border-spacing: 0;
+  padding-top: 1rem;
+
+  tr {
+    cursor: pointer;
+  }
+
+  tr:nth-child(even) {
+    background-color: #FAFAFA;
+  }
+`;
+
+export const FirstHeaderColumn = styled.td`
+  padding: .7rem;
+  padding-left: 2rem;
+  font-weight: bold;
+`;
+
+export const HeaderColumn = styled.td`
+  padding: .7rem;
+  font-weight: bold;
+`;
+
+export const FirstItemColumn = styled.td`
+  padding: .7rem;
+  padding-left: 2rem;
+`;
+
+export const ItemColumn = styled.td`
+  padding: .7rem;
+`;
+
+export const TableDetail = styled.td`
+  background-color: #F3F3F3;
+  width: 100%;
+  height: 20vh;
+  padding-left: 2rem;
+`;
