@@ -8,8 +8,8 @@ const sizes = {
     width: 60%;
   `,
   big: css`
-    margin-top: 9vh;
-    margin-bottom: 9vh;
+    margin-top: 8vh;
+    margin-bottom: 8vh;
     margin-left: 8vw;
     width: 80%;
   `

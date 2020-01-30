@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-  margin-top: -1.8rem;
+  padding: 1rem;
+  padding-bottom: 0;
   align-items: center;
   color: #4A5173;
   

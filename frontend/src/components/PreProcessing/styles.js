@@ -48,6 +48,16 @@ export const Table = styled.table`
   tr:nth-child(even) {
     background-color: #FAFAFA;
   }
+
+  button {
+    background: transparent;
+    color: black;
+    border: 1px solid black;
+
+    &:hover {
+      color: #FFF;
+    }
+  }
 `;
 
 export const FirstHeaderColumn = styled.td`
@@ -69,9 +79,21 @@ export const ItemColumn = styled.td`
   padding: .7rem;
 `;
 
-export const TableDetail = styled.td`
+export const DetailText = styled.div`
+  font-size: 14px;
+  line-height: 21px;
+`;
+
+export const RowDetail = styled.tr`
   background-color: #F3F3F3;
   width: 100%;
   height: 20vh;
   padding-left: 2rem;
+
+  > td {
+    vertical-align: top;
+    &:hover {
+      cursor: default;
+    }
+  }
 `;
