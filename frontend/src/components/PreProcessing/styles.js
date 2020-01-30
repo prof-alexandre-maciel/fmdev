@@ -62,7 +62,6 @@ export const HeaderColumn = styled.td`
 `;
 
 export const FirstItemColumn = styled.td`
-  padding: .7rem;
   padding-left: 2rem;
 `;
 
