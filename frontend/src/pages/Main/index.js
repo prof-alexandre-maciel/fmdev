@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import SideMenu from '../../components/SideMenu';
 import PreProcessing from '../../components/PreProcessing';
+import LmsSelect from '../../components/LmsSelect';
 
 class Main extends Component {
 
@@ -12,7 +13,7 @@ class Main extends Component {
     return (
       <Container>
         <SideMenu />
-        <PreProcessing />
+        <LmsSelect />
       </Container>
     )
   }

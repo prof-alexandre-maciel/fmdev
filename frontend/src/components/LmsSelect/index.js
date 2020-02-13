@@ -24,7 +24,7 @@ class LmsSelect extends Component {
 
   submit() {
     const { setDialog } = this.props;
-    // const { lms } = this.props.workflow;
+    // const { lms } = this.props.dialog;
 
     setDialog('moodle');
   }
@@ -45,10 +45,10 @@ class LmsSelect extends Component {
           <input onChange={this.handleChangeInput} name="url" />
 
           <span>Chave de Api</span>
-          <input nChange={this.handleChangeInput} name="api_key" />
+          <input onChange={this.handleChangeInput} name="api_key" />
 
           <Button onClick={this.submit.bind(this)}>Salvar</Button>
-          <Button size="small" color="gray" onClick={setDialog('moodle')}>Cancelar</Button>
+          <Button size="small" color="gray" onClick={setDialog.bind(this, 'moodle')}>Cancelar</Button>
         </DialogForm>
       </Dialog>
     )
@@ -56,6 +56,8 @@ class LmsSelect extends Component {
 
   render() {
     const { dialog, setDialog } = this.props;
+
+    console.log(dialog);
 
     return (
       <Fragment>
@@ -86,7 +88,7 @@ class LmsSelect extends Component {
   }
 }
 
-const mapStateToProps = ({ workflow }) => ({ workflow });
+const mapStateToProps = ({ dialog }) => ({ dialog });
 
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(DialogActions, dispatch);
