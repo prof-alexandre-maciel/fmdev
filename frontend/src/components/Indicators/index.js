@@ -1,19 +1,17 @@
+import { connect } from 'react-redux';
+import BreadCrumb from '../BreadCrumb';
+import Button from '../../styles/Button';
 import React, { Component, Fragment } from 'react';
 import { ConfigContainer } from '../../styles/ConfigContainer';
-
+import { Creators as ScreenActions } from '../../store/ducks/screen';
 import {
   Header, ComboBoxStyle,
   Separator, Content, LeftContent,
   IndicatorContainer, RightContainer,
   RightHeader
 } from './styles';
-import Button from '../../styles/Button';
-
-import {
-  ComboBox,
-  Checkbox
-} from 'office-ui-fabric-react/lib/index';
-import BreadCrumb from '../BreadCrumb';
+import { ComboBox, Checkbox } from 'office-ui-fabric-react/lib/index';
+import { LMS_SELECT, PRE_PROCESSING } from '../../constants';
 
 const INITIAL_OPTIONS = [
   { key: 'A', text: 'Option A' },
@@ -22,15 +20,19 @@ const INITIAL_OPTIONS = [
 ];
 
 class Indicators extends Component {
+
+
   render() {
+    const { setScreen } = this.props;
+
     return (
       <Fragment>
         <ConfigContainer>
-          <BreadCrumb text='Voltar para ESCOLHA LMS' />
+          <BreadCrumb text='Voltar para ESCOLHA LMS' destiny={LMS_SELECT} />
           <Header>
             <h1>Selecione os indicadores</h1>
             <div>
-              <Button>Continuar</Button>
+              <Button onClick={setScreen.bind(this, PRE_PROCESSING)}>Continuar</Button>
             </div>
           </Header>
 
@@ -98,4 +100,8 @@ class Indicators extends Component {
   }
 }
 
-export default Indicators;
+
+export default connect(
+  null,
+  { ...ScreenActions }
+)(Indicators);

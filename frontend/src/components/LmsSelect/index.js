@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import { Card, CardContainer, Image, DialogForm } from './styles';
 
 import { Creators as DialogActions } from '../../store/ducks/dialog';
-import { bindActionCreators } from 'redux';
+import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { connect } from 'react-redux';
 
 import moodle from '../../assets/moodle.svg';
@@ -14,6 +14,7 @@ import totara_learn from '../../assets/totara_learn.svg';
 import Dialog from '../Dialog';
 import Button from '../../styles/Button';
 import { ConfigContainer } from '../../styles/ConfigContainer';
+import { INDICATORS, MOODLE } from '../../constants';
 
 class LmsSelect extends Component {
 
@@ -23,10 +24,10 @@ class LmsSelect extends Component {
   }
 
   submit() {
-    const { setDialog } = this.props;
-    // const { lms } = this.props.dialog;
+    const { setDialog, setScreen } = this.props;
 
-    setDialog('moodle');
+    setDialog(MOODLE);
+    setScreen(INDICATORS);
   }
 
   handleChangeInput = e => {
@@ -48,7 +49,7 @@ class LmsSelect extends Component {
           <input onChange={this.handleChangeInput} name="api_key" />
 
           <Button onClick={this.submit.bind(this)}>Salvar</Button>
-          <Button size="small" color="gray" onClick={setDialog.bind(this, 'moodle')}>Cancelar</Button>
+          <Button size="small" color="gray" onClick={setDialog.bind(this, MOODLE)}>Cancelar</Button>
         </DialogForm>
       </Dialog>
     )
@@ -57,14 +58,12 @@ class LmsSelect extends Component {
   render() {
     const { dialog, setDialog } = this.props;
 
-    console.log(dialog);
-
     return (
       <Fragment>
         <ConfigContainer>
           <h1>Escolha o LMS que você vai trabalhar</h1>
           <CardContainer>
-            <Card onClick={setDialog.bind(this, 'moodle')}>
+            <Card onClick={setDialog.bind(this, MOODLE)}>
               <Image alt="" src={moodle} />
               <span>Última versão: 7.0.1</span>
             </Card>
@@ -88,11 +87,10 @@ class LmsSelect extends Component {
   }
 }
 
-const mapStateToProps = ({ dialog }) => ({ dialog });
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(DialogActions, dispatch);
+const mapStateToProps = ({ dialog, screen }) => ({ dialog, screen });
 
 export default connect(
-  mapStateToProps, mapDispatchToProps
+  mapStateToProps, {
+  ...DialogActions, ...ScreenActions
+}
 )(LmsSelect);

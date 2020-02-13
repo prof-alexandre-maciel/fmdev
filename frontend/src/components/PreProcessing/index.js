@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { connect } from 'react-redux';
 import { ConfigContainer } from '../../styles/ConfigContainer';
 import BreadCrumb from '../BreadCrumb';
 import {
@@ -14,6 +14,8 @@ import AlertIcon from 'react-feather/dist/icons/alert-triangle';
 import TargetIcon from 'react-feather/dist/icons/crosshair';
 import Progress from '../Progress';
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import { INDICATORS } from '../../constants';
+import { Creators as ScreenActions } from '../../store/ducks/screen';
 
 class PreProcessing extends Component {
 
@@ -122,7 +124,7 @@ class PreProcessing extends Component {
       <PerfectScrollbar style={{ width: '100%' }}>
         <ConfigContainer size='big'>
 
-          <BreadCrumb text='Voltar para Seleção de indicadores' />
+          <BreadCrumb text='Voltar para Seleção de indicadores' destiny={INDICATORS} />
 
           <Header>
             <h1>Escolha o indicador alvo para predição</h1>
@@ -163,4 +165,7 @@ class PreProcessing extends Component {
   }
 }
 
-export default PreProcessing
+export default connect(
+  null,
+  { ...ScreenActions }
+)(PreProcessing);

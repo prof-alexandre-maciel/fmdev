@@ -14,6 +14,7 @@ import AlertIcon from 'react-feather/dist/icons/alert-triangle';
 import TargetIcon from 'react-feather/dist/icons/crosshair';
 import Progress from '../Progress';
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import { PRE_PROCESSING } from '../../constants';
 
 class Train extends Component {
 
@@ -121,7 +122,7 @@ class Train extends Component {
     return (
       <ConfigContainer size='big'>
 
-        <BreadCrumb text='Voltar para incadores alvo' />
+        <BreadCrumb text='Voltar para pré-processamento' destiny={PRE_PROCESSING} />
 
         <Header>
           <h1>Escolha o indicador alvo para predição</h1>
