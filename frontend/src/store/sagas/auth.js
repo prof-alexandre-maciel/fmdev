@@ -3,6 +3,8 @@ import api from '../../services/api';
 import { push } from 'connected-react-router';
 import { actions as toastrActions } from 'react-redux-toastr';
 import { Creators } from '../ducks/auth';
+import { Creators as ScreenCreators } from '../ducks/screen';
+import { LMS_SELECT } from '../../constants';
 
 
 export function* signInRequest({ email, password }) {
@@ -27,4 +29,5 @@ export function* signOutRequest() {
 
   yield put(Creators.signOutSuccess());
   yield put(push('/'));
+  yield put(ScreenCreators.setScreen(LMS_SELECT));
 }

@@ -14,7 +14,7 @@ import AlertIcon from 'react-feather/dist/icons/alert-triangle';
 import TargetIcon from 'react-feather/dist/icons/crosshair';
 import Progress from '../Progress';
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { INDICATORS } from '../../constants';
+import { INDICATORS, TRAIN } from '../../constants';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 
 class PreProcessing extends Component {
@@ -119,6 +119,7 @@ class PreProcessing extends Component {
 
   render() {
     const { data } = this.state;
+    const { setScreen } = this.props;
 
     return (
       <PerfectScrollbar style={{ width: '100%' }}>
@@ -129,7 +130,7 @@ class PreProcessing extends Component {
           <Header>
             <h1>Escolha o indicador alvo para predição</h1>
             <div>
-              <Button>Selecionar Modelos</Button>
+              <Button onClick={setScreen.bind(this, TRAIN)}>Selecionar Modelos</Button>
             </div>
           </Header>
 

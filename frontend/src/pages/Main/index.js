@@ -10,7 +10,8 @@ import LmsSelect from '../../components/LmsSelect';
 import Indicators from '../../components/Indicators';
 import PreProcessing from '../../components/PreProcessing';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
-import { LMS_SELECT, INDICATORS, PRE_PROCESSING } from '../../constants';
+import { LMS_SELECT, INDICATORS, PRE_PROCESSING, TRAIN } from '../../constants';
+import Train from '../../components/Train';
 
 class Main extends Component {
 
@@ -27,6 +28,10 @@ class Main extends Component {
 
     if (activeScreen === PRE_PROCESSING) {
       return <PreProcessing />;
+    }
+
+    if (activeScreen === TRAIN) {
+      return <Train />;
     }
   }
 

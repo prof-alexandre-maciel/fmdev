@@ -27,7 +27,7 @@ class Indicators extends Component {
 
     return (
       <Fragment>
-        <ConfigContainer>
+        <ConfigContainer size='big'>
           <BreadCrumb text='Voltar para ESCOLHA LMS' destiny={LMS_SELECT} />
           <Header>
             <h1>Selecione os indicadores</h1>
