@@ -74,11 +74,14 @@ class PreProcessing extends Component {
     if (this.state.expandedRows.includes(item.id)) {
       itemRows.push(
         <RowDetail key={"row-expanded-" + item.id}>
-          <FirstItemColumn style={{ paddingTop: '.7rem' }} colSpan={4}>
+          {/* <FirstItemColumn style={{ paddingTop: '.7rem' }} colSpan={4}>
             <DetailText><b>HISTOGRAMA</b></DetailText>
+          </FirstItemColumn> */}
+
+          <FirstItemColumn vAlign="top" colSpan={1}>
           </FirstItemColumn>
 
-          <ItemColumn colSpan={1}>
+          <ItemColumn colSpan={3}>
             <DetailText><b>MÉDIA: </b>0.6</DetailText>
             <DetailText style={{ paddingTop: '.5vh' }}><b>MEDIANA: </b>1.6</DetailText>
             <DetailText style={{ paddingTop: '.5vh' }}><b>DESVIO PADRÃO: </b>0.25</DetailText>
@@ -95,7 +98,7 @@ class PreProcessing extends Component {
             <DetailText style={{ paddingTop: '.5vh' }}><b>MÁX: </b>1.02</DetailText>
           </ItemColumn>
 
-          <ItemColumn colSpan={2}>
+          <ItemColumn colSpan={3}>
             <DetailText><b>ANOMALIAS: </b></DetailText>
             <DetailText>- Coluna com dados nulo</DetailText>
           </ItemColumn>
