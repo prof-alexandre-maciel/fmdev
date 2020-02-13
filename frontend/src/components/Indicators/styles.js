@@ -7,20 +7,22 @@ export const Header = styled.div`
 
   button {
     margin-right: 2rem;
-    background: transparent;
     border-radius: none;
     color: black;
-    border: 1px solid #4A5173;
-    font-weight: 500;
+    background: #DEB981;
+    border: 1px solid #DEB981;
+    box-sizing: border-box;
     font-size: 14px;
     line-height: 18px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: #4A5173;
+    font-weight: normal;
+    color: #FFF;
 
 
     &:hover {
-      color: #fff;
+      color: #FFF;
+      border: 1px solid #4A5173;
     }
   }
 `;
@@ -76,7 +78,7 @@ export const IndicatorContainer = styled.div`
   display: grid;
   background-color: #F3F3F3;
   padding: 1rem;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   grid-column-gap: 1rem;
   grid-row-gap: 1rem;
 `;
