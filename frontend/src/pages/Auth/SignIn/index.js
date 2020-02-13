@@ -2,32 +2,23 @@ import React, { Component } from 'react';
 import Button from '../../../styles/Button';
 import { Container, SignForm, } from '../styles';
 import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
-import * as AuthActions from '../../../store/ducks/auth/actions';
+import { bindActionCreators } from 'redux';
 import logo from '../../../assets/login_logo.svg';
 import squares from '../../../assets/login_squares.svg';
+import { Creators as AuthActions } from '../../../store/ducks/auth';
 
-interface Props {
-  signInRequest(email: string, password: string): void
-}
-
-interface State {
-  email?: string
-  password?: string
-}
-
-class SignIn extends Component<Props, State> {
+class SignIn extends Component {
 
   state = {
     email: 'raniel90@gmail.com',
     password: '123456'
   };
 
-  handleInputChange = (e: any) => {
+  handleInputChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  handleSubmit = (e: any) => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     const { email, password } = this.state;
@@ -62,7 +53,7 @@ class SignIn extends Component<Props, State> {
   }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch) =>
+const mapDispatchToProps = (dispatch) =>
   bindActionCreators(AuthActions, dispatch);
 
 export default connect(null, mapDispatchToProps)(SignIn);

@@ -1,17 +1,17 @@
 import { call, put } from 'redux-saga/effects';
-import api from '../../../services/api';
+import api from '../../services/api';
 import { push } from 'connected-react-router';
 import { actions as toastrActions } from 'react-redux-toastr';
+import { Creators } from '../ducks/auth';
 
-import { signInSuccess } from './actions';
 
-export function* signIn(action: any) {
+export function* signInRequest({ email, password }) {
 
   try {
-    const response = yield call(api.post, 'auth/login', { ...action.payload });
+    const response = yield call(api.post, 'auth/login', { email, password });
 
     localStorage.setItem('@fmdev:token', response.data.token);
-    yield put(signInSuccess(response.data.token));
+    yield put(Creators.signInSuccess(response.data.token));
     yield put(push('/'));
   } catch (err) {
     yield put(toastrActions.add({
@@ -22,8 +22,9 @@ export function* signIn(action: any) {
   }
 }
 
-export function* signOut() {
+export function* signOutRequest() {
   localStorage.removeItem('@fmdev:token');
 
+  yield put(Creators.signOutSuccess());
   yield put(push('/'));
 }

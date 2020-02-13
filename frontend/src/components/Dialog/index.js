@@ -1,10 +1,10 @@
 import React from 'react';
 import { Container, Content } from './styles';
 
-const Modal = ({ children, size }) => (
+const Dialog = ({ children, size }) => (
   <Container>
     <Content size={size}>{children}</Content>
   </Container>
 )
 
-export default Modal;
+export default Dialog;

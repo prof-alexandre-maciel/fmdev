@@ -15,7 +15,7 @@ import TargetIcon from 'react-feather/dist/icons/crosshair';
 import Progress from '../Progress';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 
-class PreProcessing extends Component {
+class Train extends Component {
 
   state = {
     data: [
@@ -119,48 +119,44 @@ class PreProcessing extends Component {
     const { data } = this.state;
 
     return (
-      <PerfectScrollbar style={{ width: '100%' }}>
-        <ConfigContainer size='big'>
+      <ConfigContainer size='big'>
 
-          <BreadCrumb text='Voltar para Seleção de indicadores' />
+        <BreadCrumb text='Voltar para incadores alvo' />
 
-          <Header>
-            <h1>Escolha o indicador alvo para predição</h1>
-            <div>
-              <Button>Selecionar Modelos</Button>
-            </div>
-          </Header>
+        <Header>
+          <h1>Escolha o indicador alvo para predição</h1>
+          <div>
+            <Button>Treinar base</Button>
+          </div>
+        </Header>
 
-          <LmsText>
-            <span>LMS - Moodle</span>
-          </LmsText>
+        <LmsText>
+          <span>LMS - Moodle</span>
+        </LmsText>
 
+        <Table>
+          <thead>
+            <tr>
+              <FirstHeaderColumn>&nbsp;</FirstHeaderColumn>
+              <HeaderColumn>Indicadores</HeaderColumn>
+              <HeaderColumn>&nbsp;</HeaderColumn>
+              <HeaderColumn>&nbsp;</HeaderColumn>
+              <HeaderColumn>Importância</HeaderColumn>
+              <HeaderColumn>Tipo</HeaderColumn>
+              <HeaderColumn>Qtd. Linhas</HeaderColumn>
+              <HeaderColumn>Anomalias</HeaderColumn>
+              <HeaderColumn style={{ display: 'flex', justifyContent: 'center' }}>Ações</HeaderColumn>
+            </tr>
+          </thead>
 
+          <tbody>
+            {data.map(item => this.renderItem(item))}
+          </tbody>
+        </Table>
 
-          <Table>
-            <thead>
-              <tr>
-                <FirstHeaderColumn>&nbsp;</FirstHeaderColumn>
-                <HeaderColumn>Indicadores</HeaderColumn>
-                <HeaderColumn>&nbsp;</HeaderColumn>
-                <HeaderColumn>&nbsp;</HeaderColumn>
-                <HeaderColumn>Importância</HeaderColumn>
-                <HeaderColumn>Tipo</HeaderColumn>
-                <HeaderColumn>Qtd. Linhas</HeaderColumn>
-                <HeaderColumn>Anomalias</HeaderColumn>
-                <HeaderColumn style={{ display: 'flex', justifyContent: 'center' }}>Ações</HeaderColumn>
-              </tr>
-            </thead>
-
-            <tbody>
-              {data.map(item => this.renderItem(item))}
-            </tbody>
-          </Table>
-
-        </ConfigContainer >
-      </PerfectScrollbar>
+      </ConfigContainer >
     )
   }
 }
 
-export default PreProcessing
+export default Train

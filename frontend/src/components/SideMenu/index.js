@@ -4,7 +4,7 @@ import logo from '../../assets/logo.svg';
 import { Container, ItemList, Item, ItemText } from './styles';
 import { connect } from 'react-redux';
 
-import * as AuthActions from '../../store/ducks/auth/actions';
+import { Creators as AuthActions } from '../../store/ducks/auth';
 import { bindActionCreators } from 'redux';
 
 class SideMenu extends Component {

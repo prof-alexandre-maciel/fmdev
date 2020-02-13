@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 
-import { Card, CardContainer, Image, ModalForm } from './styles';
+import { Card, CardContainer, Image, DialogForm } from './styles';
 
-import * as WorkflowActions from '../../store/ducks/workflow/actions';
+import { Creators as DialogActions } from '../../store/ducks/dialog';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -11,7 +11,7 @@ import chamilo from '../../assets/chamilo.svg';
 import open_edx from '../../assets/open_edx.svg';
 import totara_learn from '../../assets/totara_learn.svg';
 
-import Modal from '../../components/Modal';
+import Dialog from '../Dialog';
 import Button from '../../styles/Button';
 import { ConfigContainer } from '../../styles/ConfigContainer';
 
@@ -23,22 +23,22 @@ class LmsSelect extends Component {
   }
 
   submit() {
-    const { closeLmsModal } = this.props;
+    const { setDialog } = this.props;
     // const { lms } = this.props.workflow;
 
-    closeLmsModal();
+    setDialog('moodle');
   }
 
   handleChangeInput = e => {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  renderModal() {
-    const { closeLmsModal } = this.props;
+  renderMoodleDialog() {
+    const { setDialog } = this.props;
 
     return (
-      <Modal size="big">
-        <ModalForm>
+      <Dialog size="big">
+        <DialogForm>
           <h1>Criar conexão</h1>
 
           <span>URL</span>
@@ -48,21 +48,21 @@ class LmsSelect extends Component {
           <input nChange={this.handleChangeInput} name="api_key" />
 
           <Button onClick={this.submit.bind(this)}>Salvar</Button>
-          <Button size="small" color="gray" onClick={closeLmsModal}>Cancelar</Button>
-        </ModalForm>
-      </Modal>
+          <Button size="small" color="gray" onClick={setDialog('moodle')}>Cancelar</Button>
+        </DialogForm>
+      </Dialog>
     )
   }
 
   render() {
-    const { workflow, openLmsModal } = this.props;
+    const { dialog, setDialog } = this.props;
 
     return (
       <Fragment>
         <ConfigContainer>
           <h1>Escolha o LMS que você vai trabalhar</h1>
           <CardContainer>
-            <Card onClick={openLmsModal.bind(this, 'moodle')}>
+            <Card onClick={setDialog.bind(this, 'moodle')}>
               <Image alt="" src={moodle} />
               <span>Última versão: 7.0.1</span>
             </Card>
@@ -80,7 +80,7 @@ class LmsSelect extends Component {
             </Card>
           </CardContainer>
         </ConfigContainer>
-        {workflow.openLmsModal ? this.renderModal() : null}
+        {dialog.moodle ? this.renderMoodleDialog() : null}
       </Fragment>
     );
   }
@@ -89,7 +89,7 @@ class LmsSelect extends Component {
 const mapStateToProps = ({ workflow }) => ({ workflow });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(WorkflowActions, dispatch);
+  bindActionCreators(DialogActions, dispatch);
 
 export default connect(
   mapStateToProps, mapDispatchToProps

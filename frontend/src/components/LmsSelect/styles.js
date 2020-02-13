@@ -40,7 +40,7 @@ export const Card = styled.div`
   }
 `;
 
-export const ModalForm = styled.form`
+export const DialogForm = styled.form`
   border-radius: 5px;
   padding: 40px;
   width: 400px;
