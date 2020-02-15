@@ -31,23 +31,25 @@ export const Card = styled.div`
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
-  width: 20vw;
-  min-width: 10vw;
+  width: 10vw;
+  height: 10vh;
 
   color: #000;
   height: 20vh;
+`;
 
-  span {
+export const CardVersion = styled.span`
     font-weight: 300;
     font-size: .8rem;
     line-height: 1vh;
     color: #000000;
-  }
+
+    ${props => !props.enabled && css`
+        opacity: .5;
+    `}
 `;
 
-export const DialogInput = styled.input.attrs({
-  autocomplete: 'off'
-})`
+export const DialogInput = styled.input`
     padding: 10px;
     border-radius: 3px;
     border: none;

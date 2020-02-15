@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react';
 import {
   Card, CardContainer, Image,
   DialogForm, DialogFormButtonContainer,
-  DialogInput, DialogSpan
+  DialogInput, DialogSpan, CardVersion
 } from './styles';
 
 import { Creators as DialogActions } from '../../store/ducks/dialog';
@@ -90,24 +90,24 @@ class LmsSelect extends Component {
 
     return (
       <PerfectScrollbar style={{ width: '100%' }}>
-        <ConfigContainer>
+        <ConfigContainer style={{ minHeight: '70%' }}>
           <h1>Escolha o LMS que você vai trabalhar</h1>
           <CardContainer>
             <Card onClick={setDialog.bind(this, MOODLE)}>
               <Image alt="" src={moodle} />
-              <span>Versão: 3.8.0</span>
+              <CardVersion enabled={true}>Versão: 3.8.0</CardVersion>
             </Card>
             <Card>
               <Image alt="" disabled src={chamilo} />
-              <span>Versão: 2.5.0</span>
+              <CardVersion>Não Configurado</CardVersion>
             </Card>
             <Card>
               <Image alt="" disabled src={open_edx} />
-              <span>Versão: 1.0.1</span>
+              <CardVersion>Não Configurado</CardVersion>
             </Card>
             <Card>
               <Image alt="" disabled src={totara_learn} />
-              <span>Versão: 2.5.3</span>
+              <CardVersion>Não Configurado</CardVersion>
             </Card>
           </CardContainer>
         </ConfigContainer>
