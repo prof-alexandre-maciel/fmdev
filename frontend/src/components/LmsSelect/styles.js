@@ -16,8 +16,6 @@ export const Image = styled.img`
   ${props => props.disabled && css`
     mix-blend-mode: luminosity;
     opacity: 0.7;
-    cursor: default;
-
     `}
 `;
 

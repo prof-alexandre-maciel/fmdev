@@ -6,7 +6,8 @@ export const { Types, Creators } = createActions({
   lmsRequest: [],
   lmsSuccess: ['data'],
   lmsError: ['err'],
-  getLms: []
+  getLms: [],
+  putLms: ['filter']
 });
 
 /** --------------------------------

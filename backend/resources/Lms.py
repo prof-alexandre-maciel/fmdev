@@ -68,10 +68,7 @@ class LmsResource(Resource):
             db.session.add(lms)
             db.session.commit()
 
-            schema = LmsSchema(only=("name", "updated_at"))
-            result = schema.dump(lms)
-
-            return result
+            return self.get()
 
         except:
             traceback.print_exc()

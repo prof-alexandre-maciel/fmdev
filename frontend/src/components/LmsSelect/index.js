@@ -8,6 +8,7 @@ import {
 
 import { Creators as DialogActions } from '../../store/ducks/dialog';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
+import { Creators as LmsActions } from '../../store/ducks/lms';
 import { connect } from 'react-redux';
 
 import moodle from '../../assets/moodle.svg';
@@ -32,16 +33,20 @@ const moodleOptions = [
 class LmsSelect extends Component {
 
   state = {
+    id: null,
+    name: null,
     url: null,
     token: null,
     version: null
   }
 
   submit() {
-    const { setDialog, setScreen } = this.props;
+    const { id, name, url, token, version } = this.state;
+    const { setDialog, setScreen, putLms } = this.props;
 
-    setDialog(MOODLE);
-    setScreen(INDICATORS);
+    putLms({ id, url, token, version: version.value });
+    setDialog(name);
+    // setScreen(INDICATORS);
   }
 
   handleChangeInput = e => {
@@ -105,7 +110,7 @@ class LmsSelect extends Component {
   }
 
   openDialog = (lms, item) => {
-    this.setState({ url: item.url, token: item.token, version: { label: item.version, value: item.version } });
+    this.setState({ ...item, version: { label: item.version, value: item.version } });
     this.props.setDialog(lms);
   }
 
@@ -139,6 +144,6 @@ const mapStateToProps = ({ dialog, screen, lms }) => ({ dialog, screen, lms });
 
 export default connect(
   mapStateToProps, {
-  ...DialogActions, ...ScreenActions
+  ...DialogActions, ...ScreenActions, ...LmsActions
 }
 )(LmsSelect);

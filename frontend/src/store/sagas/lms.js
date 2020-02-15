@@ -19,3 +19,19 @@ export function* getLms() {
     }));
   }
 }
+
+export function* putLms({ filter }) {
+  try {
+    yield put(Creators.lmsRequest());
+    const response = yield call(api.put, 'lms', filter);
+
+    yield put(Creators.lmsSuccess(response.data));
+  } catch (err) {
+    yield put(Creators.lmsError({ err }));
+    yield put(toastrActions.add({
+      type: 'error',
+      title: 'Erro',
+      message: 'Falha ao atualizar LMS'
+    }));
+  }
+}
