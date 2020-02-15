@@ -31,3 +31,17 @@ class LmsResource(Resource):
         except:
             traceback.print_exc()
             return None, 500
+
+    def get(self):
+        try:
+            res = Lms.query.with_entities(
+                Lms.id, Lms.name, Lms.url, Lms.token).all()
+
+            schema = LmsSchema(many=True)
+            data = schema.dump(res)
+
+            return data
+
+        except:
+            traceback.print_exc()
+            return None, 500
