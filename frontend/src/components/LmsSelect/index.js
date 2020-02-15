@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import {
   Card, CardContainer, Image,
@@ -9,6 +9,7 @@ import {
 import { Creators as DialogActions } from '../../store/ducks/dialog';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { Creators as LmsActions } from '../../store/ducks/lms';
+import { actions as toastrActions } from 'react-redux-toastr';
 import { connect } from 'react-redux';
 
 import moodle from '../../assets/moodle.svg';
@@ -44,9 +45,32 @@ class LmsSelect extends Component {
     const { id, name, url, token, version } = this.state;
     const { setDialog, setScreen, putLms } = this.props;
 
+    if (!url) {
+      this.renderWarningMsg('Informe a URL');
+      return;
+    }
+
+    if (!token) {
+      this.renderWarningMsg('Informe a Chave de API');
+      return;
+    }
+
+    if (!version) {
+      this.renderWarningMsg('Informe a versão');
+      return;
+    }
+
     putLms({ id, url, token, version: version.value });
     setDialog(name);
-    // setScreen(INDICATORS);
+    setScreen(INDICATORS);
+  }
+
+  renderWarningMsg = (msg) => {
+    this.props.add({
+      type: 'warning',
+      title: 'Atenção',
+      message: msg
+    });
   }
 
   handleChangeInput = e => {
@@ -62,7 +86,7 @@ class LmsSelect extends Component {
     return (
       <Dialog size="big">
         <DialogForm>
-          <h1>Criar conexão</h1>
+          <h1>Editar conexão</h1>
 
           <DialogSpan>URL</DialogSpan>
           <DialogInput value={url} autoComplete="off" onChange={this.handleChangeInput} name="url"></DialogInput>
@@ -144,6 +168,6 @@ const mapStateToProps = ({ dialog, screen, lms }) => ({ dialog, screen, lms });
 
 export default connect(
   mapStateToProps, {
-  ...DialogActions, ...ScreenActions, ...LmsActions
+  ...DialogActions, ...ScreenActions, ...LmsActions, ...toastrActions
 }
 )(LmsSelect);
