@@ -45,7 +45,8 @@ export const CardVersion = styled.span`
     color: #000000;
 
     ${props => !props.enabled && css`
-        opacity: .5;
+      mix-blend-mode: luminosity;
+      opacity: 0.7;
     `}
 `;
 
