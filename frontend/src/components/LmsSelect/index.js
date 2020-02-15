@@ -24,9 +24,9 @@ import { selectStyle } from '../../styles/global';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 const moodleOptions = [
-  { value: '3.8', label: '3.8' },
-  { value: '3.7', label: '3.7' },
-  { value: '3.6', label: '3.6' }
+  { value: '3.8.0', label: '3.8.0' },
+  { value: '3.7.0', label: '3.7.0' },
+  { value: '3.6.0', label: '3.6.0' }
 ];
 
 class LmsSelect extends Component {
