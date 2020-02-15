@@ -2,7 +2,10 @@ import styled, { css } from 'styled-components';
 
 export const CardContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
+  padding-bottom: 1rem;
 `
 
 export const Image = styled.img`
@@ -28,17 +31,44 @@ export const Card = styled.div`
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
+  width: 20vw;
+  min-width: 10vw;
 
   color: #000;
   height: 20vh;
 
   span {
     font-weight: 300;
-    font-size: 1.4vh;
+    font-size: .8rem;
     line-height: 1vh;
     color: #000000;
   }
 `;
+
+export const DialogInput = styled.input.attrs({
+  autocomplete: 'off'
+})`
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-top: 8px;
+    transition: border 0.15s ease;
+    font-size: 16px;
+    border: 1px solid #FFF;
+
+    &:focus {
+      border: 1px solid #000;
+    }
+`;
+
+export const DialogSpan = styled.span`
+    font-size: 16px;
+    line-height: 31px;
+    letter-spacing: 0.07em;
+    margin-top: 15px;
+`;
+
 
 export const DialogForm = styled.form`
   border-radius: 5px;
@@ -55,32 +85,7 @@ export const DialogForm = styled.form`
     font-size: 18px;
     line-height: 31px;
     letter-spacing: 0.07em;
-    color: #FFF;
     justify-content: center;
-  }
-
-  span {
-    color: #FFF;
-    font-size: 16px;
-    line-height: 31px;
-    letter-spacing: 0.07em;
-    margin-top: 15px;
-  }
-
-  input {
-    height: 50px;
-    padding: 10px;
-    color: #fff;
-    border-radius: 3px;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.1);
-    margin-top: 8px;
-    transition: border 0.15s ease;
-    font-size: 16px;
-
-    &:focus {
-      border: 1px solid #FFF;
-    }
   }
 
   button {
@@ -98,3 +103,9 @@ export const DialogForm = styled.form`
     }
   }
 `
+
+export const DialogFormButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;

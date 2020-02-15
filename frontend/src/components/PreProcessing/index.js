@@ -13,7 +13,7 @@ import MoreIcon from 'react-feather/dist/icons/more-horizontal';
 import AlertIcon from 'react-feather/dist/icons/alert-triangle';
 import TargetIcon from 'react-feather/dist/icons/crosshair';
 import Progress from '../Progress';
-import PerfectScrollbar from 'react-perfect-scrollbar'
+import PerfectScrollbar from 'react-perfect-scrollbar';
 import { INDICATORS, TRAIN } from '../../constants';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 

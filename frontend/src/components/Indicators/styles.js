@@ -27,18 +27,6 @@ export const Header = styled.div`
   }
 `;
 
-export const ComboBoxStyle = {
-  container: {
-    marginBottom: '1rem'
-  },
-  root: {
-    backgroundColor: '#F5F5F5',
-  },
-  input: {
-    backgroundColor: '#F5F5F5',
-  }
-}
-
 export const Content = styled.div`
   display: flex;
   margin: 2rem;

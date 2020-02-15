@@ -33,6 +33,8 @@ class Main extends Component {
     if (activeScreen === TRAIN) {
       return <Train />;
     }
+
+    return null;
   }
 
   render() {

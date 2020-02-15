@@ -4,6 +4,8 @@ import { initializeIcons } from '@uifabric/icons';
 import { loadTheme } from 'office-ui-fabric-react';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 
+const baseColor = '#000';
+
 loadTheme({
   palette: {
     themePrimary: '#DEB981',
@@ -60,3 +62,101 @@ export default createGlobalStyle`
     cursor: pointer;
   }
 `;
+
+export const ComboBoxStyle = {
+  container: {
+    marginBottom: '1rem',
+    '&:hover': {
+      border: '1px solid red'
+    }
+  },
+  root: {
+    backgroundColor: '#F5F5F5',
+    '&:hover': {
+      border: '1px solid red'
+    }
+  },
+  input: {
+    backgroundColor: '#F5F5F5',
+    '&:hover': {
+      border: '1px solid red'
+    }
+  }
+}
+
+export const selectStyle = {
+  container: (provided) => ({
+    ...provided,
+    width: '100%',
+
+    fontSize: 12,
+  }),
+  clearIndicator: (provided) => ({
+    ...provided,
+    color: baseColor,
+    padding: 5
+  }),
+  multiValueRemove: (provided) => ({
+    ...provided,
+    borderRadius: '0 8px 8px 0'
+
+  }),
+  dropdownIndicator: (provided) => {
+    return {
+      ...provided,
+      color: baseColor,
+      padding: 5,
+      ":hover": {
+        color: baseColor
+      }
+    }
+  },
+  multiValue: (provided) => ({
+    ...provided,
+    borderRadius: 16
+  }),
+  groupHeading: (provided) => ({
+    ...provided,
+    color: baseColor
+  }),
+  indicatorsContainer: provided => ({
+    ...provided,
+    height: 30
+  }),
+  control: (provided, state) => {
+    return {
+      ...provided,
+      backgroundColor: '#F9F9F9',
+      boxShadow: state.isFocused || state.isHovered ? `0 0 0 1px ${baseColor}` : null,
+      "&:hover": {
+        borderColor: baseColor,
+      },
+      borderWidth: 1,
+      minHeight: 30
+    }
+  },
+  option: (provided, state) => {
+    let color;
+    let background;
+
+    if (state.isFocused && !state.isSelected) {
+      color = baseColor;
+      background = '#EEE';
+    }
+
+    if (state.isSelected) {
+      color = '#FFF';
+      background = baseColor;
+    }
+
+    return {
+      ...provided,
+      color,
+      background,
+      ":active": {
+        color: '#FFF',
+        backgroundColor: baseColor
+      }
+    }
+  }
+}

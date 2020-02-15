@@ -63,6 +63,11 @@ const Button = styled.button.attrs({
       background:none;
       opacity: 0.6;
     }`}
+
+  ${props => props.isCancel === true && css`
+      font-weight: normal;
+      border: none !important;
+    `}
 `;
 
 export default Button;

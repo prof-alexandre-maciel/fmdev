@@ -5,13 +5,14 @@ import React, { Component, Fragment } from 'react';
 import { ConfigContainer } from '../../styles/ConfigContainer';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import {
-  Header, ComboBoxStyle,
+  Header,
   Separator, Content, LeftContent,
   IndicatorContainer, RightContainer,
   RightHeader
 } from './styles';
 import { ComboBox, Checkbox } from 'office-ui-fabric-react/lib/index';
 import { LMS_SELECT, PRE_PROCESSING } from '../../constants';
+import { ComboBoxStyle } from '../../styles/global';
 
 const INITIAL_OPTIONS = [
   { key: 'A', text: 'Option A' },

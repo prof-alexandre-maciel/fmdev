@@ -1,6 +1,10 @@
 import React, { Component, Fragment } from 'react';
 
-import { Card, CardContainer, Image, DialogForm } from './styles';
+import {
+  Card, CardContainer, Image,
+  DialogForm, DialogFormButtonContainer,
+  DialogInput, DialogSpan
+} from './styles';
 
 import { Creators as DialogActions } from '../../store/ducks/dialog';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
@@ -15,12 +19,22 @@ import Dialog from '../Dialog';
 import Button from '../../styles/Button';
 import { ConfigContainer } from '../../styles/ConfigContainer';
 import { INDICATORS, MOODLE } from '../../constants';
+import Select from 'react-select';
+import { selectStyle } from '../../styles/global';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+
+const moodleOptions = [
+  { value: '3.8', label: '3.8' },
+  { value: '3.7', label: '3.7' },
+  { value: '3.6', label: '3.6' }
+];
 
 class LmsSelect extends Component {
 
   state = {
     url: null,
-    api_key: null
+    api_key: null,
+    version: null
   }
 
   submit() {
@@ -34,6 +48,8 @@ class LmsSelect extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  handleChange = (item, name) => this.setState({ [name]: item });
+
   renderMoodleDialog() {
     const { setDialog } = this.props;
 
@@ -42,14 +58,28 @@ class LmsSelect extends Component {
         <DialogForm>
           <h1>Criar conexão</h1>
 
-          <span>URL</span>
-          <input onChange={this.handleChangeInput} name="url" />
+          <DialogSpan>URL</DialogSpan>
+          <DialogInput autoComplete="off" onChange={this.handleChangeInput} name="url"></DialogInput>
 
-          <span>Chave de Api</span>
-          <input onChange={this.handleChangeInput} name="api_key" />
+          <DialogSpan>Chave de Api</DialogSpan>
+          <DialogInput onChange={this.handleChangeInput} name="api_key" />
 
-          <Button onClick={this.submit.bind(this)}>Salvar</Button>
-          <Button size="small" color="gray" onClick={setDialog.bind(this, MOODLE)}>Cancelar</Button>
+          <DialogSpan>Versão LMS</DialogSpan>
+          <div style={{ width: '100%' }}>
+            <Select
+              isClearable
+              value={this.state.version}
+              onChange={(e) => this.handleChange(e, 'version')}
+              placeholder={'Selecione uma Versão'}
+              styles={selectStyle}
+              options={moodleOptions} />
+          </div>
+
+          <DialogFormButtonContainer>
+            <Button onClick={this.submit.bind(this)}>Salvar</Button>
+            <Button color="gray" isCancel={true} onClick={setDialog.bind(this, MOODLE)}>Cancelar</Button>
+          </DialogFormButtonContainer>
+
         </DialogForm>
       </Dialog>
     )
@@ -59,30 +89,30 @@ class LmsSelect extends Component {
     const { dialog, setDialog } = this.props;
 
     return (
-      <Fragment>
+      <PerfectScrollbar style={{ width: '100%' }}>
         <ConfigContainer>
           <h1>Escolha o LMS que você vai trabalhar</h1>
           <CardContainer>
             <Card onClick={setDialog.bind(this, MOODLE)}>
               <Image alt="" src={moodle} />
-              <span>Última versão: 7.0.1</span>
+              <span>Versão: 3.8.0</span>
             </Card>
             <Card>
               <Image alt="" disabled src={chamilo} />
-              <span>Última versão: 7.0.1</span>
+              <span>Versão: 2.5.0</span>
             </Card>
             <Card>
               <Image alt="" disabled src={open_edx} />
-              <span>Última versão: 7.0.1</span>
+              <span>Versão: 1.0.1</span>
             </Card>
             <Card>
               <Image alt="" disabled src={totara_learn} />
-              <span>Última versão: 7.0.1</span>
+              <span>Versão: 2.5.3</span>
             </Card>
           </CardContainer>
         </ConfigContainer>
         {dialog.moodle ? this.renderMoodleDialog() : null}
-      </Fragment>
+      </PerfectScrollbar>
     );
   }
 }
