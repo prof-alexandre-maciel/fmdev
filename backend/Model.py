@@ -37,11 +37,11 @@ class UserSchema(ma.Schema):
 class Lms(db.Model):
     __tablename__ = 'lms'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-    url = db.Column(db.Text)
-    token = db.Column(db.Text)
-    created_at = db.Column(db.DateTime())
-    updated_at = db.Column(db.DateTime())
+    name = db.Column(db.String(255), nullable=False, unique=True, index=True)
+    url = db.Column(db.Text())
+    token = db.Column(db.Text())
+    created_at = db.Column(db.DateTime(), nullable=False)
+    updated_at = db.Column(db.DateTime(), nullable=False)
 
     def __init__(self, name, url, token, created_at, updated_at):
         self.name = name

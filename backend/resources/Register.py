@@ -1,8 +1,8 @@
 import datetime
 from Model import db
-from Model import User
 from run import bcrypt
 from flask import request
+from Model import User
 from flask_restful import Resource
 
 
