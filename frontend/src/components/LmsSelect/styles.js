@@ -44,9 +44,9 @@ export const CardVersion = styled.span`
     line-height: 1vh;
     color: #000000;
 
-    ${props => !props.enabled && css`
+    ${props => props.disabled === true && css`
       mix-blend-mode: luminosity;
-      opacity: 0.7;
+      opacity: 0.5;
     `}
 `;
 

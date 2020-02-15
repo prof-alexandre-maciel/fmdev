@@ -10,10 +10,15 @@ import LmsSelect from '../../components/LmsSelect';
 import Indicators from '../../components/Indicators';
 import PreProcessing from '../../components/PreProcessing';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
+import { Creators as LmsActions } from '../../store/ducks/lms';
 import { LMS_SELECT, INDICATORS, PRE_PROCESSING, TRAIN } from '../../constants';
 import Train from '../../components/Train';
 
 class Main extends Component {
+
+  componentDidMount() {
+    this.props.getLms();
+  }
 
   renderContent = () => {
     const { activeScreen } = this.props.screen;
@@ -50,6 +55,6 @@ class Main extends Component {
 const mapStateToProps = ({ screen }) => ({ screen });
 
 const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(ScreenActions, dispatch);
+  bindActionCreators({ ...ScreenActions, ...LmsActions }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

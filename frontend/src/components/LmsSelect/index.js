@@ -33,7 +33,7 @@ class LmsSelect extends Component {
 
   state = {
     url: null,
-    api_key: null,
+    token: null,
     version: null
   }
 
@@ -51,6 +51,7 @@ class LmsSelect extends Component {
   handleChange = (item, name) => this.setState({ [name]: item });
 
   renderMoodleDialog() {
+    const { url, token, version } = this.state;
     const { setDialog } = this.props;
 
     return (
@@ -59,16 +60,16 @@ class LmsSelect extends Component {
           <h1>Criar conexão</h1>
 
           <DialogSpan>URL</DialogSpan>
-          <DialogInput autoComplete="off" onChange={this.handleChangeInput} name="url"></DialogInput>
+          <DialogInput value={url} autoComplete="off" onChange={this.handleChangeInput} name="url"></DialogInput>
 
           <DialogSpan>Chave de Api</DialogSpan>
-          <DialogInput onChange={this.handleChangeInput} name="api_key" />
+          <DialogInput value={token} onChange={this.handleChangeInput} name="token" type="password" />
 
           <DialogSpan>Versão LMS</DialogSpan>
           <div style={{ width: '100%' }}>
             <Select
               isClearable
-              value={this.state.version}
+              value={version}
               onChange={(e) => this.handleChange(e, 'version')}
               placeholder={'Selecione uma Versão'}
               styles={selectStyle}
@@ -85,30 +86,47 @@ class LmsSelect extends Component {
     )
   }
 
+  getImgFromName = (name) => {
+    if (name === MOODLE) {
+      return moodle;
+    }
+
+    if (name === 'chamilo') {
+      return chamilo;
+    }
+
+    if (name === 'open_edx') {
+      return open_edx;
+    }
+
+    if (name === 'totara_learn') {
+      return totara_learn;
+    }
+  }
+
+  openDialog = (lms, item) => {
+    this.setState({ url: item.url, token: item.token, version: { label: item.version, value: item.version } });
+    this.props.setDialog(lms);
+  }
+
   render() {
-    const { dialog, setDialog } = this.props;
+    const { dialog, lms } = this.props;
 
     return (
       <PerfectScrollbar style={{ width: '100%' }}>
         <ConfigContainer style={{ minHeight: '70%' }}>
           <h1>Escolha o LMS que você vai trabalhar</h1>
+
           <CardContainer>
-            <Card onClick={setDialog.bind(this, MOODLE)}>
-              <Image alt="" src={moodle} />
-              <CardVersion enabled={true}>Versão: 3.8.0</CardVersion>
-            </Card>
-            <Card>
-              <Image alt="" disabled src={chamilo} />
-              <CardVersion>Não Configurado</CardVersion>
-            </Card>
-            <Card>
-              <Image alt="" disabled src={open_edx} />
-              <CardVersion>Não Configurado</CardVersion>
-            </Card>
-            <Card>
-              <Image alt="" disabled src={totara_learn} />
-              <CardVersion>Não Configurado</CardVersion>
-            </Card>
+            {lms.data.map(item => (
+              <Card key={item.id} onClick={item.name === MOODLE ? this.openDialog.bind(this, item.name, item) : null}>
+                <Image disabled={!item.version} alt="" src={this.getImgFromName(item.name)} />
+                <CardVersion
+                  disabled={!item.version}>
+                  {item.version ? `Versão: ${item.version}` : 'Não Configurado'}
+                </CardVersion>
+              </Card>
+            ))}
           </CardContainer>
         </ConfigContainer>
         {dialog.moodle ? this.renderMoodleDialog() : null}
@@ -117,7 +135,7 @@ class LmsSelect extends Component {
   }
 }
 
-const mapStateToProps = ({ dialog, screen }) => ({ dialog, screen });
+const mapStateToProps = ({ dialog, screen, lms }) => ({ dialog, screen, lms });
 
 export default connect(
   mapStateToProps, {

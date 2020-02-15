@@ -35,7 +35,7 @@ class LmsResource(Resource):
 
     def get(self):
         try:
-            res = Lms.query.with_entities(
+            res = Lms.query.order_by(Lms.id).with_entities(
                 Lms.id, Lms.name, Lms.url, Lms.token, Lms.version).all()
 
             schema = LmsSchema(many=True)
