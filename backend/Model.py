@@ -37,15 +37,17 @@ class UserSchema(ma.Schema):
 class Lms(db.Model):
     __tablename__ = 'lms'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False, unique=True, index=True)
+    name = db.Column(db.String(), nullable=False, unique=True, index=True)
     url = db.Column(db.Text())
     token = db.Column(db.Text())
+    version = db.Column(db.String())
     created_at = db.Column(db.DateTime(), nullable=False)
     updated_at = db.Column(db.DateTime(), nullable=False)
 
-    def __init__(self, name, url, token, created_at, updated_at):
+    def __init__(self, name, url, version, token, created_at, updated_at):
         self.name = name
         self.url = url
+        self.version = version
         self.token = token
         self.created_at = created_at
         self.updated_at = updated_at
@@ -53,8 +55,9 @@ class Lms(db.Model):
 
 class LmsSchema(ma.Schema):
     id = fields.Integer(dump_only=True)
-    name = fields.String(required=True)
-    url = fields.String(required=True)
-    token = fields.String(required=True)
-    created_at = fields.DateTime(required=True)
-    updated_at = fields.DateTime(required=True)
+    name = fields.String()
+    url = fields.String()
+    token = fields.String()
+    version = fields.String()
+    created_at = fields.DateTime()
+    updated_at = fields.DateTime()
