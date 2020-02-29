@@ -15,6 +15,9 @@ class Login(Resource):
         user = User.query \
             .with_entities(User.password, User.username) \
             .filter_by(email=email).first()
+        
+        if user is None:
+            return {"error": "User not found"}, 401
 
         if bcrypt.check_password_hash(user.password, password):
             access_token = create_access_token(

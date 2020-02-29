@@ -16,7 +16,8 @@ class Register(Resource):
             password=bcrypt.generate_password_hash(
                 data['password']).decode('utf-8'),
             email=data['email'],
-            created_at=now
+            created_at=now,
+            updated_at=now
         )
 
         db.session.add(user)
@@ -25,5 +26,6 @@ class Register(Resource):
         return {"data": {
             "username": user.username,
             "email": user.email,
-            "created_at": now.strftime("%Y-%m-%d %H:%M:%S")
+            "created_at": now.strftime("%Y-%m-%d %H:%M:%S"),
+            "updated_at": now.strftime("%Y-%m-%d %H:%M:%S")
         }}

@@ -10,8 +10,8 @@ import { Creators as AuthActions } from '../../../store/ducks/auth';
 class SignIn extends Component {
 
   state = {
-    email: 'raniel90@gmail.com',
-    password: '123456'
+    email: 'admin@fmdev.com.br',
+    password: 'p@ssW0rd'
   };
 
   handleInputChange = (e) => {
