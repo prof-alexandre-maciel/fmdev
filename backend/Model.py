@@ -61,3 +61,29 @@ class LmsSchema(ma.Schema):
     version = fields.String()
     created_at = fields.DateTime()
     updated_at = fields.DateTime()
+
+
+class Indicator(db.Model):
+    __tablename__ = 'indicators'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(), nullable=False, index=True)
+    description = db.Column(db.String(), nullable=False)
+    lms = db.Column(db.String(), nullable=False)
+    created_at = db.Column(db.DateTime(), nullable=False)
+    updated_at = db.Column(db.DateTime(), nullable=False)
+
+    def __init__(self, name, description, lms, created_at, updated_at):
+        self.name = name
+        self.description = description
+        self.lms = lms
+        self.created_at = created_at
+        self.updated_at = updated_at
+
+
+class IndicatorSchema(ma.Schema):
+    id = fields.Integer(dump_only=True)
+    name = fields.String()
+    description = fields.String()
+    lms = fields.String()
+    created_at = fields.DateTime()
+    updated_at = fields.DateTime()
