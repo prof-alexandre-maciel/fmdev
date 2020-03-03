@@ -7,7 +7,7 @@ from flask_restful import Resource
 class Subject(Resource):
     def get(self):
         try:
-            query = 'select * from moodle limit 1'
+            query = 'SELECT * FROM moodle LIMIT 1'
 
             return utils.execute_query(query)
 
