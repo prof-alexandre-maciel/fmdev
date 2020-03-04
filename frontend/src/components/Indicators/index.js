@@ -37,11 +37,11 @@ class Indicators extends Component {
       course: null,
       courses: [{ label: 'Pedagogia', value: 'Pedagogia' }]
     };
-    this.carTemplate = this.carTemplate.bind(this);
+    this.getPickListTemplate = this.getPickListTemplate.bind(this);
     this.onChange = this.onChange.bind(this);
   }
 
-  carTemplate(car) {
+  getPickListTemplate(car) {
     return (
       <div className="p-clearfix">
         <div style={{ fontSize: '14px', float: 'right', margin: '15px 5px 0 0' }}>{car.brand} - {car.year} - {car.color}</div>
@@ -126,7 +126,7 @@ class Indicators extends Component {
                 source={source}
                 target={target}
                 onChange={this.onChange}
-                itemTemplate={this.carTemplate}
+                itemTemplate={this.getPickListTemplate}
                 sourceStyle={{ height: '40vh', width: '26vw' }} targetStyle={{ height: '40vh', width: '26vw' }}
               />
             </RightContainer>

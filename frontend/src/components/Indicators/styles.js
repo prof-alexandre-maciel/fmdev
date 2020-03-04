@@ -44,9 +44,9 @@ export const Content = styled.div`
 `;
 
 export const LeftContent = styled.div`
-display: flex;
-flex-direction: column;
-width: 15vw;
+  display: flex;
+  flex-direction: column;
+  width: 16vw;
 `;
 
 export const Separator = styled.div`

@@ -64,6 +64,16 @@ export default createGlobalStyle`
   button {
     cursor: pointer;
   }
+
+  .p-button {
+    background-color: #4A5173 !important;
+    border-color: #4A5173 !important;
+  }
+
+  .p-picklist .p-picklist-list .p-picklist-item.p-highlight {
+    background-color: #4A5173 !important;
+    border-color: #4A5173 !important;
+  }
 `;
 
 export const ComboBoxStyle = {
