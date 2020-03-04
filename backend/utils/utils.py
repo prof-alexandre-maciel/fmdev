@@ -16,3 +16,17 @@ def execute_query(query):
   data = json.loads(data)
   
   return data
+
+
+def list_to_sql_string(data):
+    string = ''
+
+    for idx, item in enumerate(data):
+        comma = ','
+
+        if idx + 1 == len(data):
+            comma = ''
+
+        string += f"'{item}'{comma}"
+
+    return string

@@ -7,12 +7,22 @@ from flask_restful import Resource
 class Subject(Resource):
     def post(self):
         try:
+            where = ''
+            payload = request.get_json()
+
+            if 'courses' in payload and len(payload['courses']) > 0:
+                courses = utils.list_to_sql_string(payload['courses'])
+                where = f"WHERE curso IN ({courses})"
+
             query = f"""SELECT 
                             nome_da_disciplina as label, 
                             nome_da_disciplina as value 
                         FROM moodle
+                        {where}
                         GROUP BY nome_da_disciplina
                         ORDER BY nome_da_disciplina"""
+            
+            print(query)
 
             return utils.execute_query(query)
 

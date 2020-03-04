@@ -6,7 +6,7 @@ export const { Types, Creators } = createActions({
   subjectRequest: [],
   subjectSuccess: ['data'],
   subjectError: ['err'],
-  getSubjects: []
+  getSubjects: ['filter']
 });
 
 /** --------------------------------

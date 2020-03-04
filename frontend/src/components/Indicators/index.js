@@ -23,15 +23,13 @@ class Indicators extends Component {
 
   state = {
     target: [],
-    courseSelected: null,
-    subjectSelected: null,
-    semesterSelected: null
+    courseSelected: [],
+    subjectSelected: [],
+    semesterSelected: []
   };
 
   componentDidMount() {
     this.props.getCourses();
-    this.props.getSubjects();
-    this.props.getSemesters();
     this.props.getIndicators();
   }
 
@@ -43,7 +41,29 @@ class Indicators extends Component {
     );
   }
 
-  handleChange = (item, name) => this.setState({ [name]: item });
+  handleChange = (item, name) => this.setState({ [name]: item }, () => this.refreshFilters(name, item));
+
+  refreshFilters = (name, item) => {
+    if (name === 'courseSelected') {
+
+      if (!item.length) {
+        this.props.subjectSuccess([]);
+        this.props.semesterSuccess([]);
+        return;
+      }
+
+      this.props.getSubjects({ courses: item.map(item => item.value) });
+    }
+
+    if (name === 'subjectSelected') {
+      if (!item.length) {
+        this.props.semesterSuccess([]);
+        return;
+      }
+
+      this.props.getSemesters({ subjects: item.map(item => item.value) });
+    }
+  };
 
   onChange(event) {
     this.props.indicatorSuccess(event.source);
