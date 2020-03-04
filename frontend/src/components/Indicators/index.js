@@ -6,10 +6,10 @@ import { ConfigContainer } from '../../styles/ConfigContainer';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { Creators as CourseActions } from '../../store/ducks/course';
 import { Creators as SubjectActions } from '../../store/ducks/subject';
+import { Creators as SemesterActions } from '../../store/ducks/semester';
 import {
-  Header,
-  Separator, Content, LeftContent,
-  IndicatorContainer, RightContainer, SelectText, SelectContainer
+  Header, Separator, Content, LeftContent,
+  RightContainer, SelectText, SelectContainer
 } from './styles';
 import { LMS_SELECT, PRE_PROCESSING } from '../../constants';
 import { selectStyle } from '../../styles/global';
@@ -34,12 +34,14 @@ class Indicators extends Component {
     ],
     target: [],
     courseSelected: null,
-    subjectSelected: null
+    subjectSelected: null,
+    semesterSelected: null
   };
 
   componentDidMount() {
     this.props.getCourses();
     this.props.getSubjects();
+    this.props.getSemesters();
   }
 
   getPickListTemplate(car) {
@@ -60,9 +62,9 @@ class Indicators extends Component {
   }
 
   render() {
-    const { course, subject } = this.props;
+    const { course, subject, semester } = this.props;
     const { setScreen } = this.props;
-    const { source, target, courseSelected, subjectSelected } = this.state;
+    const { source, target, courseSelected, subjectSelected, semesterSelected } = this.state;
 
     return (
       <ConfigContainer size='big'>
@@ -108,11 +110,11 @@ class Indicators extends Component {
                 <Select
                   isMulti
                   isClearable
-                  value={courseSelected}
-                  onChange={(e) => this.handleChange(e, 'courseSelected')}
+                  value={semesterSelected}
+                  onChange={(e) => this.handleChange(e, 'semesterSelected')}
                   placeholder={'Selecione as Turmas'}
                   styles={selectStyle}
-                  options={course.data.asMutable()} />
+                  options={semester.data.asMutable()} />
               </SelectContainer>
             </LeftContent>
 
@@ -140,9 +142,9 @@ class Indicators extends Component {
   }
 }
 
-const mapStateToProps = ({ course, subject }) => ({ course, subject });
+const mapStateToProps = ({ course, subject, semester }) => ({ course, subject, semester });
 
 export default connect(
   mapStateToProps,
-  { ...ScreenActions, ...CourseActions, ...SubjectActions }
+  { ...ScreenActions, ...CourseActions, ...SubjectActions, ...SemesterActions }
 )(Indicators);
