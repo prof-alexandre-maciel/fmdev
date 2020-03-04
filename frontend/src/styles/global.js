@@ -3,6 +3,9 @@ import 'react-redux-toastr/lib/css/react-redux-toastr.min.css'
 import { initializeIcons } from '@uifabric/icons';
 import { loadTheme } from 'office-ui-fabric-react';
 import 'react-perfect-scrollbar/dist/css/styles.css';
+import 'primereact/resources/themes/nova-light/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
 
 const baseColor = '#000';
 

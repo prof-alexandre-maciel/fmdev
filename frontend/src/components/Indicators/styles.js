@@ -27,6 +27,17 @@ export const Header = styled.div`
   }
 `;
 
+export const SelectContainer = styled.div`
+  padding-bottom: 3vh;
+`;
+
+export const SelectText = styled.div`
+  font-style: normal;
+  font-weight: normal;
+  color: #000000;
+  padding-bottom: .5vh;
+`;
+
 export const Content = styled.div`
   display: flex;
   margin: 2rem;
@@ -60,13 +71,4 @@ export const RightHeader = styled.div`
     line-height: 21px;
     color: #000000;
   }
-`
-
-export const IndicatorContainer = styled.div`
-  display: grid;
-  background-color: #F3F3F3;
-  padding: 1rem;
-  grid-template-columns: repeat(6, 1fr);
-  grid-column-gap: 1rem;
-  grid-row-gap: 1rem;
 `;

@@ -1,34 +1,70 @@
 import { connect } from 'react-redux';
 import BreadCrumb from '../BreadCrumb';
 import Button from '../../styles/Button';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { ConfigContainer } from '../../styles/ConfigContainer';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import {
   Header,
   Separator, Content, LeftContent,
-  IndicatorContainer, RightContainer,
-  RightHeader
+  IndicatorContainer, RightContainer, SelectText, SelectContainer
 } from './styles';
-import { ComboBox, Checkbox } from 'office-ui-fabric-react/lib/index';
 import { LMS_SELECT, PRE_PROCESSING } from '../../constants';
-import { ComboBoxStyle } from '../../styles/global';
-
-const INITIAL_OPTIONS = [
-  { key: 'A', text: 'Option A' },
-  { key: 'B', text: 'Option B' },
-  { key: 'C', text: 'Option C' }
-];
+import { selectStyle } from '../../styles/global';
+import Select from 'react-select';
+import PerfectScrollbar from 'react-perfect-scrollbar';
+import { PickList } from 'primereact/picklist';
 
 class Indicators extends Component {
 
 
+  constructor() {
+    super();
+    this.state = {
+      source: [
+        { "brand": "VW", "year": 2012, "color": "Orange", "vin": "dsad231ff" },
+        { "brand": "Audi", "year": 2011, "color": "Black", "vin": "gwregre345" },
+        { "brand": "Renault", "year": 2005, "color": "Gray", "vin": "h354htr" },
+        { "brand": "BMW", "year": 2003, "color": "Blue", "vin": "j6w54qgh" },
+        { "brand": "Mercedes", "year": 1995, "color": "Orange", "vin": "hrtwy34" },
+        { "brand": "Volvo", "year": 2005, "color": "Black", "vin": "jejtyj" },
+        { "brand": "Honda", "year": 2012, "color": "Yellow", "vin": "g43gr" },
+        { "brand": "Jaguar", "year": 2013, "color": "Orange", "vin": "greg34" },
+        { "brand": "Ford", "year": 2000, "color": "Black", "vin": "h54hw5" },
+        { "brand": "Fiat", "year": 2013, "color": "Red", "vin": "245t2s" }
+      ],
+      target: [],
+      course: null,
+      courses: [{ label: 'Pedagogia', value: 'Pedagogia' }]
+    };
+    this.carTemplate = this.carTemplate.bind(this);
+    this.onChange = this.onChange.bind(this);
+  }
+
+  carTemplate(car) {
+    return (
+      <div className="p-clearfix">
+        <div style={{ fontSize: '14px', float: 'right', margin: '15px 5px 0 0' }}>{car.brand} - {car.year} - {car.color}</div>
+      </div>
+    );
+  }
+
+  handleChange = (item, name) => this.setState({ [name]: item });
+
+  onChange(event) {
+    this.setState({
+        source: event.source,
+        target: event.target
+    });
+}
+
   render() {
+    const { courses, course, source, target } = this.state;
     const { setScreen } = this.props;
 
     return (
-      <Fragment>
-        <ConfigContainer size='big'>
+      <ConfigContainer size='big'>
+        <PerfectScrollbar style={{ width: '100%' }}>
           <BreadCrumb text='Voltar para ESCOLHA LMS' destiny={LMS_SELECT} />
           <Header>
             <h1>Selecione os indicadores</h1>
@@ -39,64 +75,65 @@ class Indicators extends Component {
 
           <Content>
             <LeftContent>
-              <ComboBox
-                label="Selecione um curso"
-                autoComplete="on"
-                options={INITIAL_OPTIONS}
-                styles={ComboBoxStyle}
-              />
+              <SelectText>Cursos</SelectText>
+              <SelectContainer>
+                <Select
+                  isMulti
+                  isClearable
+                  value={course}
+                  onChange={(e) => this.handleChange(e, 'course')}
+                  placeholder={'Selecione um Curso'}
+                  styles={selectStyle}
+                  options={courses} />
+              </SelectContainer>
 
-              <ComboBox
-                label="Selecione uma disciplina"
-                autoComplete="on"
-                options={INITIAL_OPTIONS}
-                styles={ComboBoxStyle}
-              />
 
-              <ComboBox
-                label="Selecione uma turma"
-                autoComplete="on"
-                options={INITIAL_OPTIONS}
-                styles={ComboBoxStyle}
-              />
+              <SelectText>Disciplinas</SelectText>
+              <SelectContainer>
+                <Select
+                  isMulti
+                  isClearable
+                  value={course}
+                  onChange={(e) => this.handleChange(e, 'subject')}
+                  placeholder={'Selecione uma Disciplina'}
+                  styles={selectStyle}
+                  options={courses} />
+              </SelectContainer>
+
+
+              <SelectText>Turmas</SelectText>
+              <SelectContainer>
+                <Select
+                  isMulti
+                  isClearable
+                  value={course}
+                  onChange={(e) => this.handleChange(e, 'class')}
+                  placeholder={'Selecione uma Turma'}
+                  styles={selectStyle}
+                  options={courses} />
+              </SelectContainer>
             </LeftContent>
 
             <Separator>&nbsp;</Separator>
 
             <RightContainer>
-              <RightHeader>
-                <span>Selecione os indicadores  para continuar</span>
-              </RightHeader>
-
-              <IndicatorContainer>
-                <Checkbox label="Indicador 1" onChange={() => { }} />
-                <Checkbox label="Indicador 2" onChange={() => { }} />
-                <Checkbox label="Indicador 3" onChange={() => { }} />
-                <Checkbox label="Indicador 4" onChange={() => { }} />
-                <Checkbox label="Indicador 5" onChange={() => { }} />
-                <Checkbox label="Indicador 6" onChange={() => { }} />
-                <Checkbox label="Indicador 7" onChange={() => { }} />
-                <Checkbox label="Indicador 8" onChange={() => { }} />
-                <Checkbox label="Indicador 9" onChange={() => { }} />
-                <Checkbox label="Indicador 10" onChange={() => { }} />
-                <Checkbox label="Indicador 11" onChange={() => { }} />
-                <Checkbox label="Indicador 12" onChange={() => { }} />
-                <Checkbox label="Indicador 13" onChange={() => { }} />
-                <Checkbox label="Indicador 14" onChange={() => { }} />
-                <Checkbox label="Indicador 15" onChange={() => { }} />
-                <Checkbox label="Indicador 16" onChange={() => { }} />
-                <Checkbox label="Indicador 17" onChange={() => { }} />
-                <Checkbox label="Indicador 18" onChange={() => { }} />
-                <Checkbox label="Indicador 19" onChange={() => { }} />
-                <Checkbox label="Indicador 20" onChange={() => { }} />
-
-              </IndicatorContainer>
-
+              <PickList
+                responsive={true}
+                showSourceControls={false}
+                showTargetControls={false}
+                sourceHeader="Disponíveis"
+                targetHeader="Selecionados"
+                source={source}
+                target={target}
+                onChange={this.onChange}
+                itemTemplate={this.carTemplate}
+                sourceStyle={{ height: '40vh', width: '26vw' }} targetStyle={{ height: '40vh', width: '26vw' }}
+              />
             </RightContainer>
 
           </Content>
-        </ConfigContainer>
-      </Fragment>
+        </PerfectScrollbar>
+      </ConfigContainer>
     );
   }
 }
