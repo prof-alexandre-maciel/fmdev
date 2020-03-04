@@ -6,7 +6,7 @@ export const { Types, Creators } = createActions({
   semesterRequest: [],
   semesterSuccess: ['data'],
   semesterError: ['err'],
-  getSemesters: []
+  getSemesters: ['filter']
 });
 
 /** --------------------------------

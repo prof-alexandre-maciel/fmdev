@@ -29,6 +29,7 @@ export const Header = styled.div`
 
 export const SelectContainer = styled.div`
   padding-bottom: 3vh;
+  width: 100%;
 `;
 
 export const SelectText = styled.div`
@@ -47,6 +48,7 @@ export const LeftContent = styled.div`
   display: flex;
   flex-direction: column;
   width: 16vw;
+  max-width: 16vw;
 `;
 
 export const Separator = styled.div`

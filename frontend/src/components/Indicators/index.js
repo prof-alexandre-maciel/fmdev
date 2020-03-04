@@ -46,7 +46,7 @@ class Indicators extends Component {
   refreshFilters = (name, item) => {
     if (name === 'courseSelected') {
 
-      if (!item.length) {
+      if (!item || !item.length) {
         this.props.subjectSuccess([]);
         this.props.semesterSuccess([]);
         return;
@@ -56,7 +56,7 @@ class Indicators extends Component {
     }
 
     if (name === 'subjectSelected') {
-      if (!item.length) {
+      if (!item || !item.length) {
         this.props.semesterSuccess([]);
         return;
       }
@@ -162,7 +162,7 @@ class Indicators extends Component {
                 target={target}
                 onChange={this.onChange.bind(this)}
                 itemTemplate={this.getPickListTemplate.bind(this)}
-                sourceStyle={{ height: '40vh', width: '26vw' }} targetStyle={{ height: '40vh', width: '26vw' }}
+                sourceStyle={{ height: '40vh', width: '25vw' }} targetStyle={{ height: '40vh', width: '25vw' }}
               />
             </RightContainer>
 

@@ -4,10 +4,10 @@ import { call, put } from 'redux-saga/effects';
 import { actions as toastrActions } from 'react-redux-toastr';
 
 
-export function* getSemesters() {
+export function* getSemesters({ filter }) {
   try {
     yield put(Creators.semesterRequest());
-    const response = yield call(api.post, 'semester');
+    const response = yield call(api.post, 'semester', filter);
 
     yield put(Creators.semesterSuccess(response.data));
   } catch (err) {
