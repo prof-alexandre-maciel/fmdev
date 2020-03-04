@@ -149,7 +149,7 @@ export const selectStyle = {
     }
   },
   option: (provided, state) => {
-    let color;
+    let color = '#000';
     let background;
 
     if (state.isFocused && !state.isSelected) {

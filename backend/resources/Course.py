@@ -5,7 +5,7 @@ from flask_restful import Resource
 
 
 class Course(Resource):
-    def get(self):
+    def post(self):
         try:
             query = f"""SELECT 
                             curso as label, 

@@ -4,6 +4,8 @@ import Button from '../../styles/Button';
 import React, { Component } from 'react';
 import { ConfigContainer } from '../../styles/ConfigContainer';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
+import { Creators as CourseActions } from '../../store/ducks/course';
+import { Creators as SubjectActions } from '../../store/ducks/subject';
 import {
   Header,
   Separator, Content, LeftContent,
@@ -17,28 +19,27 @@ import { PickList } from 'primereact/picklist';
 
 class Indicators extends Component {
 
+  state = {
+    source: [
+      { "brand": "VW", "year": 2012, "color": "Orange", "vin": "dsad231ff" },
+      { "brand": "Audi", "year": 2011, "color": "Black", "vin": "gwregre345" },
+      { "brand": "Renault", "year": 2005, "color": "Gray", "vin": "h354htr" },
+      { "brand": "BMW", "year": 2003, "color": "Blue", "vin": "j6w54qgh" },
+      { "brand": "Mercedes", "year": 1995, "color": "Orange", "vin": "hrtwy34" },
+      { "brand": "Volvo", "year": 2005, "color": "Black", "vin": "jejtyj" },
+      { "brand": "Honda", "year": 2012, "color": "Yellow", "vin": "g43gr" },
+      { "brand": "Jaguar", "year": 2013, "color": "Orange", "vin": "greg34" },
+      { "brand": "Ford", "year": 2000, "color": "Black", "vin": "h54hw5" },
+      { "brand": "Fiat", "year": 2013, "color": "Red", "vin": "245t2s" }
+    ],
+    target: [],
+    courseSelected: null,
+    subjectSelected: null
+  };
 
-  constructor() {
-    super();
-    this.state = {
-      source: [
-        { "brand": "VW", "year": 2012, "color": "Orange", "vin": "dsad231ff" },
-        { "brand": "Audi", "year": 2011, "color": "Black", "vin": "gwregre345" },
-        { "brand": "Renault", "year": 2005, "color": "Gray", "vin": "h354htr" },
-        { "brand": "BMW", "year": 2003, "color": "Blue", "vin": "j6w54qgh" },
-        { "brand": "Mercedes", "year": 1995, "color": "Orange", "vin": "hrtwy34" },
-        { "brand": "Volvo", "year": 2005, "color": "Black", "vin": "jejtyj" },
-        { "brand": "Honda", "year": 2012, "color": "Yellow", "vin": "g43gr" },
-        { "brand": "Jaguar", "year": 2013, "color": "Orange", "vin": "greg34" },
-        { "brand": "Ford", "year": 2000, "color": "Black", "vin": "h54hw5" },
-        { "brand": "Fiat", "year": 2013, "color": "Red", "vin": "245t2s" }
-      ],
-      target: [],
-      course: null,
-      courses: [{ label: 'Pedagogia', value: 'Pedagogia' }]
-    };
-    this.getPickListTemplate = this.getPickListTemplate.bind(this);
-    this.onChange = this.onChange.bind(this);
+  componentDidMount() {
+    this.props.getCourses();
+    this.props.getSubjects();
   }
 
   getPickListTemplate(car) {
@@ -53,14 +54,15 @@ class Indicators extends Component {
 
   onChange(event) {
     this.setState({
-        source: event.source,
-        target: event.target
+      source: event.source,
+      target: event.target
     });
-}
+  }
 
   render() {
-    const { courses, course, source, target } = this.state;
+    const { course, subject } = this.props;
     const { setScreen } = this.props;
+    const { source, target, courseSelected, subjectSelected } = this.state;
 
     return (
       <ConfigContainer size='big'>
@@ -80,11 +82,11 @@ class Indicators extends Component {
                 <Select
                   isMulti
                   isClearable
-                  value={course}
-                  onChange={(e) => this.handleChange(e, 'course')}
-                  placeholder={'Selecione um Curso'}
+                  value={courseSelected}
+                  onChange={(e) => this.handleChange(e, 'courseSelected')}
+                  placeholder={'Selecione os Cursos'}
                   styles={selectStyle}
-                  options={courses} />
+                  options={course.data.asMutable()} />
               </SelectContainer>
 
 
@@ -93,11 +95,11 @@ class Indicators extends Component {
                 <Select
                   isMulti
                   isClearable
-                  value={course}
-                  onChange={(e) => this.handleChange(e, 'subject')}
-                  placeholder={'Selecione uma Disciplina'}
+                  value={subjectSelected}
+                  onChange={(e) => this.handleChange(e, 'subjectSelected')}
+                  placeholder={'Selecione as Disciplinas'}
                   styles={selectStyle}
-                  options={courses} />
+                  options={subject.data.asMutable()} />
               </SelectContainer>
 
 
@@ -106,11 +108,11 @@ class Indicators extends Component {
                 <Select
                   isMulti
                   isClearable
-                  value={course}
-                  onChange={(e) => this.handleChange(e, 'class')}
-                  placeholder={'Selecione uma Turma'}
+                  value={courseSelected}
+                  onChange={(e) => this.handleChange(e, 'courseSelected')}
+                  placeholder={'Selecione as Turmas'}
                   styles={selectStyle}
-                  options={courses} />
+                  options={course.data.asMutable()} />
               </SelectContainer>
             </LeftContent>
 
@@ -138,8 +140,9 @@ class Indicators extends Component {
   }
 }
 
+const mapStateToProps = ({ course, subject }) => ({ course, subject });
 
 export default connect(
-  null,
-  { ...ScreenActions }
+  mapStateToProps,
+  { ...ScreenActions, ...CourseActions, ...SubjectActions }
 )(Indicators);

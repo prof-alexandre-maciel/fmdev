@@ -5,9 +5,14 @@ from flask_restful import Resource
 
 
 class Subject(Resource):
-    def get(self):
+    def post(self):
         try:
-            query = 'SELECT * FROM moodle LIMIT 1'
+            query = f"""SELECT 
+                            nome_da_disciplina as label, 
+                            nome_da_disciplina as value 
+                        FROM moodle
+                        GROUP BY nome_da_disciplina
+                        ORDER BY nome_da_disciplina"""
 
             return utils.execute_query(query)
 
