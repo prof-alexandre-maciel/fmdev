@@ -8,6 +8,7 @@ import screen from './screen';
 import course from './course';
 import subject from './subject';
 import semester from './semester';
+import indicator from './indicator';
 import { reducer as toastr } from 'react-redux-toastr';
 
 export default history => combineReducers({
@@ -19,5 +20,6 @@ export default history => combineReducers({
   course,
   subject,
   semester,
+  indicator,
   router: connectRouter(history)
 });

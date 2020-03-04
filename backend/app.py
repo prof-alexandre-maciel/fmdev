@@ -6,6 +6,7 @@ from resources.Subject import Subject
 from resources.Course import Course
 from resources.Register import Register
 from resources.Semester import Semester
+from resources.Indicator import Indicator
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
@@ -17,3 +18,4 @@ api.add_resource(LmsResource, '/lms')
 api.add_resource(Subject, '/subject')
 api.add_resource(Course, '/course')
 api.add_resource(Semester, '/semester')
+api.add_resource(Indicator, '/indicator')

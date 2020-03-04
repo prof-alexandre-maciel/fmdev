@@ -4,12 +4,14 @@ import { Types as LmsTypes } from '../ducks/lms';
 import { Types as CourseTypes } from '../ducks/course';
 import { Types as SubjectTypes } from '../ducks/subject';
 import { Types as SemesterTypes } from '../ducks/semester';
+import { Types as IndicatorTypes } from '../ducks/indicator';
 
 import { signInRequest, signOutRequest } from './auth';
 import { getLms, putLms } from './lms';
 import { getCourses } from './course';
 import { getSubjects } from './subject';
 import { getSemesters } from './semester';
+import { getIndicators } from './indicator';
 
 export default function* rootSaga() {
   return yield all([
@@ -19,6 +21,7 @@ export default function* rootSaga() {
     takeLatest(LmsTypes.PUT_LMS, putLms),
     takeLatest(CourseTypes.GET_COURSES, getCourses),
     takeLatest(SubjectTypes.GET_SUBJECTS, getSubjects),
-    takeLatest(SemesterTypes.GET_SEMESTERS, getSemesters)
+    takeLatest(SemesterTypes.GET_SEMESTERS, getSemesters),
+    takeLatest(IndicatorTypes.GET_INDICATORS, getIndicators)
   ])
 }

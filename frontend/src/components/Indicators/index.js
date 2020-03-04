@@ -7,6 +7,8 @@ import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { Creators as CourseActions } from '../../store/ducks/course';
 import { Creators as SubjectActions } from '../../store/ducks/subject';
 import { Creators as SemesterActions } from '../../store/ducks/semester';
+import { Creators as IndicatorActions } from '../../store/ducks/indicator';
+import { actions as toastrActions } from 'react-redux-toastr';
 import {
   Header, Separator, Content, LeftContent,
   RightContainer, SelectText, SelectContainer
@@ -20,18 +22,6 @@ import { PickList } from 'primereact/picklist';
 class Indicators extends Component {
 
   state = {
-    source: [
-      { "brand": "VW", "year": 2012, "color": "Orange", "vin": "dsad231ff" },
-      { "brand": "Audi", "year": 2011, "color": "Black", "vin": "gwregre345" },
-      { "brand": "Renault", "year": 2005, "color": "Gray", "vin": "h354htr" },
-      { "brand": "BMW", "year": 2003, "color": "Blue", "vin": "j6w54qgh" },
-      { "brand": "Mercedes", "year": 1995, "color": "Orange", "vin": "hrtwy34" },
-      { "brand": "Volvo", "year": 2005, "color": "Black", "vin": "jejtyj" },
-      { "brand": "Honda", "year": 2012, "color": "Yellow", "vin": "g43gr" },
-      { "brand": "Jaguar", "year": 2013, "color": "Orange", "vin": "greg34" },
-      { "brand": "Ford", "year": 2000, "color": "Black", "vin": "h54hw5" },
-      { "brand": "Fiat", "year": 2013, "color": "Red", "vin": "245t2s" }
-    ],
     target: [],
     courseSelected: null,
     subjectSelected: null,
@@ -42,12 +32,13 @@ class Indicators extends Component {
     this.props.getCourses();
     this.props.getSubjects();
     this.props.getSemesters();
+    this.props.getIndicators();
   }
 
-  getPickListTemplate(car) {
+  getPickListTemplate(item) {
     return (
       <div className="p-clearfix">
-        <div style={{ fontSize: '14px', float: 'right', margin: '15px 5px 0 0' }}>{car.brand} - {car.year} - {car.color}</div>
+        <div style={{ fontSize: '14px', float: 'right', margin: '15px 5px 0 0' }}>{item.description}</div>
       </div>
     );
   }
@@ -55,16 +46,36 @@ class Indicators extends Component {
   handleChange = (item, name) => this.setState({ [name]: item });
 
   onChange(event) {
+    this.props.indicatorSuccess(event.source);
+
     this.setState({
-      source: event.source,
       target: event.target
     });
   }
 
-  render() {
-    const { course, subject, semester } = this.props;
+  renderWarningMsg = (msg) => {
+    this.props.add({
+      type: 'warning',
+      title: 'Atenção',
+      message: msg
+    });
+  }
+
+  onSubmit = () => {
+    const { target } = this.state;
     const { setScreen } = this.props;
-    const { source, target, courseSelected, subjectSelected, semesterSelected } = this.state;
+
+    if (!target || !target.length || target.length <= 1) {
+      this.renderWarningMsg('Selecione ao menos dois indicadores');
+      return;
+    }
+
+    setScreen(PRE_PROCESSING);
+  }
+
+  render() {
+    const { course, subject, semester, indicator } = this.props;
+    const { target, courseSelected, subjectSelected, semesterSelected } = this.state;
 
     return (
       <ConfigContainer size='big'>
@@ -73,7 +84,7 @@ class Indicators extends Component {
           <Header>
             <h1>Selecione os indicadores</h1>
             <div>
-              <Button onClick={setScreen.bind(this, PRE_PROCESSING)}>Continuar</Button>
+              <Button onClick={this.onSubmit.bind(this)}>Continuar</Button>
             </div>
           </Header>
 
@@ -127,10 +138,10 @@ class Indicators extends Component {
                 showTargetControls={false}
                 sourceHeader="Disponíveis"
                 targetHeader="Selecionados"
-                source={source}
+                source={indicator.data}
                 target={target}
-                onChange={this.onChange}
-                itemTemplate={this.getPickListTemplate}
+                onChange={this.onChange.bind(this)}
+                itemTemplate={this.getPickListTemplate.bind(this)}
                 sourceStyle={{ height: '40vh', width: '26vw' }} targetStyle={{ height: '40vh', width: '26vw' }}
               />
             </RightContainer>
@@ -142,9 +153,13 @@ class Indicators extends Component {
   }
 }
 
-const mapStateToProps = ({ course, subject, semester }) => ({ course, subject, semester });
+const mapStateToProps = ({ course, subject, semester, indicator }) => ({ course, subject, semester, indicator });
 
 export default connect(
   mapStateToProps,
-  { ...ScreenActions, ...CourseActions, ...SubjectActions, ...SemesterActions }
+  {
+    ...ScreenActions, ...CourseActions,
+    ...SubjectActions, ...SemesterActions,
+    ...IndicatorActions, ...toastrActions
+  }
 )(Indicators);
