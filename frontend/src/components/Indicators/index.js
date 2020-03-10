@@ -116,6 +116,7 @@ class Indicators extends Component {
                   isMulti
                   isClearable
                   value={courseSelected}
+                  noOptionsMessage={() => 'Sem dados'}
                   onChange={(e) => this.handleChange(e, 'courseSelected')}
                   placeholder={'Selecione os Cursos'}
                   styles={selectStyle}
@@ -128,6 +129,7 @@ class Indicators extends Component {
                 <Select
                   isMulti
                   isClearable
+                  noOptionsMessage={() => 'Sem dados'}
                   value={subjectSelected}
                   onChange={(e) => this.handleChange(e, 'subjectSelected')}
                   placeholder={'Selecione as Disciplinas'}
@@ -142,6 +144,7 @@ class Indicators extends Component {
                   isMulti
                   isClearable
                   value={semesterSelected}
+                  noOptionsMessage={() => 'Sem dados'}
                   onChange={(e) => this.handleChange(e, 'semesterSelected')}
                   placeholder={'Selecione as Turmas'}
                   styles={selectStyle}
