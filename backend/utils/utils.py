@@ -13,6 +13,7 @@ def execute_query(query):
 
   df = pd.DataFrame(data, columns=res.keys())
   data = df.to_json(orient='records', force_ascii=False)
+  df.to_csv('../analysis/data/request.csv', index=False)
   data = json.loads(data)
   
   return data

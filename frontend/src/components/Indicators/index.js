@@ -22,10 +22,6 @@ import { PickList } from 'primereact/picklist';
 
 class Indicators extends Component {
 
-  state = {
-    target: []
-  };
-
   componentDidMount() {
     this.props.getCourses();
   }
@@ -33,7 +29,7 @@ class Indicators extends Component {
   getPickListTemplate(item) {
     return (
       <div className="p-clearfix">
-        <div style={{ fontSize: '14px', textAlign: 'right', margin: '15px 5px 0 0' }}>{item.description}</div>
+        <div style={{ fontSize: '14px', textAlign: 'right', margin: '15px 5px 0 0' }}>{item.label}</div>
       </div>
     );
   }
@@ -67,7 +63,7 @@ class Indicators extends Component {
 
   onPickListChange(event) {
     this.props.setIndicator('source', event.source);
-    this.props.setIndicator('target', event.target);
+    this.props.setIndicator('indicators', event.target);
   }
 
   renderWarningMsg = (msg) => {
@@ -81,26 +77,34 @@ class Indicators extends Component {
   onSubmit = () => {
     let filter = {};
     const { setScreen } = this.props;
-    const { target, courseSelected, subjectSelected, semesterSelected } = this.props.indicator;
+    const { indicators, targetSelected, courseSelected, subjectSelected, semesterSelected } = this.props.indicator;
 
-    if (!target || !target.length || target.length <= 1) {
+    if (!targetSelected || !targetSelected.value) {
+      this.renderWarningMsg('Selecione um indicador alvo');
+      return;
+    }
+
+    if (!indicators || !indicators.length || indicators.length <= 1) {
       this.renderWarningMsg('Selecione ao menos dois indicadores');
       return;
     }
 
+    filter.lms = 'moodle';
+    filter.target = targetSelected.value;
     filter.courses = courseSelected.map(item => item.value);
     filter.subjects = subjectSelected.map(item => item.value);
     filter.semesters = semesterSelected.map(item => item.value);
-    filter.indicators = target.map(item => item.name);
-    filter.lms = 'moodle';
+    filter.indicators = indicators.map(item => item.value);
+    
 
     this.props.getIndicatorMetadata(filter);
     setScreen(PRE_PROCESSING);
   }
 
   render() {
-    const { course, subject, semester } = this.props;
-    const { source, target, courseSelected, subjectSelected, semesterSelected } = this.props.indicator;
+    const { course, subject, semester, indicator } = this.props;
+    const { source, indicators, targetSelected, courseSelected,
+      subjectSelected, semesterSelected } = this.props.indicator;
 
     return (
       <ConfigContainer size='big'>
@@ -155,6 +159,18 @@ class Indicators extends Component {
                   styles={selectStyle}
                   options={semester.data.asMutable()} />
               </SelectContainer>
+
+              <SelectText>Indicador Alvo</SelectText>
+              <SelectContainer>
+                <Select
+                  isClearable
+                  value={targetSelected}
+                  noOptionsMessage={() => 'Sem dados'}
+                  onChange={(e) => this.handleChange(e, 'targetSelected')}
+                  placeholder={'Selecione um indicador alvo'}
+                  styles={selectStyle}
+                  options={indicator.data.asMutable()} />
+              </SelectContainer>
             </LeftContent>
 
             <Separator>&nbsp;</Separator>
@@ -167,7 +183,7 @@ class Indicators extends Component {
                 sourceHeader="Disponíveis"
                 targetHeader="Selecionados"
                 source={source}
-                target={target}
+                target={indicators}
                 onChange={this.onPickListChange.bind(this)}
                 itemTemplate={this.getPickListTemplate.bind(this)}
                 sourceStyle={{ height: '40vh', width: '25vw' }} targetStyle={{ height: '40vh', width: '25vw' }}

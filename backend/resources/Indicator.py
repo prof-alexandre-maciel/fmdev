@@ -10,9 +10,8 @@ class Indicator(Resource):
             lms = request.get_json()['lms']
 
             query = f"""SELECT 
-                            name,
-                            description,
-                            lms
+                            name as value,
+                            description as label
                         FROM
                             indicators
                         WHERE 

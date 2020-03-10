@@ -20,7 +20,8 @@ const INITIAL_STATE = Immutable({
   loading: false,
   error: false,
   source: [],
-  target: [],
+  indicators: [],
+  targetSelected: [],
   courseSelected: [],
   subjectSelected: [],
   semesterSelected: []
@@ -34,7 +35,7 @@ export const set = (state, { name, value }) => state.merge({ [name]: value });
 
 export const request = state => state.merge({ loading: true });
 
-export const success = (state, { data }) => state.merge({ source: data, data, error: false, loading: false, target: [] });
+export const success = (state, { data }) => state.merge({ source: data, data, error: false, loading: false, indicators: [] });
 
 export const error = state => state.merge({ loading: false, error: true });
 
