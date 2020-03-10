@@ -65,7 +65,6 @@ class Indicators extends Component {
   };
 
   onPickListChange(event) {
-    console.log(event.source, event.target);
     this.props.setIndicator('source', event.source);
     this.props.setIndicator('target', event.target);
   }
