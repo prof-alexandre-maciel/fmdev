@@ -9,6 +9,7 @@ import {
 import { Creators as DialogActions } from '../../store/ducks/dialog';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { Creators as LmsActions } from '../../store/ducks/lms';
+import { Creators as IndicatorActions } from '../../store/ducks/indicator';
 import { actions as toastrActions } from 'react-redux-toastr';
 import { connect } from 'react-redux';
 
@@ -43,7 +44,7 @@ class LmsSelect extends Component {
 
   submit() {
     const { id, name, url, token, version } = this.state;
-    const { setDialog, setScreen, putLms } = this.props;
+    const { setDialog, setScreen, putLms, getIndicators } = this.props;
 
     if (!url) {
       this.renderWarningMsg('Informe a URL');
@@ -62,6 +63,7 @@ class LmsSelect extends Component {
 
     putLms({ id, url, token, version: version.value });
     setDialog(name);
+    getIndicators();
     setScreen(INDICATORS);
   }
 
@@ -168,6 +170,7 @@ const mapStateToProps = ({ dialog, screen, lms }) => ({ dialog, screen, lms });
 
 export default connect(
   mapStateToProps, {
-  ...DialogActions, ...ScreenActions, ...LmsActions, ...toastrActions
+  ...DialogActions, ...ScreenActions, 
+  ...LmsActions, ...toastrActions, ...IndicatorActions
 }
 )(LmsSelect);

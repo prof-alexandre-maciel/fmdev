@@ -22,15 +22,11 @@ import { PickList } from 'primereact/picklist';
 class Indicators extends Component {
 
   state = {
-    target: [],
-    courseSelected: [],
-    subjectSelected: [],
-    semesterSelected: []
+    target: []
   };
 
   componentDidMount() {
     this.props.getCourses();
-    this.props.getIndicators();
   }
 
   getPickListTemplate(item) {
@@ -41,7 +37,10 @@ class Indicators extends Component {
     );
   }
 
-  handleChange = (item, name) => this.setState({ [name]: item }, () => this.refreshFilters(name, item));
+  handleChange = (item, name) => {
+    this.props.setIndicator(name, item);
+    this.refreshFilters(name, item);
+  };
 
   refreshFilters = (name, item) => {
     if (name === 'courseSelected') {
@@ -65,12 +64,10 @@ class Indicators extends Component {
     }
   };
 
-  onChange(event) {
-    this.props.indicatorSuccess(event.source);
-
-    this.setState({
-      target: event.target
-    });
+  onPickListChange(event) {
+    console.log(event.source, event.target);
+    this.props.setIndicator('source', event.source);
+    this.props.setIndicator('target', event.target);
   }
 
   renderWarningMsg = (msg) => {
@@ -82,7 +79,7 @@ class Indicators extends Component {
   }
 
   onSubmit = () => {
-    const { target } = this.state;
+    const { target } = this.props.indicator;
     const { setScreen } = this.props;
 
     if (!target || !target.length || target.length <= 1) {
@@ -94,8 +91,8 @@ class Indicators extends Component {
   }
 
   render() {
-    const { course, subject, semester, indicator } = this.props;
-    const { target, courseSelected, subjectSelected, semesterSelected } = this.state;
+    const { course, subject, semester } = this.props;
+    const { source, target, courseSelected, subjectSelected, semesterSelected } = this.props.indicator;
 
     return (
       <ConfigContainer size='big'>
@@ -161,9 +158,9 @@ class Indicators extends Component {
                 showTargetControls={false}
                 sourceHeader="Disponíveis"
                 targetHeader="Selecionados"
-                source={indicator.data}
+                source={source}
                 target={target}
-                onChange={this.onChange.bind(this)}
+                onChange={this.onPickListChange.bind(this)}
                 itemTemplate={this.getPickListTemplate.bind(this)}
                 sourceStyle={{ height: '40vh', width: '25vw' }} targetStyle={{ height: '40vh', width: '25vw' }}
               />
