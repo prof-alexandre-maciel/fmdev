@@ -91,7 +91,8 @@ class Indicators extends Component {
     filter.courses = courseSelected.map(item => item.value);
     filter.subjects = subjectSelected.map(item => item.value);
     filter.semesters = semesterSelected.map(item => item.value);
-    filter.target = target.map(item => item.name);
+    filter.indicators = target.map(item => item.name);
+    filter.lms = 'moodle';
 
     this.props.getIndicatorMetadata(filter);
     setScreen(PRE_PROCESSING);

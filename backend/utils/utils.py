@@ -21,12 +21,7 @@ def execute_query(query):
 def list_to_sql_string(data):
     string = ''
 
-    for idx, item in enumerate(data):
-        comma = ','
-
-        if idx + 1 == len(data):
-            comma = ''
-
-        string += f"'{item}'{comma}"
+    string = "', '".join(data)
+    string = f"'{string}'"
 
     return string
