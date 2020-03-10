@@ -111,8 +111,13 @@ export const selectStyle = {
   }),
   multiValueRemove: (provided) => ({
     ...provided,
-    borderRadius: '0 8px 8px 0'
-
+    color: baseColor,
+    borderRadius: '0 8px 8px 0',
+    "&:hover": {
+      color: '#fff',
+      cursor: 'pointer',
+      backgroundColor: baseColor,
+    }
   }),
   dropdownIndicator: (provided) => {
     return {

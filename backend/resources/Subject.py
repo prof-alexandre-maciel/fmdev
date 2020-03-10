@@ -22,8 +22,6 @@ class Subject(Resource):
                         GROUP BY nome_da_disciplina
                         ORDER BY nome_da_disciplina"""
             
-            print(query)
-
             return utils.execute_query(query)
 
         except:

@@ -36,7 +36,7 @@ class Indicators extends Component {
   getPickListTemplate(item) {
     return (
       <div className="p-clearfix">
-        <div style={{ fontSize: '14px', float: 'right', margin: '15px 5px 0 0' }}>{item.description}</div>
+        <div style={{ fontSize: '14px', textAlign: 'right', margin: '15px 5px 0 0' }}>{item.description}</div>
       </div>
     );
   }
