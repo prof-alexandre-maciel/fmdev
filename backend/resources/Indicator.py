@@ -7,6 +7,8 @@ from flask_restful import Resource
 class Indicator(Resource):
     def post(self):
         try:
+            lms = request.get_json()['lms']
+
             query = f"""SELECT 
                             name,
                             description,
@@ -14,7 +16,7 @@ class Indicator(Resource):
                         FROM
                             indicators
                         WHERE 
-                            lms='moodle'
+                            lms='{lms}'
                         GROUP BY 
                             name, description, lms
                         ORDER BY

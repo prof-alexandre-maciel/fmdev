@@ -8,6 +8,7 @@ import { Creators as CourseActions } from '../../store/ducks/course';
 import { Creators as SubjectActions } from '../../store/ducks/subject';
 import { Creators as SemesterActions } from '../../store/ducks/semester';
 import { Creators as IndicatorActions } from '../../store/ducks/indicator';
+import { Creators as IndicatorMetadataActions } from '../../store/ducks/indicator_metadata';
 import { actions as toastrActions } from 'react-redux-toastr';
 import {
   Header, Separator, Content, LeftContent,
@@ -78,14 +79,21 @@ class Indicators extends Component {
   }
 
   onSubmit = () => {
-    const { target } = this.props.indicator;
+    let filter = {};
     const { setScreen } = this.props;
+    const { target, courseSelected, subjectSelected, semesterSelected } = this.props.indicator;
 
     if (!target || !target.length || target.length <= 1) {
       this.renderWarningMsg('Selecione ao menos dois indicadores');
       return;
     }
 
+    filter.courses = courseSelected.map(item => item.value);
+    filter.subjects = subjectSelected.map(item => item.value);
+    filter.semesters = semesterSelected.map(item => item.value);
+    filter.target = target.map(item => item.name);
+
+    this.props.getIndicatorMetadata(filter);
     setScreen(PRE_PROCESSING);
   }
 
@@ -179,6 +187,7 @@ export default connect(
   {
     ...ScreenActions, ...CourseActions,
     ...SubjectActions, ...SemesterActions,
-    ...IndicatorActions, ...toastrActions
+    ...IndicatorActions, ...toastrActions,
+    ...IndicatorMetadataActions
   }
 )(Indicators);

@@ -6,7 +6,8 @@ export const { Types, Creators } = createActions({
   indicatorRequest: [],
   indicatorSuccess: ['data'],
   indicatorError: ['err'],
-  getIndicators: [],
+  getIndicators: ['filter'],
+  saveIndicators: ['filter'],
   setIndicator: ['name', 'value']
 });
 

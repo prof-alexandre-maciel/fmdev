@@ -1,6 +1,6 @@
 import { createReducer, createActions } from 'reduxsauce';
 import Immutable from 'seamless-immutable';
-import { LMS_SELECT, INDICATORS } from '../../constants';
+import { INDICATORS } from '../../constants';
 
 /* Types & Action Creators */
 

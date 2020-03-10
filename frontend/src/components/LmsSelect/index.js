@@ -63,7 +63,7 @@ class LmsSelect extends Component {
 
     putLms({ id, url, token, version: version.value });
     setDialog(name);
-    getIndicators();
+    getIndicators({ lms: name });
     setScreen(INDICATORS);
   }
 
@@ -170,7 +170,7 @@ const mapStateToProps = ({ dialog, screen, lms }) => ({ dialog, screen, lms });
 
 export default connect(
   mapStateToProps, {
-  ...DialogActions, ...ScreenActions, 
+  ...DialogActions, ...ScreenActions,
   ...LmsActions, ...toastrActions, ...IndicatorActions
 }
 )(LmsSelect);
