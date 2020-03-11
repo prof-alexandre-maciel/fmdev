@@ -3,7 +3,8 @@ import traceback
 import pandas as pd
 from Model import db
 
-def execute_query(query):
+def execute_query(query, mode='sql'):
+
   data = []
 
   res = db.engine.execute(query)
@@ -12,8 +13,11 @@ def execute_query(query):
       data.append(item)
 
   df = pd.DataFrame(data, columns=res.keys())
+
+  if mode == 'pandas':
+    return df
+
   data = df.to_json(orient='records', force_ascii=False)
-  df.to_csv('../analysis/data/request.csv', index=False)
   data = json.loads(data)
   
   return data

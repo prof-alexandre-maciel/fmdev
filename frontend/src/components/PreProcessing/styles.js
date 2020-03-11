@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Header = styled.div`
   display: flex;
@@ -64,19 +64,35 @@ export const FirstHeaderColumn = styled.td`
   padding: .7rem;
   padding-left: 2rem;
   font-weight: bold;
+
+  ${props => props.align && css`
+    text-align: ${props.align} 
+  `}
 `;
 
 export const HeaderColumn = styled.td`
   padding: .7rem;
   font-weight: bold;
+
+  ${props => props.align && css`
+    text-align: ${props.align} 
+  `}
 `;
 
 export const FirstItemColumn = styled.td`
   padding-left: 2rem;
+
+  ${props => props.align && css`
+    text-align: ${props.align} 
+  `}
 `;
 
 export const ItemColumn = styled.td`
   padding: .7rem;
+
+  ${props => props.align && css`
+    text-align: ${props.align} 
+  `}
 `;
 
 export const DetailText = styled.div`

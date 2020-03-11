@@ -1,6 +1,6 @@
 import { createReducer, createActions } from 'reduxsauce';
 import Immutable from 'seamless-immutable';
-import { INDICATORS } from '../../constants';
+import { INDICATORS, PRE_PROCESSING } from '../../constants';
 
 /* Types & Action Creators */
 
@@ -11,7 +11,7 @@ export const { Types, Creators } = createActions({
 /* Initial State */
 
 export const INITIAL_STATE = Immutable({
-  activeScreen: INDICATORS
+  activeScreen: PRE_PROCESSING
 });
 
 /* Reducers */

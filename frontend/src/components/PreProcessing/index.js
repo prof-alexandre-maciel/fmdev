@@ -21,28 +21,28 @@ class PreProcessing extends Component {
 
   state = {
     data: [
-      { id: 1, indicator: "Teste", importance: 0.8, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 2, indicator: "Alunos", importance: 0.5, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 3, indicator: "Alunos", importance: 0.4, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 4, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 5, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 6, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 7, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 8, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 9, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 10, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 11, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 12, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 13, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 14, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 15, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 16, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 17, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 18, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 19, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 20, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 21, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
-      { id: 22, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0 },
+      { id: 1, indicator: "Teste", importance: 0.8, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 2, indicator: "Alunos", importance: 0.5, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 3, indicator: "Alunos", importance: 0.4, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 4, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 5, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 6, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 7, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 8, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 9, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 10, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 11, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 12, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 13, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 14, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 15, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 16, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 17, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 18, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 19, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 20, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 21, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 },
+      { id: 22, indicator: "Alunos", importance: 0.2, type: "Discreto", lines: 88790, anomalies: 0, mean: 1, std: 1, min: 1, max: 2 }
     ],
     expandedRows: []
   };
@@ -61,14 +61,19 @@ class PreProcessing extends Component {
   renderItem(item) {
     const itemRows = [
       <tr onClick={this.handleRowClick.bind(this, item.id)} key={"row-data-" + item.id}>
-        <FirstItemColumn><Checkbox onChange={() => { }} /></FirstItemColumn>
-        <ItemColumn>{item.indicator}</ItemColumn>
+        <FirstItemColumn>{item.indicator}</FirstItemColumn>
         <ItemColumn><AlertIcon size={20} color="#FFF" fill="#A87878" /></ItemColumn>
         <ItemColumn><TargetIcon size={20} color="#DEB981" /></ItemColumn>
         <ItemColumn><Progress value={item.importance} /></ItemColumn>
         <ItemColumn>{item.type}</ItemColumn>
-        <ItemColumn>{item.lines}</ItemColumn>
-        <ItemColumn>{item.anomalies}</ItemColumn>
+        <ItemColumn align="right">{item.lines}</ItemColumn>
+        <ItemColumn align="right">{item.anomalies}</ItemColumn>
+
+        <ItemColumn align="right">{item.mean}</ItemColumn>
+        <ItemColumn align="right">{item.std}</ItemColumn>
+        <ItemColumn align="right">{item.min}</ItemColumn>
+        <ItemColumn align="right">{item.max}</ItemColumn>
+
         <ItemColumn style={{ display: 'flex', justifyContent: 'center' }}><MoreIcon /></ItemColumn>
       </tr >
     ];
@@ -143,14 +148,17 @@ class PreProcessing extends Component {
           <Table>
             <thead>
               <tr>
-                <FirstHeaderColumn>&nbsp;</FirstHeaderColumn>
-                <HeaderColumn>Indicadores</HeaderColumn>
+                <FirstHeaderColumn>Indicador</FirstHeaderColumn>
                 <HeaderColumn>&nbsp;</HeaderColumn>
                 <HeaderColumn>&nbsp;</HeaderColumn>
                 <HeaderColumn>Importância</HeaderColumn>
                 <HeaderColumn>Tipo</HeaderColumn>
-                <HeaderColumn>Qtd. Linhas</HeaderColumn>
-                <HeaderColumn>Anomalias</HeaderColumn>
+                <HeaderColumn align="right">Qtd. Único</HeaderColumn>
+                <HeaderColumn align="right">Qtd. Faltante</HeaderColumn>
+                <HeaderColumn align="right" >Média</HeaderColumn>
+                <HeaderColumn align="right">Desvio Padrão</HeaderColumn>
+                <HeaderColumn align="right">Mínimo</HeaderColumn>
+                <HeaderColumn align="right">Máximo</HeaderColumn>
                 <HeaderColumn style={{ display: 'flex', justifyContent: 'center' }}>Ações</HeaderColumn>
               </tr>
             </thead>
