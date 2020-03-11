@@ -24,7 +24,7 @@ class IndicatorMetadata(Resource):
                 pass
 
         return correlation_items
-    
+
     def get_indicators_description(self):
         descriptions = {}
         payload = request.get_json()
@@ -42,13 +42,12 @@ class IndicatorMetadata(Resource):
                     GROUP BY 
                         name, description, lms
                 """
-            
+
         data = utils.execute_query(query)
 
         for item in data:
             descriptions[item['name']] = item['description']
 
-        
         return descriptions
 
     def post(self):
@@ -124,8 +123,7 @@ class IndicatorMetadata(Resource):
 
                 if column in correlation_items:
                     if math.isnan(correlation_items[column]) == False:
-                        corr = "%.2f" % correlation_items[column]
-                        corr = float(corr)
+                        corr = utils.to_float(correlation_items[column], 2)
 
                 item = {
                     'name': column,
@@ -133,13 +131,14 @@ class IndicatorMetadata(Resource):
                     'type': type_items[column],
                     'missing': null_items[column],
                     'unique': unique_items[column],
-                    'mean': descriptive['mean'],
-                    "std": descriptive['std'],
-                    "min": descriptive['min'],
-                    "25%": descriptive['25%'],
-                    "50%": descriptive['50%'],
-                    "75%": descriptive['75%'],
-                    "max": descriptive['max'],
+                    'count': len(df.index),
+                    'mean': utils.to_float(descriptive['mean'], 2),
+                    "std": utils.to_float(descriptive['std'], 2),
+                    "min": utils.to_float(descriptive['min'], 2),
+                    "25%": utils.to_float(descriptive['25%'], 2),
+                    "50%": utils.to_float(descriptive['50%'], 2),
+                    "75%": utils.to_float(descriptive['75%'], 2),
+                    "max": utils.to_float(descriptive['max'], 2),
                     "corr": corr
                 }
 

@@ -30,3 +30,13 @@ def list_to_sql_string(data):
     string = f"'{string}'"
 
     return string
+  
+
+def to_float(value, decimals):
+  if value is None:
+    return value
+
+  new_value = f"%.{decimals}f" % value
+  new_value = float(new_value)
+
+  return new_value

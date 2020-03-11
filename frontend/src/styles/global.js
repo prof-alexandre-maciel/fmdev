@@ -7,7 +7,8 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 
-const baseColor = '#000';
+export const primaryColor = '#4A5173';
+const secondaryColor = '#000';
 
 loadTheme({
   palette: {
@@ -106,26 +107,26 @@ export const selectStyle = {
   }),
   clearIndicator: (provided) => ({
     ...provided,
-    color: baseColor,
+    color: secondaryColor,
     padding: 5
   }),
   multiValueRemove: (provided) => ({
     ...provided,
-    color: baseColor,
+    color: secondaryColor,
     borderRadius: '0 8px 8px 0',
     "&:hover": {
       color: '#fff',
       cursor: 'pointer',
-      backgroundColor: baseColor,
+      backgroundColor: secondaryColor,
     }
   }),
   dropdownIndicator: (provided) => {
     return {
       ...provided,
-      color: baseColor,
+      color: secondaryColor,
       padding: 5,
       ":hover": {
-        color: baseColor
+        color: secondaryColor
       }
     }
   },
@@ -135,7 +136,7 @@ export const selectStyle = {
   }),
   groupHeading: (provided) => ({
     ...provided,
-    color: baseColor
+    color: secondaryColor
   }),
   indicatorsContainer: provided => ({
     ...provided,
@@ -145,9 +146,9 @@ export const selectStyle = {
     return {
       ...provided,
       backgroundColor: '#F9F9F9',
-      boxShadow: state.isFocused || state.isHovered ? `0 0 0 1px ${baseColor}` : null,
+      boxShadow: state.isFocused || state.isHovered ? `0 0 0 1px ${secondaryColor}` : null,
       "&:hover": {
-        borderColor: baseColor,
+        borderColor: secondaryColor,
       },
       borderWidth: 1,
       minHeight: 30
@@ -158,13 +159,13 @@ export const selectStyle = {
     let background;
 
     if (state.isFocused && !state.isSelected) {
-      color = baseColor;
+      color = secondaryColor;
       background = '#EEE';
     }
 
     if (state.isSelected) {
       color = '#FFF';
-      background = baseColor;
+      background = secondaryColor;
     }
 
     return {
@@ -173,7 +174,7 @@ export const selectStyle = {
       background,
       ":active": {
         color: '#FFF',
-        backgroundColor: baseColor
+        backgroundColor: secondaryColor
       }
     }
   }

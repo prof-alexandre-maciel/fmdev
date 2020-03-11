@@ -66,7 +66,7 @@ export const FirstHeaderColumn = styled.td`
   font-weight: bold;
 
   ${props => props.align && css`
-    text-align: ${props.align} 
+    text-align: ${props.align};
   `}
 `;
 
@@ -75,7 +75,7 @@ export const HeaderColumn = styled.td`
   font-weight: bold;
 
   ${props => props.align && css`
-    text-align: ${props.align} 
+    text-align: ${props.align};
   `}
 `;
 
@@ -83,7 +83,7 @@ export const FirstItemColumn = styled.td`
   padding-left: 2rem;
 
   ${props => props.align && css`
-    text-align: ${props.align} 
+    text-align: ${props.align};
   `}
 `;
 
@@ -91,7 +91,7 @@ export const ItemColumn = styled.td`
   padding: .7rem;
 
   ${props => props.align && css`
-    text-align: ${props.align} 
+    text-align: ${props.align};
   `}
 `;
 
@@ -112,4 +112,21 @@ export const RowDetail = styled.tr`
       cursor: default;
     }
   }
+`;
+
+export const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 15vh;
+  padding-bottom: 15vh;
+`;
+
+export const StatusMsgContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 15vh;
+  padding-bottom: 15vh;
+  color: #000;
+  opacity: .5;
+  font-size: 1.2rem;
 `;

@@ -14,5 +14,5 @@ export const Content = styled.div`
   height: 1.3vh;
   border-radius: 11px;
   position: absolute;
-  background: #488DA3;
+  background: ${props => props.background};
 `;
