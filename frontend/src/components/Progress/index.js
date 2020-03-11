@@ -4,6 +4,15 @@ import { Container, Content } from './styles';
 
 export default class Progress extends Component {
 
+  getBackgroundColor = () => {
+    let color = '#488DA3';
+    const { value } = this.props;
+
+    if (value > 0) return color;
+
+    return '#FA8B8B';
+  }
+
   getImportance = fullWidth => {
     const { value } = this.props;
 
@@ -12,11 +21,16 @@ export default class Progress extends Component {
 
   render() {
     const fullWidth = 6;
+    const { value } = this.props;
+    const background = this.getBackgroundColor();
     const importance = this.getImportance(fullWidth);
+    const transform = value > 0 ? 'rotate(0deg)' : 'rotate(180deg)';
 
     return (
-      <Container>
-        <Content style={{ width: `${importance}vw` }} />
+      <Container style={{ transform }}>
+        <Content
+          background={background}
+          style={{ width: `${importance}vw` }} />
       </Container>
     );
   }
