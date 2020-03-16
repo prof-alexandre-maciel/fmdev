@@ -32,7 +32,7 @@ class PreProcessing extends Component {
       currentExpandedRows.filter(name => name !== rowId) :
       currentExpandedRows.concat(rowId);
 
-    this.setState({ expandedRows: newExpandedRows });
+    // this.setState({ expandedRows: newExpandedRows });
   }
 
   renderItem(item) {

@@ -91,14 +91,22 @@ class Indicators extends Component {
 
     filter.lms = 'moodle';
     filter.target = targetSelected.value;
-    filter.courses = courseSelected.map(item => item.value);
-    filter.subjects = subjectSelected.map(item => item.value);
-    filter.semesters = semesterSelected.map(item => item.value);
-    filter.indicators = indicators.map(item => item.value);
-    
+    filter.courses = this.getValueFromSelect(courseSelected);
+    filter.subjects = this.getValueFromSelect(subjectSelected);
+    filter.semesters = this.getValueFromSelect(semesterSelected);
+    filter.indicators = this.getValueFromSelect(indicators);
+
 
     this.props.getIndicatorMetadata(filter);
     setScreen(PRE_PROCESSING);
+  }
+
+  getValueFromSelect = items => {
+    if (!items) {
+      return null;
+    }
+
+    return items.map(item => item.value);
   }
 
   render() {
