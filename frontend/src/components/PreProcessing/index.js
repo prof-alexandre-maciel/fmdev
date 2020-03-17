@@ -17,6 +17,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import { INDICATORS, TRAIN } from '../../constants';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import { actions as toastrActions } from 'react-redux-toastr';
 
 class PreProcessing extends Component {
 
@@ -25,14 +26,14 @@ class PreProcessing extends Component {
   };
 
   handleRowClick(rowId) {
-    const currentExpandedRows = this.state.expandedRows;
-    const isRowCurrentlyExpanded = currentExpandedRows.includes(rowId);
+    // const currentExpandedRows = this.state.expandedRows;
+    // const isRowCurrentlyExpanded = currentExpandedRows.includes(rowId);
 
-    const newExpandedRows = isRowCurrentlyExpanded ?
-      currentExpandedRows.filter(name => name !== rowId) :
-      currentExpandedRows.concat(rowId);
+    // const newExpandedRows = isRowCurrentlyExpanded ?
+    //   currentExpandedRows.filter(name => name !== rowId) :
+    //   currentExpandedRows.concat(rowId);
 
-    // this.setState({ expandedRows: newExpandedRows });
+    // this.setState({ expandedRows: null });
   }
 
   renderItem(item) {
@@ -43,7 +44,9 @@ class PreProcessing extends Component {
     const itemRows = [
       <tr onClick={this.handleRowClick.bind(this, item.name)} key={"row-data-" + item.name}>
         <FirstItemColumn>{item.description}</FirstItemColumn>
-        <ItemColumn>{item.missing ? <AlertIcon size={20} color="#FFF" fill="#A87878" /> : null}</ItemColumn>
+        <ItemColumn title={item.missing ? `Qtd. Dados Faltantes: ${item.missing}` : null}>
+          {item.missing ? <AlertIcon size={20} color="#FFF" fill="#A87878" /> : null}
+        </ItemColumn>
         <ItemColumn>{isTarget ? <TargetIcon size={20} color="#DEB981" /> : null}</ItemColumn>
         <ItemColumn title={corrParsed}>{item.corr ? <Progress value={item.corr} /> : isTarget ? <b>Alvo</b> : 'N/A'}</ItemColumn>
         <ItemColumn>{item.type}</ItemColumn>
@@ -102,9 +105,27 @@ class PreProcessing extends Component {
     return itemRows;
   }
 
+  submit = () => {
+    const { data } = this.props.indicator_metadata;
+    const itemsMissing = data.filter(item => item.missing);
+
+    if (itemsMissing.length) {
+      this.renderWarningMsg('Por favor, verifique as pendências antes de continuar.');
+      return;
+    }
+
+    this.props.setScreen(TRAIN);
+  }
+
+  renderWarningMsg = (msg) => {
+    this.props.add({
+      type: 'warning',
+      title: 'Atenção',
+      message: msg
+    });
+  }
 
   render() {
-    const { setScreen } = this.props;
     const { data, loading, error } = this.props.indicator_metadata;
 
     return (
@@ -116,7 +137,7 @@ class PreProcessing extends Component {
           <Header>
             <h1>Pré-processamento dos dados</h1>
             <div>
-              <Button onClick={setScreen.bind(this, TRAIN)}>Selecionar Modelos</Button>
+              <Button onClick={this.submit.bind(this)}>Selecionar Modelos</Button>
             </div>
           </Header>
 
@@ -145,7 +166,7 @@ class PreProcessing extends Component {
                   <FirstHeaderColumn>Indicador</FirstHeaderColumn>
                   <HeaderColumn>&nbsp;</HeaderColumn>
                   <HeaderColumn>&nbsp;</HeaderColumn>
-                  <HeaderColumn>Importância</HeaderColumn>
+                  <HeaderColumn>Correlação</HeaderColumn>
                   <HeaderColumn>Tipo</HeaderColumn>
                   <HeaderColumn align="right">Qtd. Único</HeaderColumn>
                   <HeaderColumn align="right">Qtd. Faltante</HeaderColumn>
@@ -172,5 +193,5 @@ class PreProcessing extends Component {
 const mapStateToProps = ({ indicator_metadata, indicator }) => ({ indicator_metadata, indicator });
 
 export default connect(
-  mapStateToProps, { ...ScreenActions }
+  mapStateToProps, { ...ScreenActions, ...toastrActions }
 )(PreProcessing);
