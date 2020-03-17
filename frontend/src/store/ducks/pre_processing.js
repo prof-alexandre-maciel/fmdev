@@ -15,17 +15,18 @@ export const { Types, Creators } = createActions({
 
 const INITIAL_STATE = Immutable({
   data: [],
+  path: null,
   loading: false,
   error: false
 });
 
 /* Reducers */
 
-export const init = state => state.merge({ data: [] });
+export const init = state => state.merge({ data: [], path: null });
 
 export const request = state => state.merge({ loading: true });
 
-export const success = (state, { data }) => state.merge({ data, error: false, loading: false });
+export const success = (state, { data }) => state.merge({ data: data.data, path: data.path, error: false, loading: false });
 
 export const error = state => state.merge({ loading: false, error: true });
 

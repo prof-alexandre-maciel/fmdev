@@ -1,7 +1,8 @@
 import json
+import uuid
 import traceback
 from utils import utils
-from flask import request
+from flask import request, current_app
 from scipy.stats import spearmanr
 from flask_restful import Resource
 
@@ -86,6 +87,14 @@ class PreProcessing(Resource):
 
         return df
 
+    def save_file(self, df):
+        file_id = uuid.uuid4()
+        path = f"{current_app.config.get('PRE_PROCESSING_RAW')}/{file_id}.csv"
+
+        df.to_csv(path, index=False)
+
+        return path
+
     def post(self):
         try:
             data = []
@@ -145,7 +154,9 @@ class PreProcessing(Resource):
 
                 data.append(item)
 
-            return data
+            path = self.save_file(df)
+
+            return {'data': data, 'path': path}
 
         except:
             traceback.print_exc()
