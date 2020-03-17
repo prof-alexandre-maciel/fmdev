@@ -27,14 +27,19 @@ class PreProcessing extends Component {
     expandedRow: null
   };
 
-  handleRowClick(rowId) {
+  handleRowClick(item) {
     const { expandedRow } = this.state;
     const { path } = this.props.pre_processing;
-    const newExpandedRow = expandedRow !== rowId ? rowId : null;
+    const newExpandedRow = expandedRow !== item.name ? item.name : null;
 
     if (newExpandedRow) {
-      this.props.getBoxPlot({ path, indicator: rowId });
+      if (item.type === 'Categórico') {
+        this.props.boxPlotInit();
+      } else {
+        this.props.getBoxPlot({ path, indicator: item.name });
+      }
     }
+
     this.setState({ expandedRow: newExpandedRow });
   }
 
@@ -43,7 +48,7 @@ class PreProcessing extends Component {
     const isTarget = targetSelected && targetSelected.value === item.name ? true : false;
 
     const itemRows = [
-      <tr onClick={this.handleRowClick.bind(this, item.name)} key={"row-data-" + item.name}>
+      <tr onClick={this.handleRowClick.bind(this, item)} key={"row-data-" + item.name}>
         <FirstItemColumn>{item.description}</FirstItemColumn>
         <ItemColumn title={item.missing ? `Qtd. Dados Faltantes: ${item.missing}` : null}>
           {item.missing ? <AlertIcon size={20} color="#FFF" fill="#A87878" /> : null}

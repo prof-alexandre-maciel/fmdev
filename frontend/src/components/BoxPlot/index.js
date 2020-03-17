@@ -21,7 +21,7 @@ class BoxPlot extends Component {
   )
 
   renderEmptyState = () => (
-    <CenterContainer>Sem dados</CenterContainer>
+    <CenterContainer>Sem detalhes para este indicador</CenterContainer>
   )
 
   render() {
