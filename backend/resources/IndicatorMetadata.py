@@ -1,9 +1,8 @@
 import json
-import math
 import traceback
 from utils import utils
 from flask import request
-from scipy.stats import pearsonr
+from scipy.stats import spearmanr
 from flask_restful import Resource
 
 
@@ -13,13 +12,13 @@ class IndicatorMetadata(Resource):
         correlation_items = {}
         payload = request.get_json()
 
-        target_col_name = payload['target']
+        target_col_name = 'desempenho'
 
         for col in df:
             try:
                 if target_col_name != col:
-                    correlation_items[col] = \
-                        pearsonr(df[col], df[target_col_name])[0]
+                    correlation_items[col] = spearmanr(
+                        df[col], df[target_col_name])[0]
             except:
                 pass
 
@@ -99,7 +98,6 @@ class IndicatorMetadata(Resource):
             correlation_items = self.get_corr(df)
             overview_items = json.loads(
                 df.describe().to_json(force_ascii=False))
-            type_items = df.dtypes.apply(lambda x: x.name).to_dict()
             null_items = df.isna().sum().apply(lambda x: x).to_dict()
 
             for column in df.columns:
@@ -107,6 +105,7 @@ class IndicatorMetadata(Resource):
 
             for column in df.columns:
                 corr = None
+                type_column = 'Categórico'
                 descriptive = {
                     "count": None,
                     "mean": None,
@@ -120,25 +119,25 @@ class IndicatorMetadata(Resource):
 
                 if column in overview_items:
                     descriptive = overview_items[column]
+                    type_column = 'Discreto'
 
                 if column in correlation_items:
-                    if math.isnan(correlation_items[column]) == False:
-                        corr = utils.to_float(correlation_items[column], 2)
+                    corr = utils.to_float(correlation_items[column])
 
                 item = {
                     'name': column,
                     'description': indicators_description[column],
-                    'type': type_items[column],
+                    'type': type_column,
                     'missing': null_items[column],
                     'unique': unique_items[column],
                     'count': len(df.index),
-                    'mean': utils.to_float(descriptive['mean'], 2),
-                    "std": utils.to_float(descriptive['std'], 2),
-                    "min": utils.to_float(descriptive['min'], 2),
-                    "25%": utils.to_float(descriptive['25%'], 2),
-                    "50%": utils.to_float(descriptive['50%'], 2),
-                    "75%": utils.to_float(descriptive['75%'], 2),
-                    "max": utils.to_float(descriptive['max'], 2),
+                    'mean': utils.to_float(descriptive['mean']),
+                    "std": utils.to_float(descriptive['std']),
+                    "min": utils.to_float(descriptive['min']),
+                    "25%": utils.to_float(descriptive['25%']),
+                    "50%": utils.to_float(descriptive['50%']),
+                    "75%": utils.to_float(descriptive['75%']),
+                    "max": utils.to_float(descriptive['max']),
                     "corr": corr
                 }
 

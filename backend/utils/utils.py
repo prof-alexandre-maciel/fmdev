@@ -1,4 +1,5 @@
 import json
+import math
 import traceback
 import pandas as pd
 from Model import db
@@ -32,11 +33,11 @@ def list_to_sql_string(data):
     return string
   
 
-def to_float(value, decimals):
-  if value is None:
-    return value
+def to_float(value):
+  if value is None or math.isnan(value) == True:
+    return None
 
-  new_value = f"%.{decimals}f" % value
+  new_value = "%.2f" % value
   new_value = float(new_value)
 
   return new_value

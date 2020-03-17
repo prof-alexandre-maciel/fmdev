@@ -113,6 +113,11 @@ class PreProcessing extends Component {
       return;
     }
 
+    if (!data.length) {
+      this.renderWarningMsg('Sem dados disponíveis.');
+      return;
+    }
+
     this.props.setScreen(TRAIN);
   }
 
@@ -158,7 +163,7 @@ class PreProcessing extends Component {
             <StatusMsgContainer>Ocorreu um erro para listar os indicadores.</StatusMsgContainer>
             : null}
 
-          {data.length && !loading ?
+          {data.length && !loading && !error ?
             <Table>
               <thead>
                 <tr>

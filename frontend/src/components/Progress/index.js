@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 
 import { Container, Content } from './styles';
 
@@ -16,7 +16,7 @@ export default class Progress extends Component {
   getImportance = fullWidth => {
     const { value } = this.props;
 
-    return value * fullWidth;
+    return Math.abs(value * fullWidth);
   }
 
   renderNumber = (value, prop) => {

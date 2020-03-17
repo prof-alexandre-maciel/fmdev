@@ -8,10 +8,11 @@ const sizes = {
     width: 60%;
   `,
   big: css`
-    margin-top: 7vh;
-    margin-bottom: 7vh;
-    margin-left: 7vw;
-    width: 85%;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    width: 90%;
   `
 };
 
