@@ -6,6 +6,7 @@ import { Types as SubjectTypes } from '../ducks/subject';
 import { Types as SemesterTypes } from '../ducks/semester';
 import { Types as IndicatorTypes } from '../ducks/indicator';
 import { Types as IndicatorMetadataTypes } from '../ducks/pre_processing';
+import { Types as BoxPlotTypes } from '../ducks/box_plot';
 
 import { signInRequest, signOutRequest } from './auth';
 import { getLms, putLms } from './lms';
@@ -14,6 +15,7 @@ import { getSubjects } from './subject';
 import { getSemesters } from './semester';
 import { getIndicators } from './indicator';
 import { getIndicatorMetadata } from './pre_processing';
+import { getBoxPlot } from './box_plot';
 
 export default function* rootSaga() {
   return yield all([
@@ -26,5 +28,6 @@ export default function* rootSaga() {
     takeLatest(SemesterTypes.GET_SEMESTERS, getSemesters),
     takeLatest(IndicatorTypes.GET_INDICATORS, getIndicators),
     takeLatest(IndicatorMetadataTypes.GET_PRE_PROCESSING, getIndicatorMetadata),
+    takeLatest(BoxPlotTypes.GET_BOX_PLOT, getBoxPlot),
   ])
 }

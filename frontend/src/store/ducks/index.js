@@ -8,8 +8,9 @@ import screen from './screen';
 import course from './course';
 import subject from './subject';
 import semester from './semester';
+import box_plot from './box_plot';
 import indicator from './indicator';
-import indicator_metadata from './pre_processing';
+import pre_processing from './pre_processing';
 import { reducer as toastr } from 'react-redux-toastr';
 
 export default history => combineReducers({
@@ -20,8 +21,9 @@ export default history => combineReducers({
   screen,
   course,
   subject,
+  box_plot,
   semester,
   indicator,
-  indicator_metadata,
+  pre_processing,
   router: connectRouter(history)
 });
