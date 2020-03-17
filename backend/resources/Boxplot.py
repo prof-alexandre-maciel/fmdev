@@ -30,9 +30,8 @@ class Boxplot(Resource):
 
             if res['status'] == 'error':
                 return {"msg": "Invalid path"}, 500
-            
-            return res['data']
 
+            return res['data'].tolist()
         except:
             traceback.print_exc()
             return {"msg": "Error on POST Boxplot"}, 500
