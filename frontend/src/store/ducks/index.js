@@ -9,7 +9,7 @@ import course from './course';
 import subject from './subject';
 import semester from './semester';
 import indicator from './indicator';
-import indicator_metadata from './indicator_metadata';
+import indicator_metadata from './pre_processing';
 import { reducer as toastr } from 'react-redux-toastr';
 
 export default history => combineReducers({

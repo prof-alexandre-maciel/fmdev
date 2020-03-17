@@ -2,11 +2,11 @@ import { createActions, createReducer } from 'reduxsauce';
 import Immutable from 'seamless-immutable';
 
 export const { Types, Creators } = createActions({
-  indicatorMetadataInit: [],
-  indicatorMetadataRequest: [],
-  indicatorMetadataSuccess: ['data'],
-  indicatorMetadataError: ['err'],
-  getIndicatorMetadata: ['filter'],
+  preProcessingInit: [],
+  preProcessingRequest: [],
+  preProcessingSuccess: ['data'],
+  preProcessingError: ['err'],
+  getPreProcessing: ['filter'],
 });
 
 /** --------------------------------
@@ -32,8 +32,8 @@ export const error = state => state.merge({ loading: false, error: true });
 /* Reducers to types */
 
 export default createReducer(INITIAL_STATE, {
-  [Types.INDICATOR_METADATA_INIT]: init,
-  [Types.INDICATOR_METADATA_REQUEST]: request,
-  [Types.INDICATOR_METADATA_SUCCESS]: success,
-  [Types.INDICATOR_METADATA_ERROR]: error
+  [Types.PRE_PROCESSING_INIT]: init,
+  [Types.PRE_PROCESSING_REQUEST]: request,
+  [Types.PRE_PROCESSING_SUCCESS]: success,
+  [Types.PRE_PROCESSING_ERROR]: error
 });

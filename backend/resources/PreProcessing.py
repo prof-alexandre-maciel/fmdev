@@ -6,7 +6,7 @@ from scipy.stats import spearmanr
 from flask_restful import Resource
 
 
-class IndicatorMetadata(Resource):
+class PreProcessing(Resource):
 
     def get_corr(self, df):
         correlation_items = {}

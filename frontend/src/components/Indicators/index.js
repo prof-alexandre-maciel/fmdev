@@ -8,7 +8,7 @@ import { Creators as CourseActions } from '../../store/ducks/course';
 import { Creators as SubjectActions } from '../../store/ducks/subject';
 import { Creators as SemesterActions } from '../../store/ducks/semester';
 import { Creators as IndicatorActions } from '../../store/ducks/indicator';
-import { Creators as IndicatorMetadataActions } from '../../store/ducks/indicator_metadata';
+import { Creators as PreProcessingActions } from '../../store/ducks/pre_processing';
 import { actions as toastrActions } from 'react-redux-toastr';
 import {
   Header, Separator, Content, LeftContent,
@@ -97,7 +97,7 @@ class Indicators extends Component {
     filter.indicators = this.getValueFromSelect(indicators);
 
 
-    this.props.getIndicatorMetadata(filter);
+    this.props.getPreProcessing(filter);
     setScreen(PRE_PROCESSING);
   }
 
@@ -213,6 +213,6 @@ export default connect(
     ...ScreenActions, ...CourseActions,
     ...SubjectActions, ...SemesterActions,
     ...IndicatorActions, ...toastrActions,
-    ...IndicatorMetadataActions
+    ...PreProcessingActions
   }
 )(Indicators);
