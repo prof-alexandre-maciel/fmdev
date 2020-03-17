@@ -156,8 +156,8 @@ class PreProcessing(Resource):
 
             path = self.save_file(df)
 
-            return {'data': data, 'path': path}
+            return {'data': data, 'path': path }
 
         except:
             traceback.print_exc()
-            return {"msg": "Error on GET Indicator Metadata"}, 500
+            return {"msg": "Error on POST PreProcessing"}, 500
