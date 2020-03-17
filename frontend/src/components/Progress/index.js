@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 
 import { Container, Content } from './styles';
 
@@ -19,6 +19,10 @@ export default class Progress extends Component {
     return value * fullWidth;
   }
 
+  renderNumber = (value, prop) => {
+    return <div style={{ fontSize: '.7rem', [prop]: '.3vw' }}>{value}</div>
+  }
+
   render() {
     const fullWidth = 6;
     const { value } = this.props;
@@ -27,11 +31,15 @@ export default class Progress extends Component {
     const transform = value > 0 ? 'rotate(0deg)' : 'rotate(180deg)';
 
     return (
-      <Container style={{ transform }}>
-        <Content
-          background={background}
-          style={{ width: `${importance}vw` }} />
-      </Container>
+      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+        {value < 0 ? this.renderNumber(value, 'paddingRight') : null}
+        <Container style={{ transform }}>
+          <Content
+            background={background}
+            style={{ width: `${importance}vw` }} />
+        </Container>
+        {value > 0 ? this.renderNumber(value, 'paddingLeft') : null}
+      </div>
     );
   }
 }

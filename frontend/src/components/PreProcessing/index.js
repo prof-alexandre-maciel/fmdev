@@ -38,7 +38,6 @@ class PreProcessing extends Component {
 
   renderItem(item) {
     const { targetSelected } = this.props.indicator;
-    const corrParsed = item.corr ? `${item.corr * 100}%` : null;
     const isTarget = targetSelected && targetSelected.value === item.name ? true : false;
 
     const itemRows = [
@@ -48,7 +47,7 @@ class PreProcessing extends Component {
           {item.missing ? <AlertIcon size={20} color="#FFF" fill="#A87878" /> : null}
         </ItemColumn>
         <ItemColumn>{isTarget ? <TargetIcon size={20} color="#DEB981" /> : null}</ItemColumn>
-        <ItemColumn title={corrParsed}>{item.corr ? <Progress value={item.corr} /> : isTarget ? <b>Alvo</b> : 'N/A'}</ItemColumn>
+        <ItemColumn>{item.corr ? <Progress value={item.corr} /> : isTarget ? <b>Alvo</b> : 'N/A'}</ItemColumn>
         <ItemColumn>{item.type}</ItemColumn>
         <ItemColumn align="right">{item.unique}</ItemColumn>
         <ItemColumn align="right">{item.missing}</ItemColumn>
