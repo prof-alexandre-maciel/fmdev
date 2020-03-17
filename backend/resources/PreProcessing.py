@@ -29,16 +29,16 @@ class PreProcessing(Resource):
         payload = request.get_json()
         lms = payload['lms']
 
-        query = f"""SELECT 
+        query = f"""SELECT
                         name,
                         description
                     FROM
                         indicators
-                    WHERE 
+                    WHERE
                         lms='{lms}'
                     AND
                         name IN ({utils.list_to_sql_string(payload['indicators'])})
-                    GROUP BY 
+                    GROUP BY
                         name, description, lms
                 """
 
@@ -49,55 +49,57 @@ class PreProcessing(Resource):
 
         return descriptions
 
+    def get_dataframe(self):
+        query_where = ''
+        where = 'WHERE'
+        fields = "*"
+        group_by = ''
+        payload = request.get_json()
+
+        if 'indicators' in payload and type(payload['indicators']) == list:
+            fields = ", ".join(payload['indicators'])
+
+        if 'courses' in payload and type(payload['courses']) == list and len(payload['courses']) > 0:
+            query_where += f"""{where} curso IN ({utils.list_to_sql_string(payload['courses'])}) """
+            where = 'AND'
+
+        if 'subjects' in payload and type(payload['subjects']) == list and len(payload['subjects']) > 0:
+            query_where += f"""{where} nome_da_disciplina IN ({utils.list_to_sql_string(payload['subjects'])}) """
+            where = 'AND'
+
+        if 'semesters' in payload and type(payload['semesters']) == list and len(payload['semesters']) > 0:
+            query_where += f"""{where} semestre IN ({utils.list_to_sql_string(payload['semesters'])}) """
+
+        if fields != '*':
+            group_by = f"GROUP BY {fields}"
+
+        query = f"""
+                    SELECT 
+                        {fields}
+                    FROM
+                        {payload['lms']}
+                        {query_where}
+                        {group_by}
+                """
+
+        df = utils.execute_query(query=query, mode='pandas')
+
+        return df
+
     def post(self):
         try:
             data = []
-
-            query_where = ''
-            where = 'WHERE'
-            fields = "*"
-            group_by = ''
-
+            eda_items = {}
             null_items = {}
             type_items = {}
             unique_items = {}
-            overview_items = {}
             correlation_items = {}
 
-            payload = request.get_json()
+            df = self.get_dataframe()
             indicators_description = self.get_indicators_description()
 
-            if 'indicators' in payload and type(payload['indicators']) == list:
-                fields = ", ".join(payload['indicators'])
-
-            if 'courses' in payload and type(payload['courses']) == list and len(payload['courses']) > 0:
-                query_where += f"""{where} curso IN ({utils.list_to_sql_string(payload['courses'])}) """
-                where = 'AND'
-
-            if 'subjects' in payload and type(payload['subjects']) == list and len(payload['subjects']) > 0:
-                query_where += f"""{where} nome_da_disciplina IN ({utils.list_to_sql_string(payload['subjects'])}) """
-                where = 'AND'
-
-            if 'semesters' in payload and type(payload['semesters']) == list and len(payload['semesters']) > 0:
-                query_where += f"""{where} semestre IN ({utils.list_to_sql_string(payload['semesters'])}) """
-
-            if fields != '*':
-                group_by = f"GROUP BY {fields}"
-
-            query = f"""
-                        SELECT 
-                            {fields}
-                        FROM
-                            {payload['lms']}
-                            {query_where}
-                            {group_by}
-                    """
-
-            df = utils.execute_query(query=query, mode='pandas')
-
             correlation_items = self.get_corr(df)
-            overview_items = json.loads(
-                df.describe().to_json(force_ascii=False))
+            eda_items = json.loads(df.describe().to_json(force_ascii=False))
             null_items = df.isna().sum().apply(lambda x: x).to_dict()
 
             for column in df.columns:
@@ -117,8 +119,8 @@ class PreProcessing(Resource):
                     "max": None
                 }
 
-                if column in overview_items:
-                    descriptive = overview_items[column]
+                if column in eda_items:
+                    descriptive = eda_items[column]
                     type_column = 'Discreto'
 
                 if column in correlation_items:
