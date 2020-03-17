@@ -4,9 +4,9 @@ import { ConfigContainer } from '../../styles/ConfigContainer';
 import BreadCrumb from '../BreadCrumb';
 import {
   Header, LmsText, Table,
-  FirstHeaderColumn, HeaderColumn, StatusMsgContainer,
-  FirstItemColumn, ItemColumn, DetailText, RowDetail,
-  LoadingContainer
+  FirstHeaderColumn, HeaderColumn,
+  StatusMsgContainer, FirstItemColumn, ItemColumn,
+  RowDetail, LoadingContainer
 } from './styles';
 import Button from '../../styles/Button';
 import MoreIcon from 'react-feather/dist/icons/more-horizontal';
@@ -18,22 +18,24 @@ import { INDICATORS, TRAIN } from '../../constants';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { actions as toastrActions } from 'react-redux-toastr';
+import { Creators as BoxPlotActions } from '../../store/ducks/box_plot';
+import BoxPlot from '../BoxPlot';
 
 class PreProcessing extends Component {
 
   state = {
-    expandedRows: []
+    expandedRow: null
   };
 
   handleRowClick(rowId) {
-    // const currentExpandedRows = this.state.expandedRows;
-    // const isRowCurrentlyExpanded = currentExpandedRows.includes(rowId);
+    const { expandedRow } = this.state;
+    const { path } = this.props.pre_processing;
+    const newExpandedRow = expandedRow !== rowId ? rowId : null;
 
-    // const newExpandedRows = isRowCurrentlyExpanded ?
-    //   currentExpandedRows.filter(name => name !== rowId) :
-    //   currentExpandedRows.concat(rowId);
-
-    // this.setState({ expandedRows: null });
+    if (newExpandedRow) {
+      this.props.getBoxPlot({ path, indicator: rowId });
+    }
+    this.setState({ expandedRow: newExpandedRow });
   }
 
   renderItem(item) {
@@ -61,43 +63,15 @@ class PreProcessing extends Component {
       </tr >
     ];
 
-    if (this.state.expandedRows.includes(item.name)) {
+    if (this.state.expandedRow === item.name) {
       itemRows.push(
         <RowDetail key={"row-expanded-" + item.name}>
-          {/* <FirstItemColumn style={{ paddingTop: '.7rem' }} colSpan={4}>
-            <DetailText><b>HISTOGRAMA</b></DetailText>
-          </FirstItemColumn> */}
-
-          <FirstItemColumn vAlign="top" colSpan={1}>
-          </FirstItemColumn>
-
-          <ItemColumn colSpan={3}>
-            <DetailText><b>MÉDIA: </b>0.6</DetailText>
-            <DetailText style={{ paddingTop: '.5vh' }}><b>MEDIANA: </b>1.6</DetailText>
-            <DetailText style={{ paddingTop: '.5vh' }}><b>DESVIO PADRÃO: </b>0.25</DetailText>
-            <DetailText style={{ paddingTop: '.5vh' }}><b>QUARTILE: </b>0.25</DetailText>
-
-            <DetailText style={{ paddingTop: '1rem', fontSize: '13px' }}>Q1: Menor ou igual à 25%</DetailText>
-            <DetailText style={{ fontSize: '13px' }}>Q2: Entre 25.1% e 50% (até a mediana)</DetailText>
-            <DetailText style={{ fontSize: '13px' }}>Q3: 51% à 75% (acima da mediana)</DetailText>
-            <DetailText style={{ fontSize: '13px' }}>Q4: Acima de 75%</DetailText>
-          </ItemColumn>
-
-          <ItemColumn vAlign="top" colSpan={1}>
-            <DetailText><b>MIN: </b>0.02</DetailText>
-            <DetailText style={{ paddingTop: '.5vh' }}><b>MÁX: </b>1.02</DetailText>
-          </ItemColumn>
-
-          <ItemColumn colSpan={7}>
-            <DetailText><b>ANOMALIAS: </b></DetailText>
-            <DetailText>- Coluna com dados nulo</DetailText>
-          </ItemColumn>
-
-          <ItemColumn colSpan={1}>
-            <Button>PRÉ-PROCESSAR</Button>
-          </ItemColumn>
-
-        </RowDetail >
+          <td colSpan={Object.keys(item).length}>
+            <div style={{ 'display': 'flex', justifyContent: 'center', alignItems: 'center' }}>
+              <BoxPlot name={item.description} />
+            </div>
+          </td>
+        </RowDetail>
       );
     }
 
@@ -105,7 +79,7 @@ class PreProcessing extends Component {
   }
 
   submit = () => {
-    const { data } = this.props.indicator_metadata;
+    const { data } = this.props.pre_processing;
     const itemsMissing = data.filter(item => item.missing);
 
     if (itemsMissing.length) {
@@ -130,7 +104,7 @@ class PreProcessing extends Component {
   }
 
   render() {
-    const { data, loading, error } = this.props.indicator_metadata;
+    const { data, loading, error } = this.props.pre_processing;
 
     return (
       <PerfectScrollbar style={{ width: '100%' }}>
@@ -194,8 +168,8 @@ class PreProcessing extends Component {
   }
 }
 
-const mapStateToProps = ({ indicator_metadata, indicator }) => ({ indicator_metadata, indicator });
+const mapStateToProps = ({ pre_processing, indicator }) => ({ pre_processing, indicator });
 
 export default connect(
-  mapStateToProps, { ...ScreenActions, ...toastrActions }
+  mapStateToProps, { ...ScreenActions, ...toastrActions, ...BoxPlotActions }
 )(PreProcessing);

@@ -104,7 +104,6 @@ export const RowDetail = styled.tr`
   background-color: #F3F3F3;
   width: 100%;
   height: 20vh;
-  padding-left: 2rem;
 
   > td {
     vertical-align: top;

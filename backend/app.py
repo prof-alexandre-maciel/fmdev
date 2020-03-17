@@ -4,7 +4,7 @@ from resources.Lms import LmsResource
 from resources.Login import Login
 from resources.Subject import Subject
 from resources.Course import Course
-from resources.Boxplot import Boxplot
+from resources.BoxPlot import BoxPlot
 from resources.Register import Register
 from resources.Semester import Semester
 from resources.Indicator import Indicator
@@ -22,4 +22,4 @@ api.add_resource(Course, '/course')
 api.add_resource(Semester, '/semester')
 api.add_resource(Indicator, '/indicator')
 api.add_resource(PreProcessing, '/pre-processing')
-api.add_resource(Boxplot, '/boxplot')
+api.add_resource(BoxPlot, '/box-plot')

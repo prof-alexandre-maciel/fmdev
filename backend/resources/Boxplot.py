@@ -5,7 +5,7 @@ from flask import request
 from flask_restful import Resource
 
 
-class Boxplot(Resource):
+class BoxPlot(Resource):
 
     def get_csv_data(self, path, indicator):
         res = {'status': 'success'}
