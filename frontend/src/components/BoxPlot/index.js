@@ -38,6 +38,7 @@ class BoxPlot extends Component {
       name,
       y: data,
       type: 'box',
+      marker: { color: primaryColor },
     };
 
     return (
