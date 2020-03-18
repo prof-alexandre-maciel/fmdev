@@ -24,28 +24,39 @@ class BoxPlot extends Component {
     <CenterContainer>Sem detalhes para este indicador</CenterContainer>
   )
 
-  render() {
+  getTrace = () => {
     let trace = {};
     const { name } = this.props;
-    const { error, loading, data } = this.props.box_plot;
+    const { data, chartType } = this.props.box_plot;
+
+    if (chartType === 'box') {
+      trace.y = data;
+    }
+
+    if (chartType === 'histogram') {
+      trace.x = data;
+    }
+
+    trace.name = name;
+    trace.marker = { color: primaryColor };
+    trace.type = chartType;
+
+    return [trace];
+  }
+
+  render() {
+    const { error, loading, data, chartType } = this.props.box_plot;
 
     if (error && !loading) return this.renderError();
     if (loading) return this.renderLoading();
 
     if (!data.length) return this.renderEmptyState();
 
-    trace = {
-      name,
-      y: data,
-      type: 'box',
-      marker: { color: primaryColor },
-    };
-
     return (
       <Plot
         useResizeHandler={true}
         style={{ width: '100%', height: '50vh' }}
-        data={[trace]}
+        data={this.getTrace()}
         config={{
           displaylogo: false,
           displayModeBar: false,
@@ -53,7 +64,7 @@ class BoxPlot extends Component {
           editable: false
         }}
         layout={{
-          title: 'Box Plot',
+          title: chartType === 'box' ? 'Box Plot' : 'Histograma',
           margin: {
             l: 100,
             r: 100,

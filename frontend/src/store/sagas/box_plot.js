@@ -11,7 +11,7 @@ export function* getBoxPlot({ filter }) {
     yield put(Creators.boxPlotRequest());
     response = yield call(api.post, 'box-plot', filter);
 
-    yield put(Creators.boxPlotSuccess(response.data));
+    yield put(Creators.boxPlotSuccess(response.data, filter.chartType));
   } catch (err) {
     yield put(Creators.boxPlotError({ err }));
     yield put(toastrActions.add({

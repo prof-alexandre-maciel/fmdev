@@ -7,7 +7,7 @@ export const { Types, Creators } = createActions({
   boxPlotInit: [],
   boxPlotRequest: [],
   getBoxPlot: ['filter'],
-  boxPlotSuccess: ['data'],
+  boxPlotSuccess: ['data', 'chartType'],
   boxPlotError: ['err']
 });
 
@@ -15,6 +15,7 @@ export const { Types, Creators } = createActions({
 
 export const INITIAL_STATE = Immutable({
   data: {},
+  chartType: null,
   loading: false,
   error: false
 });
@@ -25,7 +26,7 @@ export const init = state => state.merge({ ...INITIAL_STATE });
 
 export const request = state => state.merge({ loading: true });
 
-export const success = (state, { data }) => state.merge({ data, error: false, loading: false });
+export const success = (state, { data, chartType }) => state.merge({ data, chartType, error: false, loading: false });
 
 export const error = state => state.merge({ loading: false, error: true });
 

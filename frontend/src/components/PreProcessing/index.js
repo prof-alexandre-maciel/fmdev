@@ -31,13 +31,10 @@ class PreProcessing extends Component {
     const { expandedRow } = this.state;
     const { path } = this.props.pre_processing;
     const newExpandedRow = expandedRow !== item.name ? item.name : null;
+    const chartType = item.type === 'Categórico' ? 'histogram' : 'box';
 
     if (newExpandedRow) {
-      if (item.type === 'Categórico') {
-        this.props.boxPlotInit();
-      } else {
-        this.props.getBoxPlot({ path, indicator: item.name });
-      }
+      this.props.getBoxPlot({ path, indicator: item.name, chartType });
     }
 
     this.setState({ expandedRow: newExpandedRow });
