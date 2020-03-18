@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import { ConfigContainer } from '../../styles/ConfigContainer';
 import BreadCrumb from '../BreadCrumb';
 import {
-  Header, LmsText, Table,
-  FirstHeaderColumn, HeaderColumn,
+  Header, LmsText, Table, HeaderColumn,
   StatusMsgContainer, ItemColumn,
   RowDetail, LoadingContainer
 } from './styles';
@@ -20,13 +19,24 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { actions as toastrActions } from 'react-redux-toastr';
 import { Creators as ChartActions } from '../../store/ducks/chart';
 import Chart from '../Chart';
+import { Menu } from 'primereact/menu';
 
 export const ItemColumnWrapper = onClick => ({ ...props }) => <ItemColumn onClick={onClick} {...props} />
 
 class PreProcessing extends Component {
 
   state = {
-    expandedRow: null
+    expandedRow: null,
+    tableActions: [
+      {
+        label: 'Preencher Com:',
+        items: [
+          { label: 'Média', command: () => { } },
+          { label: 'Mediana', command: () => { } },
+          { label: 'Mais Frequente', command: () => { } },
+          { label: 'Constante', command: () => { } },
+        ]
+      }]
   };
 
   handleRowClick(item) {
@@ -42,7 +52,26 @@ class PreProcessing extends Component {
     this.setState({ expandedRow: newExpandedRow });
   }
 
+  onClickTableMenu = (itemClicked, event) => {
+    let newItems = [];
+    let { tableActions } = this.state;
+
+    tableActions[0].items.forEach(item => {
+      let newItem = item;
+
+      if (itemClicked.missing) {
+        newItem.disabled = true;
+      }
+      newItems.push(newItems);
+    });
+
+    tableActions[0].items = newItems;
+
+    this.setState({ tableActions }, () => this.menu.toggle(event));
+  }
+
   renderItem(item) {
+    const { tableActions } = this.state;
     const { targetSelected } = this.props.indicator;
     const isTarget = targetSelected && targetSelected.value === item.name ? true : false;
     const ItemColumnWrapped = ItemColumnWrapper(this.handleRowClick.bind(this, item));
@@ -64,7 +93,8 @@ class PreProcessing extends Component {
         <ItemColumnWrapped align="right">{item.min}</ItemColumnWrapped>
         <ItemColumnWrapped align="right">{item.max}</ItemColumnWrapped>
 
-        <ItemColumn style={{ display: 'flex', justifyContent: 'center' }}><MoreIcon /></ItemColumn>
+        <Menu model={tableActions} popup={true} ref={el => this.menu = el} id="popup_menu" />
+        <ItemColumn onClick={(event) => this.onClickTableMenu(item, event)} style={{ display: 'flex', justifyContent: 'center' }}><MoreIcon /></ItemColumn>
       </tr >
     ];
 

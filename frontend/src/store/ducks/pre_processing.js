@@ -82,7 +82,7 @@ const INITIAL_STATE = Immutable({
     "name": "desempenho_binario",
     "description": "DESEMPENHO_BINARIO",
     "type": "Discreto",
-    "missing": 0,
+    "missing": 2,
     "unique": 2,
     "count": 2892,
     "mean": 0.42,
