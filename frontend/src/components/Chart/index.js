@@ -8,7 +8,7 @@ import { primaryColor } from '../../styles/global';
 
 const Plot = createPlotlyComponent(Plotly);
 
-class BoxPlot extends Component {
+class Chart extends Component {
 
   renderLoading = () => (
     <CenterContainer color={primaryColor}>
@@ -27,7 +27,7 @@ class BoxPlot extends Component {
   getTrace = () => {
     let trace = {};
     const { name } = this.props;
-    const { data, chartType } = this.props.box_plot;
+    const { data, chartType } = this.props.chart;
 
     if (chartType === 'box') {
       trace.y = data;
@@ -45,7 +45,7 @@ class BoxPlot extends Component {
   }
 
   render() {
-    const { error, loading, data, chartType } = this.props.box_plot;
+    const { error, loading, data, chartType } = this.props.chart;
 
     if (error && !loading) return this.renderError();
     if (loading) return this.renderLoading();
@@ -84,8 +84,8 @@ class BoxPlot extends Component {
   }
 }
 
-const mapStateToProps = ({ box_plot }) => ({ box_plot });
+const mapStateToProps = ({ chart }) => ({ chart });
 
 export default connect(
   mapStateToProps, null
-)(BoxPlot);
+)(Chart);

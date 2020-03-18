@@ -1,24 +1,25 @@
 import { all, takeLatest } from 'redux-saga/effects';
-import { Types as AuthTypes } from '../ducks/auth';
 import { Types as LmsTypes } from '../ducks/lms';
+import { Types as AuthTypes } from '../ducks/auth';
+import { Types as ChartTypes } from '../ducks/chart';
 import { Types as CourseTypes } from '../ducks/course';
 import { Types as SubjectTypes } from '../ducks/subject';
 import { Types as SemesterTypes } from '../ducks/semester';
 import { Types as IndicatorTypes } from '../ducks/indicator';
 import { Types as IndicatorMetadataTypes } from '../ducks/pre_processing';
-import { Types as BoxPlotTypes } from '../ducks/box_plot';
 
-import { signInRequest, signOutRequest } from './auth';
+import { getChart } from './chart';
 import { getLms, putLms } from './lms';
 import { getCourses } from './course';
 import { getSubjects } from './subject';
 import { getSemesters } from './semester';
 import { getIndicators } from './indicator';
+import { signInRequest, signOutRequest } from './auth';
 import { getIndicatorMetadata } from './pre_processing';
-import { getBoxPlot } from './box_plot';
 
 export default function* rootSaga() {
   return yield all([
+    takeLatest(ChartTypes.GET_CHART, getChart),
     takeLatest(AuthTypes.SIGN_IN_REQUEST, signInRequest),
     takeLatest(AuthTypes.SIGN_OUT_REQUEST, signOutRequest),
     takeLatest(LmsTypes.GET_LMS, getLms),
@@ -28,6 +29,5 @@ export default function* rootSaga() {
     takeLatest(SemesterTypes.GET_SEMESTERS, getSemesters),
     takeLatest(IndicatorTypes.GET_INDICATORS, getIndicators),
     takeLatest(IndicatorMetadataTypes.GET_PRE_PROCESSING, getIndicatorMetadata),
-    takeLatest(BoxPlotTypes.GET_BOX_PLOT, getBoxPlot),
   ])
 }

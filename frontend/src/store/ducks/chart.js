@@ -4,11 +4,11 @@ import Immutable from 'seamless-immutable';
 /* Types & Action Creators */
 
 export const { Types, Creators } = createActions({
-  boxPlotInit: [],
-  boxPlotRequest: [],
-  getBoxPlot: ['filter'],
-  boxPlotSuccess: ['data', 'chartType'],
-  boxPlotError: ['err']
+  chartInit: [],
+  chartRequest: [],
+  getChart: ['filter'],
+  chartSuccess: ['data', 'chartType'],
+  chartError: ['err']
 });
 
 /* Initial State */
@@ -33,8 +33,8 @@ export const error = state => state.merge({ loading: false, error: true });
 /* Reducers to types */
 
 export default createReducer(INITIAL_STATE, {
-  [Types.BOX_PLOT_INIT]: init,
-  [Types.BOX_PLOT_REQUEST]: request,
-  [Types.BOX_PLOT_SUCCESS]: success,
-  [Types.BOX_PLOT_ERROR]: error
+  [Types.CHART_INIT]: init,
+  [Types.CHART_REQUEST]: request,
+  [Types.CHART_SUCCESS]: success,
+  [Types.CHART_ERROR]: error
 });

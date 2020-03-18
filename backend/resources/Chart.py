@@ -5,7 +5,7 @@ from flask import request
 from flask_restful import Resource
 
 
-class BoxPlot(Resource):
+class Chart(Resource):
 
     def get_csv_data(self, path, indicator):
         res = {'status': 'success'}
@@ -34,4 +34,4 @@ class BoxPlot(Resource):
             return res['data'].tolist()
         except:
             traceback.print_exc()
-            return {"msg": "Error on POST Boxplot"}, 500
+            return {"msg": "Error on POST Chart"}, 500

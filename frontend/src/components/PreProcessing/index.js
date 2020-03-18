@@ -18,8 +18,8 @@ import { INDICATORS, TRAIN } from '../../constants';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { actions as toastrActions } from 'react-redux-toastr';
-import { Creators as BoxPlotActions } from '../../store/ducks/box_plot';
-import BoxPlot from '../BoxPlot';
+import { Creators as ChartActions } from '../../store/ducks/chart';
+import Chart from '../Chart';
 
 class PreProcessing extends Component {
 
@@ -34,7 +34,7 @@ class PreProcessing extends Component {
     const chartType = item.type === 'Categórico' ? 'histogram' : 'box';
 
     if (newExpandedRow) {
-      this.props.getBoxPlot({ path, indicator: item.name, chartType });
+      this.props.getChart({ path, indicator: item.name, chartType });
     }
 
     this.setState({ expandedRow: newExpandedRow });
@@ -70,7 +70,7 @@ class PreProcessing extends Component {
         <RowDetail key={"row-expanded-" + item.name}>
           <td colSpan={Object.keys(item).length}>
             <div style={{ 'display': 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <BoxPlot name={item.description} />
+              <Chart name={item.description} />
             </div>
           </td>
         </RowDetail>
@@ -173,5 +173,5 @@ class PreProcessing extends Component {
 const mapStateToProps = ({ pre_processing, indicator }) => ({ pre_processing, indicator });
 
 export default connect(
-  mapStateToProps, { ...ScreenActions, ...toastrActions, ...BoxPlotActions }
+  mapStateToProps, { ...ScreenActions, ...toastrActions, ...ChartActions }
 )(PreProcessing);
