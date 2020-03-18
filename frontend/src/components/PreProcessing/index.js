@@ -45,24 +45,24 @@ class PreProcessing extends Component {
   renderItem(item) {
     const { targetSelected } = this.props.indicator;
     const isTarget = targetSelected && targetSelected.value === item.name ? true : false;
-    const ItemColumnWrappered = ItemColumnWrapper(this.handleRowClick.bind(this, item));
+    const ItemColumnWrapped = ItemColumnWrapper(this.handleRowClick.bind(this, item));
 
     const itemRows = [
       <tr key={"row-data-" + item.name}>
-        <ItemColumnWrappered style={{ paddingLeft: '2rem' }}>{item.description}</ItemColumnWrappered>
-        <ItemColumnWrappered title={item.missing ? `Qtd. Dados Faltantes: ${item.missing}` : null}>
+        <ItemColumnWrapped style={{ paddingLeft: '2rem' }}>{item.description}</ItemColumnWrapped>
+        <ItemColumnWrapped title={item.missing ? `Qtd. Dados Faltantes: ${item.missing}` : null}>
           {item.missing ? <AlertIcon size={20} color="#FFF" fill="#A87878" /> : null}
-        </ItemColumnWrappered>
-        <ItemColumnWrappered>{isTarget ? <TargetIcon size={20} color="#DEB981" /> : null}</ItemColumnWrappered>
-        <ItemColumnWrappered>{item.corr ? <Progress value={item.corr} /> : isTarget ? <b>Alvo</b> : 'N/A'}</ItemColumnWrappered>
-        <ItemColumnWrappered>{item.type}</ItemColumnWrappered>
-        <ItemColumnWrappered align="right">{item.unique}</ItemColumnWrappered>
-        <ItemColumnWrappered align="right">{item.missing}</ItemColumnWrappered>
+        </ItemColumnWrapped>
+        <ItemColumnWrapped>{isTarget ? <TargetIcon size={20} color="#DEB981" /> : null}</ItemColumnWrapped>
+        <ItemColumnWrapped>{item.corr ? <Progress value={item.corr} /> : isTarget ? <b>Alvo</b> : 'N/A'}</ItemColumnWrapped>
+        <ItemColumnWrapped>{item.type}</ItemColumnWrapped>
+        <ItemColumnWrapped align="right">{item.unique}</ItemColumnWrapped>
+        <ItemColumnWrapped align="right">{item.missing}</ItemColumnWrapped>
 
-        <ItemColumnWrappered align="right">{item.mean}</ItemColumnWrappered>
-        <ItemColumnWrappered align="right">{item.std}</ItemColumnWrappered>
-        <ItemColumnWrappered align="right">{item.min}</ItemColumnWrappered>
-        <ItemColumnWrappered align="right">{item.max}</ItemColumnWrappered>
+        <ItemColumnWrapped align="right">{item.mean}</ItemColumnWrapped>
+        <ItemColumnWrapped align="right">{item.std}</ItemColumnWrapped>
+        <ItemColumnWrapped align="right">{item.min}</ItemColumnWrapped>
+        <ItemColumnWrapped align="right">{item.max}</ItemColumnWrapped>
 
         <ItemColumn style={{ display: 'flex', justifyContent: 'center' }}><MoreIcon /></ItemColumn>
       </tr >
