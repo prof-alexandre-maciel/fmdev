@@ -5,7 +5,7 @@ import BreadCrumb from '../BreadCrumb';
 import {
   Header, LmsText, Table,
   FirstHeaderColumn, HeaderColumn,
-  StatusMsgContainer, FirstItemColumn, ItemColumn,
+  StatusMsgContainer, ItemColumn,
   RowDetail, LoadingContainer
 } from './styles';
 import Button from '../../styles/Button';
@@ -20,6 +20,8 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { actions as toastrActions } from 'react-redux-toastr';
 import { Creators as ChartActions } from '../../store/ducks/chart';
 import Chart from '../Chart';
+
+export const ItemColumnWrapper = onClick => ({ ...props }) => <ItemColumn onClick={onClick} {...props} />
 
 class PreProcessing extends Component {
 
@@ -43,23 +45,24 @@ class PreProcessing extends Component {
   renderItem(item) {
     const { targetSelected } = this.props.indicator;
     const isTarget = targetSelected && targetSelected.value === item.name ? true : false;
+    const ItemColumnWrappered = ItemColumnWrapper(this.handleRowClick.bind(this, item));
 
     const itemRows = [
-      <tr onClick={this.handleRowClick.bind(this, item)} key={"row-data-" + item.name}>
-        <FirstItemColumn>{item.description}</FirstItemColumn>
-        <ItemColumn title={item.missing ? `Qtd. Dados Faltantes: ${item.missing}` : null}>
+      <tr key={"row-data-" + item.name}>
+        <ItemColumnWrappered style={{ paddingLeft: '2rem' }}>{item.description}</ItemColumnWrappered>
+        <ItemColumnWrappered title={item.missing ? `Qtd. Dados Faltantes: ${item.missing}` : null}>
           {item.missing ? <AlertIcon size={20} color="#FFF" fill="#A87878" /> : null}
-        </ItemColumn>
-        <ItemColumn>{isTarget ? <TargetIcon size={20} color="#DEB981" /> : null}</ItemColumn>
-        <ItemColumn>{item.corr ? <Progress value={item.corr} /> : isTarget ? <b>Alvo</b> : 'N/A'}</ItemColumn>
-        <ItemColumn>{item.type}</ItemColumn>
-        <ItemColumn align="right">{item.unique}</ItemColumn>
-        <ItemColumn align="right">{item.missing}</ItemColumn>
+        </ItemColumnWrappered>
+        <ItemColumnWrappered>{isTarget ? <TargetIcon size={20} color="#DEB981" /> : null}</ItemColumnWrappered>
+        <ItemColumnWrappered>{item.corr ? <Progress value={item.corr} /> : isTarget ? <b>Alvo</b> : 'N/A'}</ItemColumnWrappered>
+        <ItemColumnWrappered>{item.type}</ItemColumnWrappered>
+        <ItemColumnWrappered align="right">{item.unique}</ItemColumnWrappered>
+        <ItemColumnWrappered align="right">{item.missing}</ItemColumnWrappered>
 
-        <ItemColumn align="right">{item.mean}</ItemColumn>
-        <ItemColumn align="right">{item.std}</ItemColumn>
-        <ItemColumn align="right">{item.min}</ItemColumn>
-        <ItemColumn align="right">{item.max}</ItemColumn>
+        <ItemColumnWrappered align="right">{item.mean}</ItemColumnWrappered>
+        <ItemColumnWrappered align="right">{item.std}</ItemColumnWrappered>
+        <ItemColumnWrappered align="right">{item.min}</ItemColumnWrappered>
+        <ItemColumnWrappered align="right">{item.max}</ItemColumnWrappered>
 
         <ItemColumn style={{ display: 'flex', justifyContent: 'center' }}><MoreIcon /></ItemColumn>
       </tr >
@@ -143,7 +146,7 @@ class PreProcessing extends Component {
             <Table>
               <thead>
                 <tr>
-                  <FirstHeaderColumn>Indicador</FirstHeaderColumn>
+                  <HeaderColumn style={{ paddingLeft: '2rem' }}>Indicador</HeaderColumn>
                   <HeaderColumn>&nbsp;</HeaderColumn>
                   <HeaderColumn>&nbsp;</HeaderColumn>
                   <HeaderColumn>Correlação</HeaderColumn>

@@ -60,27 +60,9 @@ export const Table = styled.table`
   }
 `;
 
-export const FirstHeaderColumn = styled.td`
-  padding: .7rem;
-  padding-left: 2rem;
-  font-weight: bold;
-
-  ${props => props.align && css`
-    text-align: ${props.align};
-  `}
-`;
-
 export const HeaderColumn = styled.td`
   padding: .7rem;
   font-weight: bold;
-
-  ${props => props.align && css`
-    text-align: ${props.align};
-  `}
-`;
-
-export const FirstItemColumn = styled.td`
-  padding-left: 2rem;
 
   ${props => props.align && css`
     text-align: ${props.align};
