@@ -9,10 +9,11 @@ import 'primeicons/primeicons.css';
 
 export const primaryColor = '#4A5173';
 const secondaryColor = '#000';
+export const terciaryColor = '#DEB981';
 
 loadTheme({
   palette: {
-    themePrimary: '#DEB981',
+    themePrimary: terciaryColor,
     themeLighterAlt: '#eff6fc',
     themeLighter: '#deecf9',
     themeLight: '#c7e0f4',
@@ -74,6 +75,11 @@ export default createGlobalStyle`
   .p-picklist .p-picklist-list .p-picklist-item.p-highlight {
     background-color: #4A5173 !important;
     border-color: #4A5173 !important;
+  }
+
+  .MuiList-padding {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
   }
 `;
 

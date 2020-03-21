@@ -13,7 +13,7 @@ class PreProcessing(Resource):
         correlation_items = {}
         payload = request.get_json()
 
-        target_col_name = 'desempenho'
+        target_col_name = payload['target']
 
         for col in df:
             try:

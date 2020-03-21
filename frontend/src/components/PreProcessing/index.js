@@ -19,24 +19,16 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 import { actions as toastrActions } from 'react-redux-toastr';
 import { Creators as ChartActions } from '../../store/ducks/chart';
 import Chart from '../Chart';
-import { Menu } from 'primereact/menu';
+import { Menu, MenuItem } from '@material-ui/core';
+import { terciaryColor } from '../../styles/global';
 
 export const ItemColumnWrapper = onClick => ({ ...props }) => <ItemColumn onClick={onClick} {...props} />
 
 class PreProcessing extends Component {
 
   state = {
-    expandedRow: null,
-    tableActions: [
-      {
-        label: 'Preencher Com:',
-        items: [
-          { label: 'Média', command: () => { } },
-          { label: 'Mediana', command: () => { } },
-          { label: 'Mais Frequente', command: () => { } },
-          { label: 'Constante', command: () => { } },
-        ]
-      }]
+    anchorEl: null,
+    expandedRow: null
   };
 
   handleRowClick(item) {
@@ -52,26 +44,54 @@ class PreProcessing extends Component {
     this.setState({ expandedRow: newExpandedRow });
   }
 
-  onClickTableMenu = (itemClicked, event) => {
-    let newItems = [];
-    let { tableActions } = this.state;
+  handleMenuItemClose = () => this.setState({ anchorEl: null });
 
-    tableActions[0].items.forEach(item => {
-      let newItem = item;
+  executePreProcessing = (action) => {
+    console.log(action);
+  }
 
-      if (itemClicked.missing) {
-        newItem.disabled = true;
-      }
-      newItems.push(newItems);
-    });
+  handleMenuItemClick = (preProcessingAction, event) => {
+    this.handleMenuItemClose();
+    this.executePreProcessing(preProcessingAction);
+  };
 
-    tableActions[0].items = newItems;
+  handleClickListItem = (event) => {
+    this.setState({ anchorEl: event.currentTarget });
+  };
 
-    this.setState({ tableActions }, () => this.menu.toggle(event));
+  renderMenuActions = () => {
+    const { anchorEl } = this.state;
+    const actions = {
+      header: 'Prencher Com',
+      items: [
+        { label: 'Média', pre_processing_action: 'mean' },
+      ]
+    };
+
+    return (
+      <Menu
+        style={{ padding: 0 }}
+        id="fade-menu"
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={this.handleMenuItemClose}
+      >
+        <MenuItem style={{ fontWeight: 'bold', color: '#FFF', backgroundColor: terciaryColor }}>{actions.header}</MenuItem>
+        {actions.items.map((option, index) => (
+          <MenuItem
+            key={index}
+            selected={false}
+            onClick={this.handleMenuItemClick.bind(this, option.pre_processing_action)}
+          >
+            {option.label}
+          </MenuItem>
+        ))}
+      </Menu>
+    )
   }
 
   renderItem(item) {
-    const { tableActions } = this.state;
     const { targetSelected } = this.props.indicator;
     const isTarget = targetSelected && targetSelected.value === item.name ? true : false;
     const ItemColumnWrapped = ItemColumnWrapper(this.handleRowClick.bind(this, item));
@@ -93,8 +113,7 @@ class PreProcessing extends Component {
         <ItemColumnWrapped align="right">{item.min}</ItemColumnWrapped>
         <ItemColumnWrapped align="right">{item.max}</ItemColumnWrapped>
 
-        <Menu model={tableActions} popup={true} ref={el => this.menu = el} id="popup_menu" />
-        <ItemColumn onClick={(event) => this.onClickTableMenu(item, event)} style={{ display: 'flex', justifyContent: 'center' }}><MoreIcon /></ItemColumn>
+        <ItemColumn onClick={item.missing ? this.handleClickListItem.bind(this) : null} style={{ display: 'flex', justifyContent: 'center' }}>{item.missing ? <MoreIcon /> : null}</ItemColumn>
       </tr >
     ];
 
@@ -198,6 +217,7 @@ class PreProcessing extends Component {
             : null}
 
         </ConfigContainer >
+        {this.renderMenuActions()}
       </PerfectScrollbar>
     )
   }
