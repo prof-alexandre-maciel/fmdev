@@ -30,17 +30,16 @@ export const Card = styled.div`
   justify-content: space-between;
   flex-direction: column;
   width: 10vw;
-  height: 10vh;
-
   color: #000;
   height: 20vh;
 `;
 
 export const CardVersion = styled.span`
     font-weight: 300;
-    font-size: .8rem;
-    line-height: 1vh;
+    font-size: .7rem;
+    padding-top: 3vh;
     color: #000000;
+    text-align: center;
 
     ${props => props.disabled === true && css`
       mix-blend-mode: luminosity;

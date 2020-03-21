@@ -62,7 +62,7 @@ class PreProcessing extends Component {
   renderMenuActions = () => {
     const { anchorEl } = this.state;
     const actions = {
-      header: 'Prencher Com',
+      header: 'Prencher com',
       items: [
         { label: 'Média', pre_processing_action: 'mean' },
       ]
@@ -70,14 +70,14 @@ class PreProcessing extends Component {
 
     return (
       <Menu
-        style={{ padding: 0 }}
-        id="fade-menu"
+        style={{ list: { paddingTop: 0, paddingBottom: 0 } }}
+        id="lock-menu"
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
         onClose={this.handleMenuItemClose}
       >
-        <MenuItem style={{ fontWeight: 'bold', color: '#FFF', backgroundColor: terciaryColor }}>{actions.header}</MenuItem>
+        <MenuItem style={{ color: '#FFF', backgroundColor: terciaryColor }}>{actions.header}</MenuItem>
         {actions.items.map((option, index) => (
           <MenuItem
             key={index}
@@ -161,7 +161,7 @@ class PreProcessing extends Component {
     const { data, loading, error } = this.props.pre_processing;
 
     return (
-      <PerfectScrollbar style={{ width: '100%' }}>
+      <PerfectScrollbar style={{ width: '100%', overflowX: 'auto' }}>
         <ConfigContainer size='big'>
 
           <BreadCrumb text='Voltar para Seleção de indicadores' destiny={INDICATORS} />
@@ -192,28 +192,30 @@ class PreProcessing extends Component {
             : null}
 
           {data.length && !loading && !error ?
-            <Table>
-              <thead>
-                <tr>
-                  <HeaderColumn style={{ paddingLeft: '2rem' }}>Indicador</HeaderColumn>
-                  <HeaderColumn>&nbsp;</HeaderColumn>
-                  <HeaderColumn>&nbsp;</HeaderColumn>
-                  <HeaderColumn>Correlação</HeaderColumn>
-                  <HeaderColumn>Tipo</HeaderColumn>
-                  <HeaderColumn align="right">Qtd. Único</HeaderColumn>
-                  <HeaderColumn align="right">Qtd. Faltante</HeaderColumn>
-                  <HeaderColumn align="right" >Média</HeaderColumn>
-                  <HeaderColumn align="right">Desvio Padrão</HeaderColumn>
-                  <HeaderColumn align="right">Mínimo</HeaderColumn>
-                  <HeaderColumn align="right">Máximo</HeaderColumn>
-                  <HeaderColumn style={{ display: 'flex', justifyContent: 'center' }}>Ações</HeaderColumn>
-                </tr>
-              </thead>
+            <div style={{ overflowX: 'auto' }}>
+              <Table>
+                <thead>
+                  <tr>
+                    <HeaderColumn style={{ paddingLeft: '2rem' }}>Indicador</HeaderColumn>
+                    <HeaderColumn>&nbsp;</HeaderColumn>
+                    <HeaderColumn>&nbsp;</HeaderColumn>
+                    <HeaderColumn>Correlação</HeaderColumn>
+                    <HeaderColumn>Tipo</HeaderColumn>
+                    <HeaderColumn align="right">Qtd. Único</HeaderColumn>
+                    <HeaderColumn align="right">Qtd. Faltante</HeaderColumn>
+                    <HeaderColumn align="right" >Média</HeaderColumn>
+                    <HeaderColumn align="right">Desvio Padrão</HeaderColumn>
+                    <HeaderColumn align="right">Mínimo</HeaderColumn>
+                    <HeaderColumn align="right">Máximo</HeaderColumn>
+                    <HeaderColumn style={{ display: 'flex', justifyContent: 'center' }}>Ações</HeaderColumn>
+                  </tr>
+                </thead>
 
-              <tbody>
-                {data.map(item => this.renderItem(item))}
-              </tbody>
-            </Table>
+                <tbody>
+                  {data.map(item => this.renderItem(item))}
+                </tbody>
+              </Table>
+            </div>
             : null}
 
         </ConfigContainer >
