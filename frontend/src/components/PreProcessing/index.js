@@ -15,18 +15,21 @@ import Progress from '../Progress';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { INDICATORS, TRAIN } from '../../constants';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
+import { Creators as DialogActions } from '../../store/ducks/dialog';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { actions as toastrActions } from 'react-redux-toastr';
 import { Creators as ChartActions } from '../../store/ducks/chart';
 import Chart from '../Chart';
 import { Menu, MenuItem } from '@material-ui/core';
 import { terciaryColor } from '../../styles/global';
+import PreProcessingDialog from '../PreProcessingDialog';
 
 export const ItemColumnWrapper = onClick => ({ ...props }) => <ItemColumn onClick={onClick} {...props} />
 
 class PreProcessing extends Component {
 
   state = {
+    indicatorSelected: null,
     anchorEl: null,
     expandedRow: null
   };
@@ -52,21 +55,29 @@ class PreProcessing extends Component {
 
   handleMenuItemClick = (preProcessingAction, event) => {
     this.handleMenuItemClose();
+
+    if (preProcessingAction === 'constant') {
+      this.props.setDialog('preProcessingConstant');
+      return;
+    }
     this.executePreProcessing(preProcessingAction);
   };
 
-  handleClickListItem = (event) => {
-    this.setState({ anchorEl: event.currentTarget });
+  handleClickListItem = (item, event) => {
+    this.setState({ anchorEl: event.currentTarget, indicatorSelected: item });
   };
 
   renderMenuActions = () => {
-    const { anchorEl } = this.state;
-    const actions = {
-      header: 'Prencher com',
-      items: [
-        { label: 'Média', pre_processing_action: 'mean' },
-      ]
-    };
+    let actions = [];
+    const { anchorEl, indicatorSelected } = this.state;
+
+    if (indicatorSelected && indicatorSelected.type === 'Discreto') {
+      actions.push({ label: 'Média', pre_processing_action: 'mean' });
+      actions.push({ label: 'Mediana', pre_processing_action: 'median' });
+    }
+
+    actions.push({ label: 'Valor mais frequente', pre_processing_action: 'most_frequent' });
+    actions.push({ label: 'Valor constante', pre_processing_action: 'constant' });
 
     return (
       <Menu
@@ -77,8 +88,8 @@ class PreProcessing extends Component {
         open={Boolean(anchorEl)}
         onClose={this.handleMenuItemClose}
       >
-        <MenuItem style={{ color: '#FFF', backgroundColor: terciaryColor }}>{actions.header}</MenuItem>
-        {actions.items.map((option, index) => (
+        <MenuItem style={{ color: '#FFF', backgroundColor: terciaryColor }}>Prencher com</MenuItem>
+        {actions.map((option, index) => (
           <MenuItem
             key={index}
             selected={false}
@@ -113,7 +124,7 @@ class PreProcessing extends Component {
         <ItemColumnWrapped align="right">{item.min}</ItemColumnWrapped>
         <ItemColumnWrapped align="right">{item.max}</ItemColumnWrapped>
 
-        <ItemColumn onClick={item.missing ? this.handleClickListItem.bind(this) : null} style={{ display: 'flex', justifyContent: 'center' }}>{item.missing ? <MoreIcon /> : null}</ItemColumn>
+        <ItemColumn onClick={item.missing ? this.handleClickListItem.bind(this, item.type) : null} style={{ display: 'flex', justifyContent: 'center' }}>{item.missing ? <MoreIcon /> : null}</ItemColumn>
       </tr >
     ];
 
@@ -220,6 +231,7 @@ class PreProcessing extends Component {
 
         </ConfigContainer >
         {this.renderMenuActions()}
+        <PreProcessingDialog />
       </PerfectScrollbar>
     )
   }
@@ -228,5 +240,5 @@ class PreProcessing extends Component {
 const mapStateToProps = ({ pre_processing, indicator }) => ({ pre_processing, indicator });
 
 export default connect(
-  mapStateToProps, { ...ScreenActions, ...toastrActions, ...ChartActions }
+  mapStateToProps, { ...ScreenActions, ...toastrActions, ...ChartActions, ...DialogActions }
 )(PreProcessing);

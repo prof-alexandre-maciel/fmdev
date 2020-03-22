@@ -10,7 +10,8 @@ export const { Types, Creators } = createActions({
 /* Initial State */
 
 export const INITIAL_STATE = Immutable({
-  moodle: false
+  moodle: false,
+  preProcessingConstant: false
 });
 
 /* Reducers */
