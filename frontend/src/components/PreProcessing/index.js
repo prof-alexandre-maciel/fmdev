@@ -54,10 +54,12 @@ class PreProcessing extends Component {
   }
 
   handleMenuItemClick = (preProcessingAction, event) => {
-    this.handleMenuItemClose();
+    const { indicatorSelected } = this.state;
+
+    this.handleMenuItemClose(indicatorSelected);
 
     if (preProcessingAction === 'constant') {
-      this.props.setDialog('preProcessingConstant');
+      this.props.setDialog('preProcessingConstant', indicatorSelected);
       return;
     }
     this.executePreProcessing(preProcessingAction);
@@ -88,7 +90,7 @@ class PreProcessing extends Component {
         open={Boolean(anchorEl)}
         onClose={this.handleMenuItemClose}
       >
-        <MenuItem style={{ color: '#FFF', backgroundColor: terciaryColor }}>Prencher com</MenuItem>
+        <MenuItem style={{ color: '#FFF', backgroundColor: terciaryColor }}>Pré-processar com</MenuItem>
         {actions.map((option, index) => (
           <MenuItem
             key={index}
@@ -124,7 +126,7 @@ class PreProcessing extends Component {
         <ItemColumnWrapped align="right">{item.min}</ItemColumnWrapped>
         <ItemColumnWrapped align="right">{item.max}</ItemColumnWrapped>
 
-        <ItemColumn onClick={item.missing ? this.handleClickListItem.bind(this, item.type) : null} style={{ display: 'flex', justifyContent: 'center' }}>{item.missing ? <MoreIcon /> : null}</ItemColumn>
+        <ItemColumn onClick={item.missing ? this.handleClickListItem.bind(this, item) : null} style={{ display: 'flex', justifyContent: 'center' }}>{item.missing ? <MoreIcon /> : null}</ItemColumn>
       </tr >
     ];
 
@@ -229,7 +231,7 @@ class PreProcessing extends Component {
             </div>
             : null}
 
-        </ConfigContainer >
+        </ConfigContainer>
         {this.renderMenuActions()}
         <PreProcessingDialog />
       </PerfectScrollbar>

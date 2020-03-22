@@ -4,19 +4,20 @@ import Immutable from 'seamless-immutable';
 /* Types & Action Creators */
 
 export const { Types, Creators } = createActions({
-  setDialog: ['field']
+  setDialog: ['field', 'data']
 });
 
 /* Initial State */
 
 export const INITIAL_STATE = Immutable({
+  data: null,
   moodle: false,
-  preProcessingConstant: false
+  preProcessingConstant: true
 });
 
 /* Reducers */
 
-export const set = (state, { field, data }) => state.merge({ [field]: !state[field] });
+export const set = (state, { field, data }) => state.merge({ [field]: !state[field], data: data });
 
 /* Reducers to types */
 
