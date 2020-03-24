@@ -42,13 +42,24 @@ class PreProcessingDialog extends Component {
 
     if (onSubmit) {
       this.onClose();
-      onSubmit({ action: 'constant', constantValue: constant });
+      onSubmit({ strategy: 'constant', constantValue: constant });
     }
+  }
+
+  getInputType = (data) => {
+    let type = "text";
+
+    if (data && data.type === 'Discreto') {
+      type = "number";
+    }
+
+    return type;
   }
 
   render() {
     const { constant } = this.state;
     const { preProcessingConstant, data } = this.props.dialog;
+    const inputType = this.getInputType(data);
 
     if (!preProcessingConstant) {
       return null;
@@ -60,8 +71,9 @@ class PreProcessingDialog extends Component {
           <h1>Pré-processamento</h1>
           <h2>(Indicador: {data && data.description ? `${data.description})` : null}</h2>
 
-          <DialogSpan>Informe a constante</DialogSpan>
+          <DialogSpan>Informe a constante {inputType === 'number' ? '(Apenas números)' : null}</DialogSpan>
           <DialogInput
+            type={inputType}
             value={constant}
             autoComplete="off"
             onChange={this.handleChangeInput}

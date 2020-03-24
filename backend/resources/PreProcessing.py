@@ -1,11 +1,13 @@
 import json
 import uuid
 import traceback
+import numpy as np
 import pandas as pd
 from utils import utils
-from flask import request, current_app
 from scipy.stats import spearmanr
 from flask_restful import Resource
+from flask import request, current_app
+from sklearn.impute import SimpleImputer
 
 
 class PreProcessing(Resource):
@@ -76,7 +78,7 @@ class PreProcessing(Resource):
             group_by = f"GROUP BY {fields}"
 
         query = f"""
-                    SELECT 
+                    SELECT
                         {fields}
                     FROM
                         {payload['lms']}
@@ -100,7 +102,7 @@ class PreProcessing(Resource):
         df.to_csv(path, index=False)
 
         return path
-    
+
     def get_dataframe_from_csv(self):
         payload = request.get_json()
 
@@ -117,6 +119,21 @@ class PreProcessing(Resource):
         else:
             return self.get_dataframe_from_sql()
 
+    def get_df_pre_processed(self, df):
+        payload = request.get_json()
+        fill_value = None
+
+        if 'pre_processing_constant' in payload:
+            fill_value = payload['pre_processing_constant']
+
+        if 'pre_processing_strategy' in payload and 'pre_processing_indicator' in payload:
+            strategy = payload['pre_processing_strategy']
+            indicator = payload['pre_processing_indicator']
+            imp = SimpleImputer(strategy=strategy, fill_value=fill_value)
+            df[[indicator]] = imp.fit_transform(df[[indicator]])
+
+        return df
+
     def post(self):
         try:
             data = []
@@ -124,9 +141,13 @@ class PreProcessing(Resource):
             null_items = {}
             type_items = {}
             unique_items = {}
+            is_processed = False
             correlation_items = {}
 
+            payload = request.get_json()
+
             df = self.get_dataframe()
+            df = self.get_df_pre_processed(df)
             indicators_description = self.get_indicators_description()
 
             correlation_items = self.get_corr(df)
@@ -178,7 +199,10 @@ class PreProcessing(Resource):
 
             path = self.save_file(df)
 
-            return {'data': data, 'path': path }
+            if 'path' in payload and 'pre_processing_strategy' in payload and 'pre_processing_indicator' in payload:
+                is_processed = True
+
+            return {'data': data, 'path': path, 'is_processed': is_processed}
 
         except:
             traceback.print_exc()

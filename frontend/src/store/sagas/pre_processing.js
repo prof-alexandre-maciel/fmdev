@@ -7,6 +7,7 @@ import { actions as toastrActions } from 'react-redux-toastr';
 export function* getIndicatorMetadata({ filter }) {
   try {
     yield put(Creators.preProcessingRequest());
+    yield put(Creators.preProcessingSetFilter(filter));
     const response = yield call(api.post, 'pre-processing', filter);
 
     yield put(Creators.preProcessingSuccess(response.data));

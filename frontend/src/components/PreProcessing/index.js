@@ -23,6 +23,7 @@ import Chart from '../Chart';
 import { Menu, MenuItem } from '@material-ui/core';
 import { terciaryColor } from '../../styles/global';
 import PreProcessingDialog from '../PreProcessingDialog';
+import { Creators as PreProcessingActions } from '../../store/ducks/pre_processing';
 
 export const ItemColumnWrapper = onClick => ({ ...props }) => <ItemColumn onClick={onClick} {...props} />
 
@@ -49,20 +50,32 @@ class PreProcessing extends Component {
 
   handleMenuItemClose = () => this.setState({ anchorEl: null });
 
-  executePreProcessing = ({ action, constantValue }) => {
-    console.log(action, constantValue);
+  executePreProcessing = ({ strategy, constantValue }) => {
+    let newFilter = {};
+    const { indicatorSelected } = this.state;
+    const { filter, path } = this.props.pre_processing;
+
+    newFilter = {
+      ...filter,
+      path,
+      pre_processing_constant: indicatorSelected.type === 'Discreto' ? +constantValue : constantValue,
+      pre_processing_strategy: strategy,
+      pre_processing_indicator: indicatorSelected.name
+    }
+
+    this.props.getPreProcessing(newFilter);
   }
 
-  handleMenuItemClick = (preProcessingAction, event) => {
+  handleMenuItemClick = (strategy, event) => {
     const { indicatorSelected } = this.state;
 
     this.handleMenuItemClose();
 
-    if (preProcessingAction === 'constant') {
+    if (strategy === 'constant') {
       this.props.setDialog('preProcessingConstant', indicatorSelected);
       return;
     }
-    this.executePreProcessing({ action: preProcessingAction });
+    this.executePreProcessing({ strategy });
   };
 
   handleClickListItem = (item, event) => {
@@ -220,7 +233,7 @@ class PreProcessing extends Component {
                     <HeaderColumn align="right">Desvio Padrão</HeaderColumn>
                     <HeaderColumn align="right">Mínimo</HeaderColumn>
                     <HeaderColumn align="right">Máximo</HeaderColumn>
-                    <HeaderColumn style={{ display: 'flex', justifyContent: 'center' }}>Ações</HeaderColumn>
+                    <HeaderColumn>Ações</HeaderColumn>
                   </tr>
                 </thead>
 
@@ -233,7 +246,7 @@ class PreProcessing extends Component {
 
         </ConfigContainer>
         {this.renderMenuActions()}
-        <PreProcessingDialog onSubmit={(action, data) => this.executePreProcessing(action, data)} />
+        <PreProcessingDialog onSubmit={({ strategy, constantValue }) => this.executePreProcessing({ strategy, constantValue })} />
       </PerfectScrollbar>
     )
   }
@@ -242,5 +255,9 @@ class PreProcessing extends Component {
 const mapStateToProps = ({ pre_processing, indicator }) => ({ pre_processing, indicator });
 
 export default connect(
-  mapStateToProps, { ...ScreenActions, ...toastrActions, ...ChartActions, ...DialogActions }
+  mapStateToProps, {
+  ...ScreenActions, ...toastrActions,
+  ...ChartActions, ...DialogActions,
+  ...PreProcessingActions
+}
 )(PreProcessing);
