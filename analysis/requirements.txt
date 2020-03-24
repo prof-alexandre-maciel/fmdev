@@ -26,7 +26,7 @@ dash-table==4.5.1
 decorator==4.4.0
 defusedxml==0.6.0
 distlib==0.3.0
-Django==3.0
+Django==3.0.3
 django-plotly-dash==1.1.3
 docutils==0.15.2
 dpd-components==0.1.0
