@@ -32,12 +32,15 @@ export const DialogForm = styled.form`
 
   h1 {
     font-weight: 500;
-    margin: 0 0 10px;
     font-weight: 800;
     font-size: 18px;
     line-height: 31px;
     letter-spacing: 0.07em;
     justify-content: center;
+  }
+
+  h2 {
+    font-size: 12px;
   }
 
   button {

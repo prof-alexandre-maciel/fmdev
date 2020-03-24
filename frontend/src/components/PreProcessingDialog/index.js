@@ -7,6 +7,7 @@ import { Creators as DialogActions } from '../../store/ducks/dialog';
 import { connect } from 'react-redux';
 import Dialog from '../Dialog';
 import Button from '../../styles/Button';
+import { actions as toastrActions } from 'react-redux-toastr';
 
 class PreProcessingDialog extends Component {
 
@@ -18,12 +19,31 @@ class PreProcessingDialog extends Component {
     this.props.setDialog('preProcessingConstant');
   }
 
+  renderWarningMsg = (msg) => {
+    this.props.add({
+      type: 'warning',
+      title: 'Atenção',
+      message: msg
+    });
+  }
+
   handleChangeInput = e => {
     this.setState({ [e.target.name]: e.target.value });
   }
 
   submit = () => {
+    const { onSubmit } = this.props;
+    const { constant } = this.state;
 
+    if (!constant) {
+      this.renderWarningMsg('Valor da constante não informada!');
+      return;
+    }
+
+    if (onSubmit) {
+      this.onClose();
+      onSubmit({ action: 'constant', constantValue: constant });
+    }
   }
 
   render() {
@@ -38,8 +58,9 @@ class PreProcessingDialog extends Component {
       <Dialog>
         <DialogForm>
           <h1>Pré-processamento</h1>
+          <h2>(Indicador: {data && data.description ? `${data.description})` : null}</h2>
 
-          <DialogSpan>Valor constante</DialogSpan>
+          <DialogSpan>Informe a constante</DialogSpan>
           <DialogInput
             value={constant}
             autoComplete="off"
@@ -61,5 +82,5 @@ class PreProcessingDialog extends Component {
 const mapStateToProps = ({ dialog }) => ({ dialog });
 
 export default connect(
-  mapStateToProps, { ...DialogActions }
+  mapStateToProps, { ...DialogActions, ...toastrActions }
 )(PreProcessingDialog);

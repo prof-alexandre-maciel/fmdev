@@ -49,20 +49,20 @@ class PreProcessing extends Component {
 
   handleMenuItemClose = () => this.setState({ anchorEl: null });
 
-  executePreProcessing = (action) => {
-    console.log(action);
+  executePreProcessing = ({ action, constantValue }) => {
+    console.log(action, constantValue);
   }
 
   handleMenuItemClick = (preProcessingAction, event) => {
     const { indicatorSelected } = this.state;
 
-    this.handleMenuItemClose(indicatorSelected);
+    this.handleMenuItemClose();
 
     if (preProcessingAction === 'constant') {
       this.props.setDialog('preProcessingConstant', indicatorSelected);
       return;
     }
-    this.executePreProcessing(preProcessingAction);
+    this.executePreProcessing({ action: preProcessingAction });
   };
 
   handleClickListItem = (item, event) => {
@@ -233,7 +233,7 @@ class PreProcessing extends Component {
 
         </ConfigContainer>
         {this.renderMenuActions()}
-        <PreProcessingDialog />
+        <PreProcessingDialog onSubmit={(action, data) => this.executePreProcessing(action, data)} />
       </PerfectScrollbar>
     )
   }
