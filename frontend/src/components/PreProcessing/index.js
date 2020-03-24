@@ -24,6 +24,7 @@ import { Menu, MenuItem } from '@material-ui/core';
 import { terciaryColor } from '../../styles/global';
 import PreProcessingDialog from '../PreProcessingDialog';
 import { Creators as PreProcessingActions } from '../../store/ducks/pre_processing';
+import AlertDialog from '../AlertDialog';
 
 export const ItemColumnWrapper = onClick => ({ ...props }) => <ItemColumn onClick={onClick} {...props} />
 
@@ -183,6 +184,24 @@ class PreProcessing extends Component {
     });
   }
 
+  checkIsPreProcessed = () => {
+    const { is_processed } = this.props.pre_processing;
+
+    if (is_processed) {
+      this.props.setDialog('alert', {
+        description: 'Os dados pré-processados serão perdidos. Deseja continuar?'
+      });
+      return;
+    }
+
+    this.props.setScreen(INDICATORS);
+  }
+
+  initPreProcessing = () => {
+    this.props.preProcessingInit();
+    this.props.setScreen(INDICATORS);
+  }
+
   render() {
     const { data, loading, error } = this.props.pre_processing;
 
@@ -190,7 +209,11 @@ class PreProcessing extends Component {
       <PerfectScrollbar style={{ width: '100%', overflowX: 'auto' }}>
         <ConfigContainer size='big'>
 
-          <BreadCrumb text='Voltar para Seleção de indicadores' destiny={INDICATORS} />
+          <div onClick={this.checkIsPreProcessed.bind(this)}>
+            <BreadCrumb
+              text='Voltar para Seleção de indicadores'
+            />
+          </div>
 
           <Header>
             <h1>Pré-processamento dos dados</h1>
@@ -247,6 +270,7 @@ class PreProcessing extends Component {
         </ConfigContainer>
         {this.renderMenuActions()}
         <PreProcessingDialog onSubmit={({ strategy, constantValue }) => this.executePreProcessing({ strategy, constantValue })} />
+        <AlertDialog onSubmit={this.initPreProcessing}></AlertDialog>
       </PerfectScrollbar>
     )
   }

@@ -11,7 +11,7 @@ class BreadCrumb extends Component {
 
 
     return (
-      <Container onClick={setScreen.bind(this, destiny)}>
+      <Container onClick={destiny ? setScreen.bind(this, destiny) : null}>
         <BackIcon size={16} />
         <Text>{text}</Text>
       </Container>

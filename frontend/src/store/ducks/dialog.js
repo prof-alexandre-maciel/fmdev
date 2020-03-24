@@ -11,6 +11,7 @@ export const { Types, Creators } = createActions({
 
 export const INITIAL_STATE = Immutable({
   data: null,
+  alert: false,
   moodle: false,
   preProcessingConstant: false
 });
