@@ -1,6 +1,7 @@
 import json
 import uuid
 import traceback
+import pandas as pd
 from utils import utils
 from flask import request, current_app
 from scipy.stats import spearmanr
@@ -50,7 +51,7 @@ class PreProcessing(Resource):
 
         return descriptions
 
-    def get_dataframe(self):
+    def get_dataframe_from_sql(self):
         query_where = ''
         where = 'WHERE'
         fields = "*"
@@ -88,12 +89,33 @@ class PreProcessing(Resource):
         return df
 
     def save_file(self, df):
+        payload = request.get_json()
+
+        if 'path' in payload:
+            return payload['path']
+
         file_id = uuid.uuid4()
         path = f"{current_app.config.get('PRE_PROCESSING_RAW')}/{file_id}.csv"
 
         df.to_csv(path, index=False)
 
         return path
+    
+    def get_dataframe_from_csv(self):
+        payload = request.get_json()
+
+        path = payload['path']
+        df = pd.read_csv(path)
+
+        return df
+
+    def get_dataframe(self):
+        payload = request.get_json()
+
+        if 'path' in payload:
+            return self.get_dataframe_from_csv()
+        else:
+            return self.get_dataframe_from_sql()
 
     def post(self):
         try:
