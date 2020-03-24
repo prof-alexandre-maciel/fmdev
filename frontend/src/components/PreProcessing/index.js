@@ -218,7 +218,7 @@ class PreProcessing extends Component {
           <Header>
             <h1>Pré-processamento dos dados</h1>
             <div>
-              <Button onClick={this.submit.bind(this)}>Selecionar Modelos</Button>
+              <Button onClick={this.submit.bind(this)}>Realizar treinamento</Button>
             </div>
           </Header>
 
