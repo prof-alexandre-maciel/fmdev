@@ -9,7 +9,7 @@ from resources.Register import Register
 from resources.Semester import Semester
 from resources.Indicator import Indicator
 from resources.PreProcessing import PreProcessing
-from resources.Modeling import Modeling
+from resources.Train import Train
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
@@ -24,4 +24,4 @@ api.add_resource(Semester, '/semester')
 api.add_resource(Indicator, '/indicator')
 api.add_resource(PreProcessing, '/pre-processing')
 api.add_resource(Chart, '/chart')
-api.add_resource(Modeling, '/modeling')
+api.add_resource(Train, '/train')

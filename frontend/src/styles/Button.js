@@ -17,7 +17,7 @@ const sizes = {
 
 const colors = {
   default: css`
-  background: #4A5173;
+  background: #DEB981;
 
   &:hover {
     background: #4A5173;
@@ -43,25 +43,37 @@ const colors = {
 const Button = styled.button.attrs({
   type: 'button'
 })`
-  border-radius: 3px;
-  transition: background-color 0.15s ease;
-  background: #4A5173;
-  border: 0;
-  color: #FFF;
+  
   font-size: 12px;
   padding: 0 10px;
+  border-radius: none;
+  color: black;
+  background: #DEB981;
+  border: 1px solid #DEB981;
+  box-sizing: border-box;
+  line-height: 18px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: normal;
+  color: #FFF;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    color: #FFF;
+    border: 1px solid #4A5173;
+  }
 
   ${props => sizes[props.size || 'default']}
   ${props => colors[props.color || 'default']}
 
   ${props => props.filled === false && css`
     background: none;
+    color: #4A5173;
+    border: 1px solid #4A5173;
 
     &:hover {
-      background:none;
-      opacity: 0.6;
+      background:#4A5173;
+      color: #FFF;
     }`}
 
   ${props => props.isCancel === true && css`

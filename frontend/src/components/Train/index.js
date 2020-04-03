@@ -44,8 +44,9 @@ class Train extends Component {
         <BreadCrumb text='Voltar para pré-processamento' destiny={PRE_PROCESSING} />
 
         <Header>
-          <h1>Escolha um ou mais modelos para predição</h1>
+          <h1>Treinamento</h1>
           <div>
+            <Button filled={false}>Ver Métricas</Button>
             <Button>Executar Modelos</Button>
           </div>
         </Header>

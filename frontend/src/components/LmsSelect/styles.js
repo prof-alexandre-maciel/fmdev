@@ -90,22 +90,11 @@ export const DialogForm = styled.form`
 
   button {
     margin: 30px 0 0;
-    color: #4A5173;
-    font-size: 14px;
-    line-height: 21px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    background-color: #FFF;
-    border: 1px solid #4A5173;
-
-    &:hover {
-      color: #FFF;
-    }
   }
 `
 
 export const DialogFormButtonContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 `;

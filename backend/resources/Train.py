@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import make_scorer, SCORERS
 
 
-class Modeling(Resource):
+class Train(Resource):
 
     def get_used_pipeline(self, tpot):
         pipelines = []

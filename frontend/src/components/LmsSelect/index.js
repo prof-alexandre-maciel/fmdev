@@ -108,8 +108,8 @@ class LmsSelect extends Component {
           </div>
 
           <DialogFormButtonContainer>
-            <Button onClick={this.submit.bind(this)}>Salvar</Button>
-            <Button color="gray" isCancel={true} onClick={setDialog.bind(this, MOODLE)}>Cancelar</Button>
+            <Button style={{ width: '45%' }} filled={false} onClick={setDialog.bind(this, MOODLE, null)}>Cancelar</Button>
+            <Button style={{ width: '45%', marginLeft: '2vw' }} onClick={this.submit.bind(this)}>Salvar</Button>
           </DialogFormButtonContainer>
 
         </DialogForm>
