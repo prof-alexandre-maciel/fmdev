@@ -10,11 +10,13 @@ export const Header = styled.div`
   }
 `;
 
-export const LmsText = styled.div`
+export const TrainInfo = styled.div`
   display: flex;
+  justify-content: space-between;
   margin-left: 2rem;
-  color: #000;
-  font-size: 14px;
+  margin-right: 2rem;
+  color: #4A5173;
+  font-size: 13px;
   line-height: 23px;
 `;
 
@@ -23,10 +25,6 @@ export const Table = styled.table`
   width: 100%;
   border-spacing: 0;
   padding-top: 1rem;
-
-  tr {
-    cursor: pointer;
-  }
 
   tr:nth-child(even) {
     background-color: #FAFAFA;
@@ -60,23 +58,4 @@ export const FirstItemColumn = styled.td`
 
 export const ItemColumn = styled.td`
   padding: .7rem;
-`;
-
-export const DetailText = styled.div`
-  font-size: 14px;
-  line-height: 21px;
-`;
-
-export const RowDetail = styled.tr`
-  background-color: #F3F3F3;
-  width: 100%;
-  height: 20vh;
-  padding-left: 2rem;
-
-  > td {
-    vertical-align: top;
-    &:hover {
-      cursor: default;
-    }
-  }
 `;

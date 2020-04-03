@@ -4,31 +4,32 @@ import BreadCrumb from '../BreadCrumb';
 import {
   Header, Table,
   FirstHeaderColumn, HeaderColumn,
-  FirstItemColumn, ItemColumn
+  FirstItemColumn, ItemColumn, TrainInfo
 } from './styles';
 import Button from '../../styles/Button';
-import { Checkbox } from 'office-ui-fabric-react/lib/Checkbox';
 import { PRE_PROCESSING } from '../../constants';
 
 class Train extends Component {
 
   state = {
     data: [
-      { id: 1, algorithm: "Bayes optimal classifier", description: 'The Bayes optimal classifier is a classification technique. It is an ensemble of all ths' },
-      { id: 1, algorithm: "Bootstrap aggregating (bagging)", description: 'Bootstrap aggregating, often abbreviated as bagging, involves having each model in the ensemble vote with equal weight.' },
-      { id: 1, algorithm: "Boosting", description: 'Boosting involves incrementally building an ensemble by training each new model instance to emphasize ' },
-      { id: 1, algorithm: "Bayesian parameter averaging", description: 'Boosting involves incrementally building an ensemble by training each new model instance to emphasize ' },
-      { id: 1, algorithm: "Bayesian model combination", description: 'Boosting involves incrementally building an ensemble by training each new model instance to emphasize ' },
+      { id: 1, step: "Treinamento 1/5", status: 'Finalizado', date: '02/02/2020', score: 0.88, time: '02:00' },
+      { id: 2, step: "Treinamento 2/5", status: 'Finalizado', date: '02/02/2020', score: 0.90, time: '03:00' },
+      { id: 3, step: "Treinamento 3/5", status: 'Finalizado', date: '02/02/2020', score: 0.92, time: '01:10' },
+      { id: 4, step: "Treinamento 4/5", status: 'Finalizado', date: '02/02/2020', score: 0.87, time: '02:00' },
+      { id: 5, step: "Treinamento 5/5", status: 'Progresso', date: '02/02/2020', score: null, time: null },
     ],
   };
 
   renderItem(item) {
     const itemRows = [
       <tr key={"row-data-" + item.id}>
-        <FirstItemColumn><Checkbox onChange={() => { }} /></FirstItemColumn>
-        <ItemColumn>{item.algorithm}</ItemColumn>
-        <ItemColumn>{item.description}</ItemColumn>
-      </tr >
+        <FirstItemColumn>{item.step}</FirstItemColumn>
+        <ItemColumn>{item.status}</ItemColumn>
+        <ItemColumn>{item.date}</ItemColumn>
+        <ItemColumn>{item.score}</ItemColumn>
+        <ItemColumn>{item.time}</ItemColumn>
+      </tr>
     ];
 
     return itemRows;
@@ -51,12 +52,19 @@ class Train extends Component {
           </div>
         </Header>
 
+        <TrainInfo>
+          <div>LMS - Moodle: Instâncias 1000</div>
+          <div>Treinamento: 70% (700) | Testes: 30% (300)</div>
+        </TrainInfo>
+
         <Table>
           <thead>
             <tr>
-              <FirstHeaderColumn>&nbsp;</FirstHeaderColumn>
-              <HeaderColumn>Algoritmo</HeaderColumn>
-              <HeaderColumn>Descrição</HeaderColumn>
+              <FirstHeaderColumn>Etapa</FirstHeaderColumn>
+              <HeaderColumn>Status</HeaderColumn>
+              <HeaderColumn>Data</HeaderColumn>
+              <HeaderColumn>Score</HeaderColumn>
+              <HeaderColumn>Tempo em execução</HeaderColumn>
             </tr>
           </thead>
 
