@@ -3,6 +3,7 @@ import { connectRouter } from 'connected-react-router';
 
 import lms from './lms';
 import auth from './auth';
+import train from './train';
 import chart from './chart';
 import dialog from './dialog';
 import screen from './screen';
@@ -16,6 +17,7 @@ import { reducer as toastr } from 'react-redux-toastr';
 export default history => combineReducers({
   lms,
   auth,
+  train,
   chart,
   dialog,
   toastr,

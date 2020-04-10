@@ -80,6 +80,14 @@ const Button = styled.button.attrs({
       font-weight: normal;
       border: none !important;
     `}
+  
+  ${props => props.disabled === true && css`
+    font-weight: normal;
+    opacity: .4;
+
+    &:hover {
+      cursor: default;
+    }`}
 `;
 
 export default Button;

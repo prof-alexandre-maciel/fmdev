@@ -25,6 +25,7 @@ import { terciaryColor } from '../../styles/global';
 import PreProcessingDialog from '../PreProcessingDialog';
 import TrainConfigDialog from '../TrainConfigDialog';
 import { Creators as PreProcessingActions } from '../../store/ducks/pre_processing';
+import { Creators as TrainActions } from '../../store/ducks/train';
 import AlertDialog from '../AlertDialog';
 
 export const ItemColumnWrapper = onClick => ({ ...props }) => <ItemColumn onClick={onClick} {...props} />
@@ -160,7 +161,13 @@ class PreProcessing extends Component {
     return itemRows;
   }
 
-  goToTrain = ({ data }) => this.props.setScreen(TRAIN, data);
+  goToTrain = ({ data }) => {
+    const { path } = this.props.pre_processing;
+    const newData = { ...data, path };
+
+    // this.props.postTrain(newData);
+    this.props.setScreen(TRAIN, newData);
+  };
 
   submit = () => {
     const { data } = this.props.pre_processing;
@@ -221,7 +228,7 @@ class PreProcessing extends Component {
           <Header>
             <h1>Pré-processamento dos dados</h1>
             <div>
-              <Button onClick={this.submit.bind(this)}>Realizar treinamento</Button>
+              <Button onClick={this.submit.bind(this)}>Configurar treinamento</Button>
             </div>
           </Header>
 
@@ -286,6 +293,6 @@ export default connect(
   mapStateToProps, {
   ...ScreenActions, ...toastrActions,
   ...ChartActions, ...DialogActions,
-  ...PreProcessingActions
+  ...PreProcessingActions, ...TrainActions
 }
 )(PreProcessing);

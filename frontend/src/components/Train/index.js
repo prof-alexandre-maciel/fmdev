@@ -5,11 +5,13 @@ import {
   Header, Table,
   FirstHeaderColumn, HeaderColumn,
   FirstItemColumn, ItemColumn, TrainInfo,
-  EmptyTrainInfo
+  EmptyTrainInfo,
+  LoadingContainer
 } from './styles';
 import Button from '../../styles/Button';
 import { PRE_PROCESSING } from '../../constants';
 import { connect } from 'react-redux';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 class Train extends Component {
 
@@ -21,7 +23,6 @@ class Train extends Component {
       { id: 4, step: "Treinamento 4/5", status: 'Finalizado', date: '02/02/2020', score: 0.87, time: '02:00' },
       { id: 5, step: "Treinamento 5/5", status: 'Progresso', date: '02/02/2020', score: null, time: null },
     ],
-    isRunning: false,
     isFinished: false
   };
 
@@ -47,9 +48,10 @@ class Train extends Component {
 
 
   render() {
-    const { train, test } = this.props.screen.data;
-    const { isRunning, isFinished } = this.state;
+    const { train, screen } = this.props;
+    const { loading } = this.props.train;
     const { data } = this.props.pre_processing;
+    const isFinished = !train.loading && Object.keys(train.data).length;
 
     return (
       <ConfigContainer size='big' style={{ color: '#000' }}>
@@ -59,23 +61,26 @@ class Train extends Component {
         <Header>
           <h1>Treinamento</h1>
           <div>
-            {isFinished ? <Button filled={false}>Ver Métricas</Button> : null}
-            {isFinished ? <Button filled={false}>Ver Métricas</Button> : null}
-            <Button>REALIZAR TREINAMENTO</Button>
+            <Button disabled={!isFinished} filled={false}>Ver Métricas</Button>
+            <Button disabled={!isFinished}>SALVAR MODELO</Button>
           </div>
         </Header>
 
         {data && data.length > 0 ?
           <TrainInfo>
             <div>LMS - Moodle: Instâncias {data[0].count}</div>
-            <div>Treinamento: {train}% ({this.getSplit('train')}) | Testes: {test}% ({this.getSplit('test')})</div>
+            <div>Treinamento: {screen.data.train}% ({this.getSplit('train')}) | Testes: {screen.data.test}% ({this.getSplit('test')})</div>
           </TrainInfo>
           : null}
 
-        {!isRunning && !isFinished ? <EmptyTrainInfo>Inicie o treinamento para visualizar o progresso.</EmptyTrainInfo> : null}
+        {loading ?
+          <LoadingContainer>
+            <ProgressSpinner style={{ width: '50px', height: '50px' }} strokeWidth="4" fill="#EEEEEE" animationDuration=".5s" />
+          </LoadingContainer>
+          : null}
 
-        {
-          isRunning ?
+        {/* {
+          train.loading ?
             <Table>
               <thead>
                 <tr>
@@ -92,13 +97,13 @@ class Train extends Component {
               </tbody>
             </Table>
             : null
-        }
+        } */}
 
       </ConfigContainer >
     )
   }
 }
 
-const mapStateToProps = ({ screen, pre_processing }) => ({ screen, pre_processing });
+const mapStateToProps = ({ train, screen, pre_processing }) => ({ train, screen, pre_processing });
 
 export default connect(mapStateToProps, null)(Train);

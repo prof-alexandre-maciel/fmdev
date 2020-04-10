@@ -4,7 +4,7 @@ import { call, put } from 'redux-saga/effects';
 import { actions as toastrActions } from 'react-redux-toastr';
 
 
-export function* getIndicatorMetadata({ filter }) {
+export function* getPreProcessing({ filter }) {
   try {
     yield put(Creators.preProcessingRequest());
     yield put(Creators.preProcessingSetFilter(filter));

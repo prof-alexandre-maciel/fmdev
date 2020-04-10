@@ -20,6 +20,13 @@ export const TrainInfo = styled.div`
   line-height: 23px;
 `;
 
+export const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 15vh;
+  padding-bottom: 15vh;
+`;
+
 export const EmptyTrainInfo = styled.div`
   display: flex;
   justify-content: center;
