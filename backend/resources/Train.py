@@ -1,4 +1,5 @@
 import traceback
+import pandas as pd
 from utils import utils
 from flask import request
 from flask_restful import Resource
@@ -27,14 +28,38 @@ class Train(Resource):
 
         return pipelines
 
+    def get_dataframe_from_csv(self):
+        payload = request.get_json()
+
+        path = payload['path']
+        df = pd.read_csv(path)
+
+        return df
+
     def post(self):
         try:
             iris = load_iris()
+            payload = request.get_json()
+            mandatory_fields = ['train', 'test', 'time', 'path', 'target']
 
-            X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target,
-                                                                train_size=0.75, test_size=0.25)
+            for field in mandatory_fields:
+                if field not in payload:
+                    return {'msg': f'{field} not found'}, 500
 
-            tpot = TPOTClassifier(verbosity=2, max_time_mins=1)
+            train = payload['train'] / 100
+            test = payload['test'] / 100
+            target = payload['target']
+            time = payload['time']
+
+            df = self.get_dataframe_from_csv()
+            df_x = df.copy()
+            del df_x[target]
+            
+
+            X_train, X_test, y_train, y_test = train_test_split(
+                df_x, df[target], train_size=train, test_size=test)
+
+            tpot = TPOTClassifier(verbosity=2, max_time_mins=time)
             tpot.fit(X_train, y_train)
 
             return {

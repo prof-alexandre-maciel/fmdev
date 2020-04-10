@@ -7,7 +7,7 @@ import { actions as toastrActions } from 'react-redux-toastr';
 export function* postTrain({ filter }) {
   try {
     yield put(Creators.trainRequest());
-    const response = yield call(api.post, 'train', { filter });
+    const response = yield call(api.post, 'train', filter);
 
     yield put(Creators.trainSuccess(response.data));
   } catch (err) {

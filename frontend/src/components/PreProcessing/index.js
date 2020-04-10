@@ -163,7 +163,13 @@ class PreProcessing extends Component {
 
   goToTrain = ({ data }) => {
     const { path } = this.props.pre_processing;
-    const newData = { ...data, path };
+    const { targetSelected } = this.props.indicator;
+
+    const newData = {
+      ...data,
+      path,
+      target: targetSelected && targetSelected.value ? targetSelected.value : null
+    };
 
     this.props.postTrain(newData);
     this.props.setScreen(TRAIN, newData);
