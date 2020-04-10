@@ -13,7 +13,8 @@ class TrainConfigDialog extends Component {
 
   state = {
     train: 70,
-    test: 30
+    test: 30,
+    time: 10
   };
 
   onClose = () => {
@@ -29,27 +30,37 @@ class TrainConfigDialog extends Component {
   }
 
   submit = () => {
-    const { train, test } = this.state;
+    const { train, test, time } = this.state;
     const { onSubmit } = this.props;
 
-    if (!train) {
-      this.renderWarningMsg('Por favor, informe o percentual da base de treinamento!');
+    if (!train || train <= 0) {
+      this.renderWarningMsg('O percentual da base de treinamento é inválido!');
       return;
     }
 
-    if (!test) {
-      this.renderWarningMsg('Por favor, informe o percentual da base de testes!');
+    if (!test || test <= 0) {
+      this.renderWarningMsg('O percentual da base de testes é inválido!');
+      return;
+    }
+
+    if (!time || time <= 0) {
+      this.renderWarningMsg('O tempo máximo de execução é inválido!');
+      return;
+    }
+
+    if (time > 1440) {
+      this.renderWarningMsg('O tempo máximo de execução não pode ser superior à 1 dia (1440 minutos)');
       return;
     }
 
     this.onClose();
 
     if (onSubmit) {
-      onSubmit({ data: { train, test } });
+      onSubmit({ data: { train, test, time } });
     }
   }
 
-  handleChange = (event, maskedValue, floatValue) => {
+  handlePercentualChange = (event, maskedValue, floatValue) => {
     let newValue = floatValue;
     let otherInputToUpdate = event.target.name === 'train' ? 'test' : 'train';
 
@@ -67,15 +78,19 @@ class TrainConfigDialog extends Component {
     });
   }
 
+  handleChange = (event, maskedValue, floatValue) => {
+    this.setState({ [event.target.name]: floatValue });
+  }
+
   render() {
-    const { train, test } = this.state;
+    const { train, test, time } = this.state;
     const { trainConfig } = this.props.dialog;
     const inputParams = {
       suffix: "%",
       className: "input",
       decimalSeparator: ".",
       thousandSeparator: "",
-      onChangeEvent: this.handleChange
+      onChangeEvent: this.handlePercentualChange
     };
 
     if (!trainConfig) {
@@ -99,6 +114,16 @@ class TrainConfigDialog extends Component {
             {...inputParams}
             value={test}
             name="test"
+          />
+
+          <DialogSpan>Tempo máx. execução em minutos</DialogSpan>
+          <CurrencyInput
+            {...inputParams}
+            suffix=""
+            precision="0"
+            onChangeEvent={this.handleChange}
+            value={time}
+            name="time"
           />
 
           <DialogFormButtonContainer>
