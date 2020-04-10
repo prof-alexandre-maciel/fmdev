@@ -4,10 +4,12 @@ import BreadCrumb from '../BreadCrumb';
 import {
   Header, Table,
   FirstHeaderColumn, HeaderColumn,
-  FirstItemColumn, ItemColumn, TrainInfo
+  FirstItemColumn, ItemColumn, TrainInfo,
+  EmptyTrainInfo
 } from './styles';
 import Button from '../../styles/Button';
 import { PRE_PROCESSING } from '../../constants';
+import { connect } from 'react-redux';
 
 class Train extends Component {
 
@@ -19,6 +21,8 @@ class Train extends Component {
       { id: 4, step: "Treinamento 4/5", status: 'Finalizado', date: '02/02/2020', score: 0.87, time: '02:00' },
       { id: 5, step: "Treinamento 5/5", status: 'Progresso', date: '02/02/2020', score: null, time: null },
     ],
+    isRunning: false,
+    isFinished: false
   };
 
   renderItem(item) {
@@ -35,47 +39,66 @@ class Train extends Component {
     return itemRows;
   }
 
+  getSplit = (value) => {
+    const { data } = this.props.pre_processing;
+
+    return ~~((data[0].count * this.props.screen.data[value]) / 100);
+  }
+
 
   render() {
-    const { data } = this.state;
+    const { train, test } = this.props.screen.data;
+    const { isRunning, isFinished } = this.state;
+    const { data } = this.props.pre_processing;
 
     return (
-      <ConfigContainer size='big'>
+      <ConfigContainer size='big' style={{ color: '#000' }}>
 
         <BreadCrumb text='Voltar para pré-processamento' destiny={PRE_PROCESSING} />
 
         <Header>
           <h1>Treinamento</h1>
           <div>
-            <Button filled={false}>Ver Métricas</Button>
-            <Button>Executar Modelos</Button>
+            {isFinished ? <Button filled={false}>Ver Métricas</Button> : null}
+            {isFinished ? <Button filled={false}>Ver Métricas</Button> : null}
+            <Button>REALIZAR TREINAMENTO</Button>
           </div>
         </Header>
 
-        <TrainInfo>
-          <div>LMS - Moodle: Instâncias 1000</div>
-          <div>Treinamento: 70% (700) | Testes: 30% (300)</div>
-        </TrainInfo>
+        {data && data.length > 0 ?
+          <TrainInfo>
+            <div>LMS - Moodle: Instâncias {data[0].count}</div>
+            <div>Treinamento: {train}% ({this.getSplit('train')}) | Testes: {test}% ({this.getSplit('test')})</div>
+          </TrainInfo>
+          : null}
 
-        <Table>
-          <thead>
-            <tr>
-              <FirstHeaderColumn>Etapa</FirstHeaderColumn>
-              <HeaderColumn>Status</HeaderColumn>
-              <HeaderColumn>Data</HeaderColumn>
-              <HeaderColumn>Score</HeaderColumn>
-              <HeaderColumn>Tempo em execução</HeaderColumn>
-            </tr>
-          </thead>
+        {!isRunning && !isFinished ? <EmptyTrainInfo>Inicie o treinamento para visualizar o progresso.</EmptyTrainInfo> : null}
 
-          <tbody>
-            {data.map(item => this.renderItem(item))}
-          </tbody>
-        </Table>
+        {
+          isRunning ?
+            <Table>
+              <thead>
+                <tr>
+                  <FirstHeaderColumn>Etapa</FirstHeaderColumn>
+                  <HeaderColumn>Status</HeaderColumn>
+                  <HeaderColumn>Data</HeaderColumn>
+                  <HeaderColumn>Score</HeaderColumn>
+                  <HeaderColumn>Tempo em execução</HeaderColumn>
+                </tr>
+              </thead>
+
+              <tbody>
+                {this.state.data.map(item => this.renderItem(item))}
+              </tbody>
+            </Table>
+            : null
+        }
 
       </ConfigContainer >
     )
   }
 }
 
-export default Train
+const mapStateToProps = ({ screen, pre_processing }) => ({ screen, pre_processing });
+
+export default connect(mapStateToProps, null)(Train);

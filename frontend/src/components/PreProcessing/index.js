@@ -23,6 +23,7 @@ import Chart from '../Chart';
 import { Menu, MenuItem } from '@material-ui/core';
 import { terciaryColor } from '../../styles/global';
 import PreProcessingDialog from '../PreProcessingDialog';
+import TrainConfigDialog from '../TrainConfigDialog';
 import { Creators as PreProcessingActions } from '../../store/ducks/pre_processing';
 import AlertDialog from '../AlertDialog';
 
@@ -159,6 +160,8 @@ class PreProcessing extends Component {
     return itemRows;
   }
 
+  goToTrain = ({ data }) => this.props.setScreen(TRAIN, data);
+
   submit = () => {
     const { data } = this.props.pre_processing;
     const itemsMissing = data.filter(item => item.missing);
@@ -173,7 +176,7 @@ class PreProcessing extends Component {
       return;
     }
 
-    this.props.setScreen(TRAIN);
+    this.props.setDialog('trainConfig');
   }
 
   renderWarningMsg = (msg) => {
@@ -270,6 +273,7 @@ class PreProcessing extends Component {
         </ConfigContainer>
         {this.renderMenuActions()}
         <PreProcessingDialog onSubmit={({ strategy, constantValue }) => this.executePreProcessing({ strategy, constantValue })} />
+        <TrainConfigDialog onSubmit={({ data }) => this.goToTrain({ data })} />
         <AlertDialog onSubmit={this.initPreProcessing}></AlertDialog>
       </PerfectScrollbar>
     )

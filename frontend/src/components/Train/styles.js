@@ -20,6 +20,16 @@ export const TrainInfo = styled.div`
   line-height: 23px;
 `;
 
+export const EmptyTrainInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50%;
+  color: #CCC;
+  font-size: 20px;
+  line-height: 23px;
+`;
+
 export const Table = styled.table`
   color: black;
   width: 100%;

@@ -13,7 +13,8 @@ export const INITIAL_STATE = Immutable({
   data: null,
   alert: false,
   moodle: false,
-  preProcessingConstant: false
+  preProcessingConstant: false,
+  trainConfig: false
 });
 
 /* Reducers */
