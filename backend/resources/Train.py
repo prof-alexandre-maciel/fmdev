@@ -52,10 +52,12 @@ class Train(Resource):
             time = payload['time']
 
             df = self.get_dataframe_from_csv()
+            df_categoric = df.copy()
+            df_categoric = df_categoric.select_dtypes(include=['object'])
+            df = df.drop(df_categoric.columns, axis=1)
             df_x = df.copy()
             del df_x[target]
             
-
             X_train, X_test, y_train, y_test = train_test_split(
                 df_x, df[target], train_size=train, test_size=test)
 
