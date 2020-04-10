@@ -51,7 +51,7 @@ class Train extends Component {
     const { train, screen } = this.props;
     const { loading } = this.props.train;
     const { data } = this.props.pre_processing;
-    const isFinished = !train.loading && Object.keys(train.data).length;
+    const isFinished = !train.loading && Object.keys(train.data).length > 0;
 
     return (
       <ConfigContainer size='big' style={{ color: '#000' }}>

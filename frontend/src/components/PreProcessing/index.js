@@ -165,7 +165,7 @@ class PreProcessing extends Component {
     const { path } = this.props.pre_processing;
     const newData = { ...data, path };
 
-    // this.props.postTrain(newData);
+    this.props.postTrain(newData);
     this.props.setScreen(TRAIN, newData);
   };
 
