@@ -28,12 +28,14 @@ class Train extends Component {
   };
 
   componentDidMount() {
-    const interval = window.setInterval(this.callTrainStatus, 1000 * 60);
+    const interval = window.setInterval(this.callTrainStatus, 1000 * 20);
 
     this.setState({
       countdown: Date.now(),
       interval
     });
+
+    this.props.trainStatusInit();
   }
 
   callTrainStatus = () => {
@@ -57,11 +59,14 @@ class Train extends Component {
       [~~finishedAt.format('YYYY'), ~~finishedAt.format('MM'), ~~finishedAt.format('DD'),
       ~~finishedAt.format('HH'), ~~finishedAt.format('mm'), ~~finishedAt.format('ss')])
 
-    diff = nowDiff.diff(finishDiff, 'minutes');
+    diff = finishDiff.diff(nowDiff, 'minutes');
     diff = Math.abs(diff);
 
     if (diff === 0) {
-      return 'N/A';
+      diff = finishDiff.diff(nowDiff, 'seconds');
+      diff = Math.abs(diff);
+
+      return `${diff} segundos`;
     }
 
     if (diff === 1) {
