@@ -89,6 +89,11 @@ class Indicators extends Component {
       return;
     }
 
+    if (!indicators.filter(indicator => indicator.value === targetSelected.value).length) {
+      this.renderWarningMsg(`É necessário selecionar o indicador ${targetSelected.value}, pois o mesmo é um indicador alvo`);
+      return;
+    }
+
     filter.lms = 'moodle';
     filter.target = targetSelected.value;
     filter.courses = this.getValueFromSelect(courseSelected);

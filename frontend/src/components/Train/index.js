@@ -45,19 +45,54 @@ class Train extends Component {
     clearInterval(this.state.interval);
   }
 
-  renderItem(item) {
-    const itemRows = [
-      <tr key={"row-data-" + item.id}>
-        <FirstItemColumn>{this.getStatusIcon(item)}</FirstItemColumn>
-        <ItemColumn>{item.step}</ItemColumn>
-        <ItemColumn>{item.status}</ItemColumn>
-        <ItemColumn>{item.date ? moment(item.date).format('DD/MM/YYYY HH:mm:ss') : null}</ItemColumn>
-        <ItemColumn>{item.score}</ItemColumn>
-      </tr>
-    ];
+  getDiffExecutionTime = (item) => {
+    let diff = null;
+    let now = moment(this.state.countdown);
+    let finishedAt = moment(item.date);
+    let nowDiff = moment(
+      [~~now.format('YYYY'), ~~now.format('MM'), ~~now.format('DD'),
+      ~~now.format('HH'), ~~now.format('mm'), ~~now.format('ss')
+      ])
+    let finishDiff = moment(
+      [~~finishedAt.format('YYYY'), ~~finishedAt.format('MM'), ~~finishedAt.format('DD'),
+      ~~finishedAt.format('HH'), ~~finishedAt.format('mm'), ~~finishedAt.format('ss')])
 
-    return itemRows;
+    diff = nowDiff.diff(finishDiff, 'minutes');
+    diff = Math.abs(diff);
+
+    if (diff === 0) {
+      return 'N/A';
+    }
+
+    if (diff === 1) {
+      diff = `${diff} minuto`;
+    }
+
+    if (diff < 60) {
+      diff = `${diff} minutos`;
+    }
+
+    if (diff >= 60 && diff <= 120) {
+      diff = `${Math.round(diff / 60)} hora`;
+    }
+
+    if (diff >= 120) {
+      diff = `${Math.round(diff / 60)} horas`;
+    }
+
+    return diff;
   }
+
+  renderItem = (item, idx) => (
+    <tr key={idx}>
+      <FirstItemColumn>{this.getStatusIcon(item)}</FirstItemColumn>
+      <ItemColumn>{item.step}</ItemColumn>
+      <ItemColumn>{item.status}</ItemColumn>
+      <ItemColumn>{item.date ? moment(item.date).format('DD/MM/YYYY HH:mm:ss') : null}</ItemColumn>
+      <ItemColumn>{item.date ? this.getDiffExecutionTime(item) : null}</ItemColumn>
+      <ItemColumn>{item.score}</ItemColumn>
+    </tr>
+  )
 
   getStatusIcon = (item) => {
     if (item.status === 'Em andamento') {
@@ -139,7 +174,7 @@ class Train extends Component {
             {screen.data.time ?
               <TrainInfo>
                 <div><b>Treinamento:</b> {screen.data.train}% ({this.getSplit('train')} instâncias)  | <b>Testes:</b> {screen.data.test}% ({this.getSplit('test')} instâncias)</div>
-                <div><b>Tempo restante (previsto):</b>{loading ? <Countdown date={countdown + 1000 * 60 * screen.data.time} /> : 'N/A'}</div>
+                <div><b>Tempo restante (previsto):</b> {loading ? <Countdown date={countdown + 1000 * 60 * screen.data.time} /> : 'N/A'}</div>
               </TrainInfo>
               : null}
 
@@ -155,12 +190,13 @@ class Train extends Component {
                   <HeaderColumn>Etapa</HeaderColumn>
                   <HeaderColumn>Status</HeaderColumn>
                   <HeaderColumn>Finalizado em</HeaderColumn>
+                  <HeaderColumn>Tempo de Execução</HeaderColumn>
                   <HeaderColumn>Score</HeaderColumn>
                 </tr>
               </thead>
 
               <tbody>
-                {train_status.data.map(item => this.renderItem(item))}
+                {train_status.data.map((item, idx) => this.renderItem(item, idx))}
                 {loading ? this.renderItem({
                   step: `Treinamento ${train_status.data.length + 1}`,
                   status: 'Em andamento',
