@@ -53,7 +53,7 @@ class Train(Resource):
 
         return df
     
-    def load_model(self)
+    def load_model(self):
         filename = self.get_filename_from_path('.sav')
         loaded_model = joblib.load(open(filename, 'rb'))
 
