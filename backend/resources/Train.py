@@ -28,19 +28,21 @@ class Train(Resource):
             })
 
         return pipelines
-    
+
     def train(self, x_train, y_train, time):
         client = Client(processes=False)
+        output_folder = f"{current_app.config.get('TRAIN_TPOT_OUTPUT')}/{self.get_filename_from_path('')}"
 
         tpot = TPOTClassifier(generations=5,
-                            max_time_mins=time,
-                            population_size=20, cv=5,
-                            random_state=42, verbosity=3,
-                            use_dask=True)
+                              max_time_mins=time,
+                              population_size=20, cv=5,
+                              random_state=42, verbosity=3,
+                              use_dask=True,
+                              periodic_checkpoint_folder=output_folder)
 
         with joblib.parallel_backend("dask"):
             tpot.fit(x_train, y_train)
-        
+
         return tpot
 
     def get_dataframe_from_csv(self):
@@ -51,6 +53,12 @@ class Train(Resource):
 
         return df
     
+    def load_model(self)
+        filename = self.get_filename_from_path('.sav')
+        loaded_model = joblib.load(open(filename, 'rb'))
+
+        return loaded_model
+
     def get_df_without_one_hot_encoding(self, target):
         df = self.get_dataframe_from_csv()
         df_categoric = df.copy()
@@ -61,22 +69,24 @@ class Train(Resource):
         del df_x[target]
 
         return df, df_x
-    
-    def save(self, tpot):
+
+    def get_filename_from_path(self, extension):
         payload = request.get_json()
         path = payload['path']
-        filename = os.path.basename(path).replace('.csv', '.sav')
+        filename = os.path.basename(path).replace('.csv', extension)
+
+        return filename
+
+    def save(self, tpot):
+        filename = self.get_filename_from_path('.sav')
         filename = f"{current_app.config.get('TRAIN_MODELS')}/{filename}"
         joblib.dump(tpot.fitted_pipeline_, open(filename, 'wb'))
 
     def export(self, tpot):
-        payload = request.get_json()
-        path = payload['path']
-        filename = os.path.basename(path).replace('.csv', '.py')
-
+        filename = self.get_filename_from_path('.py')
         filename = f"{current_app.config.get('TRAIN_PIPELINES')}/{filename}"
         tpot.export(filename)
-    
+
     def post(self):
         try:
             payload = request.get_json()
