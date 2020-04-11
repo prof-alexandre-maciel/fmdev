@@ -117,27 +117,6 @@ class Train(Resource):
                 "fitted_pipelines": self.get_used_pipeline(tpot)
             }
 
-            # import time
-            # time.sleep(10)
-
-            # return {
-            #     "score": 0.6782608695652174,
-            #     "qtd_evaluated_pipelines": 118,
-            #     "fitted_pipelines": [
-            #         {
-            #             "algorithm": "LinearSVC",
-            #             "hyperparameters": [
-            #                 "input_matrix",
-            #                 "C=10.0",
-            #                 "dual=False",
-            #                 "loss=squared_hinge",
-            #                 "penalty=l1",
-            #                 "tol=0.0001)"
-            #             ]
-            #         }
-            #     ]
-            # }
-
         except:
             traceback.print_exc()
             return {"msg": "Error on POST Modeling"}, 500

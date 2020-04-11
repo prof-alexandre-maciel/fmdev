@@ -9,6 +9,12 @@ export function* postTrain({ filter }) {
     yield put(Creators.trainRequest());
     const response = yield call(api.post, 'train', filter);
 
+    yield put(toastrActions.add({
+      type: 'success',
+      title: 'Sucesso',
+      message: `Treinamento finalizado com sucesso!`
+    }));
+
     yield put(Creators.trainSuccess(response.data));
   } catch (err) {
     yield put(Creators.trainError({ err }));
