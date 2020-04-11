@@ -8,4 +8,6 @@ SQLALCHEMY_TRACK_MODIFICATIONS = True
 SQLALCHEMY_DATABASE_URI = "postgresql://raniel:@localhost/fmdev"
 JWT_SECRET_KEY = 'secret'
 PRE_PROCESSING_RAW = 'data/raw'
+TRAIN_MODELS = 'data/models'
+TRAIN_PIPELINES = 'data/pipelines'
 PRE_PROCESSING_ENRICHED = 'data/enriched'
