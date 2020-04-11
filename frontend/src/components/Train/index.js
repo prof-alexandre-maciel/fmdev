@@ -12,6 +12,7 @@ import Button from '../../styles/Button';
 import { PRE_PROCESSING } from '../../constants';
 import { connect } from 'react-redux';
 import { ProgressSpinner } from 'primereact/progressspinner';
+import Countdown from 'react-countdown';
 
 class Train extends Component {
 
@@ -68,8 +69,16 @@ class Train extends Component {
 
         {data && data.length > 0 ?
           <TrainInfo>
-            <div>LMS - Moodle: Instâncias {data[0].count}</div>
-            <div>Treinamento: {screen.data.train}% ({this.getSplit('train')}) | Testes: {screen.data.test}% ({this.getSplit('test')})</div>
+            <div><b>Total de instâncias:</b> {data[0].count}</div>
+            <div><b>Tempo máximo de execução (previsto):</b> {screen.data.time} minutos</div>
+
+          </TrainInfo>
+          : null}
+
+        {screen.data.time && loading ?
+          <TrainInfo>
+            <div><b>Treinamento:</b> {screen.data.train}% ({this.getSplit('train')} instâncias)  | <b>Testes:</b> {screen.data.test}% ({this.getSplit('test')} instâncias)</div>
+            <div><b>Tempo restante (previsto):</b> <Countdown date={Date.now() + 1000 * 60 * screen.data.time} /></div>
           </TrainInfo>
           : null}
 
