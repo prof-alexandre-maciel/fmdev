@@ -171,7 +171,7 @@ class PreProcessing extends Component {
       target: targetSelected && targetSelected.value ? targetSelected.value : null
     };
 
-    // this.props.postTrain(newData);
+    this.props.postTrain(newData);
     this.props.setScreen(TRAIN, newData);
   };
 

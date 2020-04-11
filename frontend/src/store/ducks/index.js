@@ -12,6 +12,7 @@ import subject from './subject';
 import semester from './semester';
 import indicator from './indicator';
 import pre_processing from './pre_processing';
+import train_status from './train_status';
 import { reducer as toastr } from 'react-redux-toastr';
 
 export default history => combineReducers({
@@ -27,5 +28,6 @@ export default history => combineReducers({
   semester,
   indicator,
   pre_processing,
+  train_status,
   router: connectRouter(history)
 });

@@ -20,6 +20,16 @@ export const TrainInfo = styled.div`
   line-height: 23px;
 `;
 
+export const StatusMsgContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-top: 15vh;
+  padding-bottom: 15vh;
+  color: #000;
+  opacity: .5;
+  font-size: 1.2rem;
+`;
+
 export const LoadingContainer = styled.div`
   display: flex;
   justify-content: center;

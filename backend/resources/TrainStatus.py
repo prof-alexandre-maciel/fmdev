@@ -57,23 +57,25 @@ class TrainStatus(Resource):
         second = int(date_string[17:19])
 
         return datetime.datetime(year, month, day, hour, minute, second).isoformat()
-
+    
     def post(self):
         try:
-            data = {}
+            data = []
             filename = self.get_filename_from_path('')
             output_folder = f"{current_app.config.get('TRAIN_TPOT_OUTPUT')}/{filename}"
             od_files = self.get_files_from_dir(output_folder)
 
-            for key, file in od_files.items():
+            for idx, file in enumerate(od_files.values()):
                score = self.get_score_from_content(file)
-               date = self.get_date_from_filename(key)
+               date = self.get_date_from_filename(file)
 
-               data[date] = {
+               data.append({
                    'date': date,
+                   'step': f"Treinamento {idx + 1}",
+                   'status': 'Finalizado',
                    'score': utils.to_float(float(score))
-               }
-           
+               })
+            
             return data
         except:
             traceback.print_exc()

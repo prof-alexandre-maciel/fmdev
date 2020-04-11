@@ -8,6 +8,7 @@ import { Types as SemesterTypes } from '../ducks/semester';
 import { Types as IndicatorTypes } from '../ducks/indicator';
 import { Types as PreProcessingTypes } from '../ducks/pre_processing';
 import { Types as TrainTypes } from '../ducks/train';
+import { Types as TrainStatusTypes } from '../ducks/train_status';
 
 import { getChart } from './chart';
 import { postTrain } from './train';
@@ -16,6 +17,7 @@ import { getCourses } from './course';
 import { getSubjects } from './subject';
 import { getSemesters } from './semester';
 import { getIndicators } from './indicator';
+import { postTrainStatus } from './train_status';
 import { signInRequest, signOutRequest } from './auth';
 import { getPreProcessing } from './pre_processing';
 
@@ -32,5 +34,6 @@ export default function* rootSaga() {
     takeLatest(IndicatorTypes.GET_INDICATORS, getIndicators),
     takeLatest(PreProcessingTypes.GET_PRE_PROCESSING, getPreProcessing),
     takeLatest(TrainTypes.POST_TRAIN, postTrain),
+    takeLatest(TrainStatusTypes.POST_TRAIN_STATUS, postTrainStatus),
   ])
 }

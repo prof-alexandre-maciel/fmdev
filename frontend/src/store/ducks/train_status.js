@@ -2,11 +2,11 @@ import { createActions, createReducer } from 'reduxsauce';
 import Immutable from 'seamless-immutable';
 
 export const { Types, Creators } = createActions({
-  trainInit: [],
-  postTrain: ['filter'],
-  trainRequest: [],
-  trainSuccess: ['data'],
-  trainError: ['err']
+  trainStatusInit: [],
+  postTrainStatus: ['filter'],
+  trainStatusRequest: [],
+  trainStatusSuccess: ['data'],
+  trainStatusError: ['err']
 });
 
 /** --------------------------------
@@ -14,7 +14,7 @@ export const { Types, Creators } = createActions({
  * --------------------------------- */
 
 const INITIAL_STATE = Immutable({
-  data: {},
+  data: [],
   loading: false,
   error: false
 });
@@ -34,8 +34,8 @@ export const setFilter = (state, { filter }) => state.merge({ filter });
 /* Reducers to types */
 
 export default createReducer(INITIAL_STATE, {
-  [Types.TRAIN_INIT]: init,
-  [Types.TRAIN_REQUEST]: request,
-  [Types.TRAIN_SUCCESS]: success,
-  [Types.TRAIN_ERROR]: error,
+  [Types.TRAIN_STATUS_INIT]: init,
+  [Types.TRAIN_STATUS_REQUEST]: request,
+  [Types.TRAIN_STATUS_SUCCESS]: success,
+  [Types.TRAIN_STATUS_ERROR]: error,
 });
