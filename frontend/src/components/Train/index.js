@@ -160,6 +160,10 @@ class Train extends Component {
     this.props.setScreen(ADD_TRAIN, PRE_PROCESSING);
   }
 
+  openSaveModel = () => {
+    this.props.setDialog('trainSave');
+  }
+
   render() {
     const { countdown } = this.state;
     const { train, screen, train_status, train_model } = this.props;
@@ -184,10 +188,10 @@ class Train extends Component {
                 <Button disabled={!isFinished} filled={false}>Ver Métricas</Button>
                 {!train_model.lastModelSaved ?
                   <Button
-                    onClick={isFinished ? this.props.setDialog.bind(this, 'trainSave') : null}
+                    onClick={isFinished ? this.openSaveModel.bind(this) : null}
                     disabled={!isFinished}>SALVAR MODELO</Button>
                   : null}
-                {train_model.lastModelSaved ? <Button disabled={!isFinished}>MODELO SALVO</Button> : null}
+                {train_model.lastModelSaved ? <Button disabled={true}>MODELO SALVO</Button> : null}
               </div>
             </Header>
 

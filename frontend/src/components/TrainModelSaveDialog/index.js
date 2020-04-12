@@ -14,8 +14,8 @@ import { ProgressSpinner } from 'primereact/progressspinner';
 class TrainModelSaveDialog extends Component {
 
   state = {
-    name: null,
-    description: null
+    name: '',
+    description: ''
   };
 
   onClose = () => {
@@ -60,29 +60,35 @@ class TrainModelSaveDialog extends Component {
     return (
       <Dialog>
         <DialogForm>
-          <h1>Salvar Modelo</h1>
+          <h1>{loading ? 'Salvando Modelo...' : 'Salvar Modelo'}</h1>
 
-          <DialogSpan>Informe o nome do modelo</DialogSpan>
-          <DialogInput
+          {loading ? 
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '15vh' }}>
+              <ProgressSpinner style={{ width: '30px', height: '30px' }} strokeWidth="4" animationDuration=".5s" />
+            </div>
+          : null}
+
+          {!loading ? <DialogSpan>Informe o nome do modelo</DialogSpan> : null}
+          {!loading ? <DialogInput
             value={name}
             autoComplete="off"
             onChange={this.handleChange}
             name="name">
-          </DialogInput>
+          </DialogInput> : null}
 
-          <DialogSpan>Informe detalhes do modelo</DialogSpan>
-          <DialogInput
+          {!loading ? <DialogSpan>Informe detalhes do modelo</DialogSpan> : null}
+          {!loading ? <DialogInput
             value={description}
             autoComplete="off"
             onChange={this.handleChange}
             name="description">
-          </DialogInput>
+          </DialogInput> : null}
 
-          <DialogFormButtonContainer>
-            {!loading ? <Button onClick={this.submit.bind(this)}>Salvar</Button> : null}
-            {!loading ? <Button color="gray" isCancel={true} onClick={this.onClose}>Cancelar</Button> : null}
-            {loading ? <ProgressSpinner style={{ width: '24px', height: '24px' }} strokeWidth="4" animationDuration=".5s" /> : null}
-          </DialogFormButtonContainer>
+          {!loading ? <DialogFormButtonContainer>
+            <Button onClick={this.submit.bind(this)}>Salvar</Button>
+            <Button color="gray" isCancel={true} onClick={this.onClose}>Cancelar</Button>
+          </DialogFormButtonContainer> : null}
+
 
         </DialogForm>
       </Dialog>

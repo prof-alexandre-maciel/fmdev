@@ -28,6 +28,12 @@ export function* postTrainModel({ data }) {
 
     yield put(Creators.trainModelSuccess(response.data, data.path));
     yield put(DialogCreators.setDialog('trainSave'));
+
+    yield put(toastrActions.add({
+      type: 'success',
+      title: 'Sucesso',
+      message: `Modelo salvo com sucesso!`
+    }));
   } catch (err) {
     yield put(Creators.trainModelError({ err }));
     yield put(toastrActions.add({

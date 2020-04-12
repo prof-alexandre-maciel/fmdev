@@ -14,7 +14,27 @@ export const { Types, Creators } = createActions({
  * --------------------------------- */
 
 const INITIAL_STATE = Immutable({
-  data: [],
+  data: [
+    {
+      "date": "2020-04-12T20:36:54",
+      "step": "Treinamento 1",
+      "status": "Finalizado",
+      "score": 0.7
+    },
+    {
+      "date": "2020-04-12T20:37:31",
+      "step": "Treinamento 2",
+      "status": "Finalizado",
+      "score": 0.71
+    },
+    {
+      "date": "2020-04-12T20:38:26",
+      "step": "Treinamento 3",
+      "status": "Finalizado",
+      "score": 0.71
+    }
+  ]
+  ,
   loading: false,
   error: false
 });

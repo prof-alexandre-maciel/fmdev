@@ -4,10 +4,10 @@ import Immutable from 'seamless-immutable';
 export const { Types, Creators } = createActions({
   trainModelInit: [],
   trainModelRequest: [],
-  trainModelSuccess: ['data'],
+  trainModelSuccess: ['data', 'lastModelSaved'],
   trainModelError: ['err'],
   getTrainModel: [],
-  postTrainModel: ['data', 'lastModelSaved']
+  postTrainModel: ['data']
 });
 
 /** --------------------------------
@@ -27,7 +27,11 @@ export const init = state => state.merge({ data: [] });
 
 export const request = state => state.merge({ loading: true });
 
-export const success = (state, { data, lastModelSaved }) => state.merge({ data, lastModelSaved, error: false, loading: false });
+export const success = (state, { data, lastModelSaved }) => {
+  console.log({ data, lastModelSaved })
+
+  return state.merge({ data, lastModelSaved, error: false, loading: false })
+};
 
 export const error = state => state.merge({ loading: false, error: true });
 
