@@ -22,25 +22,25 @@ class Main extends Component {
   }
 
   renderContent = () => {
-    const { activeScreen } = this.props.screen;
+    const { activeComponent } = this.props.screen;
 
-    if (activeScreen === LMS_SELECT) {
+    if (activeComponent === LMS_SELECT) {
       return <LmsSelect />;
     }
 
-    if (activeScreen === INDICATORS) {
+    if (activeComponent === INDICATORS) {
       return <Indicators />;
     }
 
-    if (activeScreen === PRE_PROCESSING) {
+    if (activeComponent === PRE_PROCESSING) {
       return <PreProcessing />;
     }
 
-    if (activeScreen === TRAIN) {
+    if (activeComponent === TRAIN) {
       return <Train />;
     }
 
-    if (activeScreen === TRAIN_MODEL) {
+    if (activeComponent === TRAIN_MODEL) {
       return <TrainModel />;
     }
 

@@ -13,7 +13,7 @@ import AlertIcon from 'react-feather/dist/icons/alert-triangle';
 import TargetIcon from 'react-feather/dist/icons/crosshair';
 import Progress from '../Progress';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { INDICATORS, TRAIN } from '../../constants';
+import { INDICATORS, TRAIN, ADD_TRAIN } from '../../constants';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { Creators as DialogActions } from '../../store/ducks/dialog';
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -172,7 +172,7 @@ class PreProcessing extends Component {
     };
 
     this.props.postTrain(newData);
-    this.props.setScreen(TRAIN, newData);
+    this.props.setScreen(ADD_TRAIN, TRAIN, newData);
   };
 
   submit = () => {
@@ -217,7 +217,7 @@ class PreProcessing extends Component {
     const { path } = this.props.pre_processing;
 
     this.props.deletePreProcessing({ path });
-    this.props.setScreen(INDICATORS);
+    this.props.setScreen(ADD_TRAIN, INDICATORS);
   }
 
   render() {

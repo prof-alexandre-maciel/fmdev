@@ -13,9 +13,6 @@ class TrainModelResource(Resource):
     def get(self):
         try:
             user_id = utils.get_user_id(request)
-
-            print(user_id)
-
             res = TrainModel.query.filter_by(user_id=user_id).all()
 
             schema = TrainModelSchema(many=True)
@@ -50,7 +47,7 @@ class TrainModelResource(Resource):
             schema = TrainModelSchema(exclude=("id"))
             result = schema.dump(train_model)
 
-            return result
+            return self.get()
 
         except:
             traceback.print_exc()

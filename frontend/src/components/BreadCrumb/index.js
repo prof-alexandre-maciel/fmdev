@@ -7,11 +7,11 @@ import { Container, Text } from './styles';
 
 class BreadCrumb extends Component {
   render() {
-    const { text, destiny, setScreen } = this.props;
+    const { text, screen, destiny, setScreen } = this.props;
 
 
     return (
-      <Container onClick={destiny ? setScreen.bind(this, destiny, {}) : null}>
+      <Container onClick={destiny ? setScreen.bind(this, screen, destiny, {}) : null}>
         <BackIcon size={16} />
         <Text>{text}</Text>
       </Container>

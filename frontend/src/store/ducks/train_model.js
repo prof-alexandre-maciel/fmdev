@@ -6,7 +6,8 @@ export const { Types, Creators } = createActions({
   trainModelRequest: [],
   trainModelSuccess: ['data'],
   trainModelError: ['err'],
-  getTrainModel: []
+  getTrainModel: [],
+  postTrainModel: ['data', 'lastModelSaved']
 });
 
 /** --------------------------------
@@ -15,6 +16,7 @@ export const { Types, Creators } = createActions({
 
 const INITIAL_STATE = Immutable({
   data: [],
+  lastModelSaved: null,
   loading: false,
   error: false
 });
@@ -25,7 +27,7 @@ export const init = state => state.merge({ data: [] });
 
 export const request = state => state.merge({ loading: true });
 
-export const success = (state, { data }) => state.merge({ data, error: false, loading: false });
+export const success = (state, { data, lastModelSaved }) => state.merge({ data, lastModelSaved, error: false, loading: false });
 
 export const error = state => state.merge({ loading: false, error: true });
 

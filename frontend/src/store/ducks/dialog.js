@@ -14,7 +14,8 @@ export const INITIAL_STATE = Immutable({
   alert: false,
   moodle: false,
   preProcessingConstant: false,
-  trainConfig: false
+  trainConfig: false,
+  trainSave: false
 });
 
 /* Reducers */

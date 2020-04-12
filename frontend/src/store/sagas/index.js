@@ -19,7 +19,7 @@ import { getSubjects } from './subject';
 import { getSemesters } from './semester';
 import { getIndicators } from './indicator';
 import { postTrainStatus } from './train_status';
-import { getTrainModel } from './train_model';
+import { getTrainModel, postTrainModel } from './train_model';
 import { signInRequest, signOutRequest } from './auth';
 import { getPreProcessing, deletePreProcessing } from './pre_processing';
 
@@ -40,5 +40,6 @@ export default function* rootSaga() {
     takeLatest(TrainTypes.DELETE_TRAIN, deleteTrain),
     takeLatest(TrainStatusTypes.POST_TRAIN_STATUS, postTrainStatus),
     takeLatest(TrainModelTypes.GET_TRAIN_MODEL, getTrainModel),
+    takeLatest(TrainModelTypes.POST_TRAIN_MODEL, postTrainModel),
   ])
 }

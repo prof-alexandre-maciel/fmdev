@@ -1,23 +1,28 @@
 import { createReducer, createActions } from 'reduxsauce';
 import Immutable from 'seamless-immutable';
-import { TRAIN_MODEL } from '../../constants';
+import { LMS_SELECT, ADD_TRAIN } from '../../constants';
 
 /* Types & Action Creators */
 
 export const { Types, Creators } = createActions({
-  setScreen: ['screen', 'data']
+  setScreen: ['screen', 'component', 'data']
 });
 
 /* Initial State */
 
 export const INITIAL_STATE = Immutable({
-  activeScreen: TRAIN_MODEL,
+  activeScreen: ADD_TRAIN,
+  activeComponent: LMS_SELECT,
   data: {}
 });
 
 /* Reducers */
 
-export const set = (state, { screen, data }) => state.merge({ activeScreen: screen, data });
+export const set = (state, { screen, component, data }) => state.merge({
+  activeScreen: screen,
+  activeComponent: component,
+  data
+});
 
 /* Reducers to types */
 

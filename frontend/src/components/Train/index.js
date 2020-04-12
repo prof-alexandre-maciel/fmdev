@@ -9,7 +9,7 @@ import {
   StatusMsgContainer
 } from './styles';
 import Button from '../../styles/Button';
-import { PRE_PROCESSING } from '../../constants';
+import { PRE_PROCESSING, ADD_TRAIN } from '../../constants';
 import { connect } from 'react-redux';
 import Countdown from 'react-countdown';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -21,6 +21,7 @@ import { actions as toastrActions } from 'react-redux-toastr';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { Beforeunload } from 'react-beforeunload';
 import AlertDialog from '../AlertDialog';
+import TrainModelSaveDialog from '../TrainModelSaveDialog';
 import { Creators as DialogActions } from '../../store/ducks/dialog';
 
 class Train extends Component {
@@ -149,19 +150,19 @@ class Train extends Component {
       return;
     }
 
-    this.props.setScreen(PRE_PROCESSING);
+    this.props.setScreen(ADD_TRAIN, PRE_PROCESSING);
   }
 
   deleteTrain = () => {
     const { path } = this.props.pre_processing;
 
     this.props.deleteTrain({ path });
-    this.props.setScreen(PRE_PROCESSING);
+    this.props.setScreen(ADD_TRAIN, PRE_PROCESSING);
   }
 
   render() {
     const { countdown } = this.state;
-    const { train, screen, train_status } = this.props;
+    const { train, screen, train_status, train_model } = this.props;
     const { loading, error } = this.props.train;
     const { data } = this.props.pre_processing;
     const isFinished = !train.loading && Object.keys(train.data).length > 0;
@@ -181,7 +182,12 @@ class Train extends Component {
               <h1>Treinamento</h1>
               <div>
                 <Button disabled={!isFinished} filled={false}>Ver Métricas</Button>
-                <Button disabled={!isFinished}>SALVAR MODELO</Button>
+                {!train_model.lastModelSaved ?
+                  <Button
+                    onClick={isFinished ? this.props.setDialog.bind(this, 'trainSave') : null}
+                    disabled={!isFinished}>SALVAR MODELO</Button>
+                  : null}
+                {train_model.lastModelSaved ? <Button disabled={!isFinished}>MODELO SALVO</Button> : null}
               </div>
             </Header>
 
@@ -232,18 +238,20 @@ class Train extends Component {
 
           </ConfigContainer >
           <AlertDialog onSubmit={this.deleteTrain}></AlertDialog>
+          <TrainModelSaveDialog />
         </PerfectScrollbar>
       </Beforeunload>
     )
   }
 }
 
-const mapStateToProps = ({ train, screen, pre_processing, train_status }) =>
-  ({ train, screen, pre_processing, train_status });
+const mapStateToProps = ({ train, screen, pre_processing, train_status, train_model }) =>
+  ({ train, screen, pre_processing, train_status, train_model });
 
 export default connect(mapStateToProps,
   {
     ...TrainStatusActions, ...toastrActions,
-    ...ScreenActions, ...DialogActions, ...TrainActions
+    ...ScreenActions, ...DialogActions,
+    ...TrainActions
   }
 )(Train);

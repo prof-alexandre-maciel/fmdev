@@ -5,17 +5,12 @@ import { Container, ItemList, Item, ItemText, Logo } from './styles';
 import { connect } from 'react-redux';
 
 import { Creators as AuthActions } from '../../store/ducks/auth';
-import { Creators as DialogActions } from '../../store/ducks/screen';
-import { bindActionCreators } from 'redux';
+import { Creators as ScreenActions } from '../../store/ducks/screen';
 import AddIcon from 'react-feather/dist/icons/plus-circle';
 import TranModelIcon from 'react-feather/dist/icons/package';
-import { LMS_SELECT, TRAIN_MODEL } from '../../constants';
+import { LMS_SELECT, TRAIN_MODEL, ADD_TRAIN } from '../../constants';
 
 class SideMenu extends Component {
-
-  setScreen = (screen) => {
-    this.props.setScreen(screen);
-  }
 
   getStrokeWidth = (screen) => {
     const { activeScreen } = this.props.screen;
@@ -32,10 +27,12 @@ class SideMenu extends Component {
     const { signOutRequest } = this.props;
     const links = [
       {
-        path: LMS_SELECT,
-        icon: <AddIcon color={'#FFF'} strokeWidth={this.getStrokeWidth(LMS_SELECT)} />
+        screen: ADD_TRAIN,
+        component: LMS_SELECT,
+        icon: <AddIcon color={'#FFF'} strokeWidth={this.getStrokeWidth(ADD_TRAIN)} />
       }, {
-        path: TRAIN_MODEL,
+        screen: TRAIN_MODEL,
+        component: TRAIN_MODEL,
         icon: <TranModelIcon color={'#FFF'} strokeWidth={this.getStrokeWidth(TRAIN_MODEL)} />
       }
     ];
@@ -49,7 +46,7 @@ class SideMenu extends Component {
           {links.map((link, idx) => (
             <Item
               key={idx}
-              onClick={this.setScreen.bind(this, link.path)}>
+              onClick={this.props.setScreen.bind(this, link.screen, link.component, null)}>
               {link.icon}
             </Item>
           ))}
@@ -68,5 +65,5 @@ const mapStateToProps = ({ screen }) => ({ screen });
 
 export default connect(
   mapStateToProps,
-  { ...AuthActions, ...DialogActions }
+  { ...AuthActions, ...ScreenActions }
 )(SideMenu);

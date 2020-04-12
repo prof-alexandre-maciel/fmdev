@@ -21,7 +21,7 @@ import totara_learn from '../../assets/totara_learn.svg';
 import Dialog from '../Dialog';
 import Button from '../../styles/Button';
 import { ConfigContainer } from '../../styles/ConfigContainer';
-import { INDICATORS, MOODLE } from '../../constants';
+import { INDICATORS, MOODLE, ADD_TRAIN } from '../../constants';
 import Select from 'react-select';
 import { selectStyle } from '../../styles/global';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -64,7 +64,7 @@ class LmsSelect extends Component {
     putLms({ id, url, token, version: version.value });
     setDialog(name);
     getIndicators({ lms: name });
-    setScreen(INDICATORS);
+    setScreen(ADD_TRAIN, INDICATORS);
   }
 
   renderWarningMsg = (msg) => {
