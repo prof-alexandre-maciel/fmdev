@@ -1,5 +1,6 @@
 import api from '../../services/api';
 import { Creators } from '../ducks/train';
+import { Creators as TrainStatusCreators } from '../ducks/train_status';
 import { call, put } from 'redux-saga/effects';
 import { actions as toastrActions } from 'react-redux-toastr';
 
@@ -16,6 +17,7 @@ export function* postTrain({ filter }) {
     }));
 
     yield put(Creators.trainSuccess(response.data));
+    yield put(TrainStatusCreators.postTrainStatus(filter));
   } catch (err) {
     yield put(Creators.trainError({ err }));
     yield put(toastrActions.add({

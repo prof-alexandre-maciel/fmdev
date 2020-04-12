@@ -50,7 +50,7 @@ class Train extends Component {
   getDiffExecutionTime = (item, idx) => {
     let diff = null;
     const { data } = this.props.train_status;
-    let now = idx === 0 ? moment(this.state.countdown) : moment(data[idx -1].date);
+    let now = idx === 0 ? moment(this.state.countdown) : moment(data[idx - 1].date);
     let finishedAt = moment(item.date);
     let nowDiff = moment(
       [~~now.format('YYYY'), ~~now.format('MM'), ~~now.format('DD'),
@@ -169,20 +169,21 @@ class Train extends Component {
               </div>
             </Header>
 
-            {data && data.length > 0 ?
-              <TrainInfo>
-                <div><b>Total de instâncias:</b> {data[0].count}</div>
-                <div><b>Tempo máximo de execução (previsto):</b> {screen.data.time} minutos</div>
+            <TrainInfo>
+              <div><b>Total de instâncias:</b> {data && data.length > 0 ? data[0].count : 'N/A'}</div>
+              {screen.data.time && loading ? <div><b>Tempo máximo de execução (previsto):</b> {screen.data.time} minutos</div> : null}
+              {!loading ? <div>&nbsp;</div> : null}
+            </TrainInfo>
 
-              </TrainInfo>
-              : null}
-
-            {screen.data.time ?
-              <TrainInfo>
-                <div><b>Treinamento:</b> {screen.data.train}% ({this.getSplit('train')} instâncias)  | <b>Testes:</b> {screen.data.test}% ({this.getSplit('test')} instâncias)</div>
-                <div><b>Tempo restante (previsto):</b> {loading ? <Countdown date={countdown + 1000 * 60 * screen.data.time} /> : 'N/A'}</div>
-              </TrainInfo>
-              : null}
+            <TrainInfo>
+              <div><b>Treinamento:</b> {screen.data.train}% ({this.getSplit('train')} instâncias)  | <b>Testes:</b> {screen.data.test}% ({this.getSplit('test')} instâncias)</div>
+              {screen.data.time && loading ?
+                <div>
+                  <b>Tempo restante (previsto):</b> {loading ? <Countdown date={countdown + 1000 * 60 * screen.data.time} /> : 'N/A'}
+                </div>
+                : null}
+              {!loading ? <div>&nbsp;</div> : null}
+            </TrainInfo>
 
 
             {!loading && !error && !train_status.data.length ?
