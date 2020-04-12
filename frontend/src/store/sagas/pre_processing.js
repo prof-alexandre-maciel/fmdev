@@ -29,3 +29,19 @@ export function* getPreProcessing({ filter }) {
     }));
   }
 }
+
+export function* deletePreProcessing({ filter }) {
+  try {
+    yield put(Creators.preProcessingDeleteRequest());
+    const response = yield call(api.delete, 'pre-processing', { data: filter });
+
+    yield put(Creators.preProcessingDeleteSuccess(response.data));
+  } catch (err) {
+    yield put(Creators.preProcessingDeleteError({ err }));
+    yield put(toastrActions.add({
+      type: 'error',
+      title: 'Erro',
+      message: 'Falha ao excluir dados do pré-processamento'
+    }));
+  }
+}

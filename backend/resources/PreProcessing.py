@@ -207,3 +207,19 @@ class PreProcessing(Resource):
         except:
             traceback.print_exc()
             return {"msg": "Error on POST PreProcessing"}, 500
+
+    def delete(self):
+        try:
+            payload = request.get_json()
+
+            if 'path' not in payload:
+                return {'msg': 'path is required to delete pre-processing data'}, 500
+
+            path = payload['path']
+            utils.delete_file(path)
+
+            return {'msg': 'Deleted with successful'}
+
+        except:
+            traceback.print_exc()
+            return {"msg": "Error on DELETE Train"}, 500

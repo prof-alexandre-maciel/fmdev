@@ -27,3 +27,19 @@ export function* postTrain({ filter }) {
     }));
   }
 }
+
+export function* deleteTrain({ filter }) {
+  try {
+    yield put(Creators.trainDeleteRequest());
+    const response = yield call(api.delete, 'train', { data: filter });
+
+    yield put(Creators.trainDeleteSuccess(response.data));
+  } catch (err) {
+    yield put(Creators.trainDeleteError({ err }));
+    yield put(toastrActions.add({
+      type: 'error',
+      title: 'Erro',
+      message: 'Falha ao excluir dados do treinamento'
+    }));
+  }
+}

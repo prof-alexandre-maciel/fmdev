@@ -210,11 +210,13 @@ class PreProcessing extends Component {
       return;
     }
 
-    this.props.setScreen(INDICATORS);
+    this.initPreProcessing();
   }
 
   initPreProcessing = () => {
-    this.props.preProcessingInit();
+    const { path } = this.props.pre_processing;
+
+    this.props.deletePreProcessing({ path });
     this.props.setScreen(INDICATORS);
   }
 

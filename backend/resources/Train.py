@@ -1,5 +1,6 @@
 import os
 import joblib
+import shutil
 import traceback
 import numpy as np
 import pandas as pd
@@ -52,7 +53,7 @@ class Train(Resource):
         df = pd.read_csv(path)
 
         return df
-    
+
     def load_model(self):
         filename = self.get_filename_from_path('.sav')
         loaded_model = joblib.load(open(filename, 'rb'))
@@ -119,4 +120,20 @@ class Train(Resource):
 
         except:
             traceback.print_exc()
-            return {"msg": "Error on POST Modeling"}, 500
+            return {"msg": "Error on POST Train"}, 500
+
+    def delete(self):
+        try:
+            filename = self.get_filename_from_path('')
+            shutil.rmtree(
+                f"{current_app.config.get('TRAIN_TPOT_OUTPUT')}/{filename}", ignore_errors=True)
+            utils.delete_file(
+                f"{current_app.config.get('TRAIN_MODELS')}/{filename}.sav")
+            utils.delete_file(
+                f"{current_app.config.get('TRAIN_PIPELINES')}/{filename}.py")
+
+            return {'msg': 'Deleted with successful'}
+
+        except:
+            traceback.print_exc()
+            return {"msg": "Error on DELETE Train"}, 500

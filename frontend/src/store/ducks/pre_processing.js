@@ -8,6 +8,11 @@ export const { Types, Creators } = createActions({
   preProcessingSuccess: ['data'],
   preProcessingError: ['err'],
   getPreProcessing: ['filter'],
+
+  deletePreProcessing: ['filter'],
+  preProcessingDeleteRequest: [],
+  preProcessingDeleteSuccess: ['data'],
+  preProcessingDeleteError: ['err'],
 });
 
 /** --------------------------------
@@ -20,7 +25,9 @@ const INITIAL_STATE = Immutable({
   filter: null,
   is_processed: false,
   loading: false,
-  error: false
+  error: false,
+  deleteLoading: false,
+  deleteError: false
 });
 
 /* Reducers */
@@ -41,6 +48,14 @@ export const error = state => state.merge({ loading: false, error: true });
 
 export const setFilter = (state, { filter }) => state.merge({ filter });
 
+/* Delete Reducers */
+
+export const deleteRequest = state => state.merge({ deleteLoading: true });
+
+export const deleteSuccess = state => state.merge({ data: { ...INITIAL_STATE }, deleteLoading: false, deleteError: false });
+
+export const deleteError = state => state.merge({ deleteLoading: false, deleteError: true });
+
 /* Reducers to types */
 
 export default createReducer(INITIAL_STATE, {
@@ -49,4 +64,8 @@ export default createReducer(INITIAL_STATE, {
   [Types.PRE_PROCESSING_SUCCESS]: success,
   [Types.PRE_PROCESSING_ERROR]: error,
   [Types.PRE_PROCESSING_SET_FILTER]: setFilter,
+
+  [Types.PRE_PROCESSING_DELETE_REQUEST]: deleteRequest,
+  [Types.PRE_PROCESSING_DELETE_SUCCESS]: deleteSuccess,
+  [Types.PRE_PROCESSING_DELETE_ERROR]: deleteError,
 });

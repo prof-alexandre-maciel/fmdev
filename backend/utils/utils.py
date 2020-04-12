@@ -1,3 +1,4 @@
+import os
 import json
 import math
 import traceback
@@ -41,3 +42,10 @@ def to_float(value):
   new_value = float(new_value)
 
   return new_value
+
+
+def delete_file(path):
+  if os.path.exists(path):
+    os.remove(path)
+  else:
+    print(f"The file {path} does not exist")

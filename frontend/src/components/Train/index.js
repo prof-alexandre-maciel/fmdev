@@ -16,9 +16,12 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 import CheckIcon from 'react-feather/dist/icons/check';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import { Creators as TrainStatusActions } from '../../store/ducks/train_status';
+import { Creators as TrainActions } from '../../store/ducks/train';
 import { actions as toastrActions } from 'react-redux-toastr';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { Beforeunload } from 'react-beforeunload';
+import AlertDialog from '../AlertDialog';
+import { Creators as DialogActions } from '../../store/ducks/dialog';
 
 class Train extends Component {
 
@@ -132,16 +135,29 @@ class Train extends Component {
   }
 
   checkGoBackToPreProcessing = () => {
-    const { loading } = this.props.train;
+    const { data, loading } = this.props.train;
 
     if (loading) {
       this.renderWarningMsg('Não é possível voltar para a tela de pré-processamento durante o treinamento!');
       return;
     }
 
+    if (Object.keys(data).length) {
+      this.props.setDialog('alert', {
+        description: 'Os dados gerados pelo treinamento serão perdidos. Você realmente deseja voltar para a tela de pré-processamento?'
+      });
+      return;
+    }
+
     this.props.setScreen(PRE_PROCESSING);
   }
 
+  deleteTrain = () => {
+    const { path } = this.props.pre_processing;
+
+    this.props.deleteTrain({ path });
+    this.props.setScreen(PRE_PROCESSING);
+  }
 
   render() {
     const { countdown } = this.state;
@@ -215,6 +231,7 @@ class Train extends Component {
             </Table>
 
           </ConfigContainer >
+          <AlertDialog onSubmit={this.deleteTrain}></AlertDialog>
         </PerfectScrollbar>
       </Beforeunload>
     )
@@ -225,5 +242,8 @@ const mapStateToProps = ({ train, screen, pre_processing, train_status }) =>
   ({ train, screen, pre_processing, train_status });
 
 export default connect(mapStateToProps,
-  { ...TrainStatusActions, ...toastrActions, ...ScreenActions }
+  {
+    ...TrainStatusActions, ...toastrActions,
+    ...ScreenActions, ...DialogActions, ...TrainActions
+  }
 )(Train);
