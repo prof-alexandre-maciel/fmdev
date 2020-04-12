@@ -13,6 +13,9 @@ class TrainModelResource(Resource):
     def get(self):
         try:
             user_id = utils.get_user_id(request)
+
+            print(user_id)
+
             res = TrainModel.query.filter_by(user_id=user_id).all()
 
             schema = TrainModelSchema(many=True)
@@ -22,7 +25,7 @@ class TrainModelResource(Resource):
 
         except:
             traceback.print_exc()
-            return [], 500
+            return None, 500
 
     def post(self):
         try:

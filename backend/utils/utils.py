@@ -59,8 +59,6 @@ def get_user_id(request):
 
   decoded_jwt = jwt.decode(encoded_jwt, verify=False)
 
-  print(decoded_jwt)
-
   if 'identity' in decoded_jwt:
     if 'id' in decoded_jwt['identity']:
       user_id = decoded_jwt['identity']['id']
