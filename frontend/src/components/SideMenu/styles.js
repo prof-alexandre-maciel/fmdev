@@ -14,7 +14,7 @@ export const ItemList = styled.div`
   flex-direction: column;
 `;
 
-export const Item = styled.button`
+export const Logo = styled.button`
   border: 0;
   background: transparent;
   margin: 0 0 8px;
@@ -25,10 +25,13 @@ export const Item = styled.button`
     width: 50px;
     height: 50px;
   }
+`;
 
-  &:hover img {
-    border-radius: 30%;
-  }
+export const Item = styled.button`
+  border: 0;
+  background: transparent;
+  margin: 0 0 8px;
+  margin-top: 2vh;
 `;
 
 export const ItemText = styled.span`

@@ -8,12 +8,15 @@ import Private from './private';
 import Guest from './guest';
 import Main from '../pages/Main'
 import SignIn from '../pages/Auth/SignIn';
+import { SIGNIN, ROOT, TRAIN_MODEL } from './constants';
+import TrainModel from '../pages/TrainModel';
 
 const Routes = () => (
   <ConnectedRouter history={history}>
     <Switch>
-      <Guest path='/signin' component={SignIn} />
-      <Private path='/' exact component={Main} />
+      <Guest path={SIGNIN} component={SignIn} />
+      <Private path={ROOT} exact component={Main} />
+      <Private path={TRAIN_MODEL} exact component={TrainModel} />
     </Switch>
   </ConnectedRouter>
 )

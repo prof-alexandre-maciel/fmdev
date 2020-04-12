@@ -11,8 +11,9 @@ import Indicators from '../../components/Indicators';
 import PreProcessing from '../../components/PreProcessing';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { Creators as LmsActions } from '../../store/ducks/lms';
-import { LMS_SELECT, INDICATORS, PRE_PROCESSING, TRAIN } from '../../constants';
+import { LMS_SELECT, INDICATORS, PRE_PROCESSING, TRAIN, TRAIN_MODEL } from '../../constants';
 import Train from '../../components/Train';
+import TrainModel from '../TrainModel';
 
 class Main extends Component {
 
@@ -37,6 +38,10 @@ class Main extends Component {
 
     if (activeScreen === TRAIN) {
       return <Train />;
+    }
+
+    if (activeScreen === TRAIN_MODEL) {
+      return <TrainModel />;
     }
 
     return null;
