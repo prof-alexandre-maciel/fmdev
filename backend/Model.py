@@ -87,3 +87,32 @@ class IndicatorSchema(ma.Schema):
     lms = fields.String()
     created_at = fields.DateTime()
     updated_at = fields.DateTime()
+
+
+class TrainModel(db.Model):
+    __tablename__ = 'train_models'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(), nullable=False)
+    description = db.Column(db.String())
+    model_id = db.Column(db.String(), nullable=False, index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    created_at = db.Column(db.DateTime(), nullable=False)
+    updated_at = db.Column(db.DateTime(), nullable=False)
+
+    def __init__(self, name, description, model_id, user_id, created_at, updated_at):
+        self.name = name
+        self.description = description
+        self.model_id = model_id
+        self.user_id = user_id
+        self.created_at = created_at
+        self.updated_at = updated_at
+
+
+class TrainModelSchema(ma.Schema):
+    id = fields.Integer(dump_only=True)
+    name = fields.String()
+    description = fields.String()
+    user_id = fields.Integer()
+    model_id = fields.Integer()
+    created_at = fields.DateTime()
+    updated_at = fields.DateTime()

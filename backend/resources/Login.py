@@ -13,7 +13,7 @@ class Login(Resource):
         password = request.get_json()['password']
 
         user = User.query \
-            .with_entities(User.password, User.username) \
+            .with_entities(User.id, User.password, User.username) \
             .filter_by(email=email).first()
         
         if user is None:
@@ -21,7 +21,7 @@ class Login(Resource):
 
         if bcrypt.check_password_hash(user.password, password):
             access_token = create_access_token(
-                identity={'username': user.username})
+                identity={'username': user.username, 'id': user.id})
             result = {
                 "refresh_token": None,
                 "token": access_token,

@@ -1,4 +1,5 @@
 import os
+import jwt
 import json
 import math
 import traceback
@@ -49,3 +50,26 @@ def delete_file(path):
     os.remove(path)
   else:
     print(f"The file {path} does not exist")
+  
+
+def get_user_id(request):
+  user_id = None
+  encoded_jwt = request.headers['Authorization']
+  encoded_jwt = encoded_jwt.replace('Bearer ', '')
+
+  decoded_jwt = jwt.decode(encoded_jwt, verify=False)
+
+  print(decoded_jwt)
+
+  if 'identity' in decoded_jwt:
+    if 'id' in decoded_jwt['identity']:
+      user_id = decoded_jwt['identity']['id']
+
+  return user_id
+
+def get_filename_from_path(request, extension):
+  payload = request.get_json()
+  path = payload['path']
+  filename = os.path.basename(path).replace('.csv', extension)
+
+  return filename
