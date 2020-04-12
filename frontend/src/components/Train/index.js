@@ -47,9 +47,10 @@ class Train extends Component {
     clearInterval(this.state.interval);
   }
 
-  getDiffExecutionTime = (item) => {
+  getDiffExecutionTime = (item, idx) => {
     let diff = null;
-    let now = moment(this.state.countdown);
+    const { data } = this.props.train_status;
+    let now = idx === 0 ? moment(this.state.countdown) : moment(data[idx -1].date);
     let finishedAt = moment(item.date);
     let nowDiff = moment(
       [~~now.format('YYYY'), ~~now.format('MM'), ~~now.format('DD'),
@@ -94,7 +95,7 @@ class Train extends Component {
       <ItemColumn>{item.step}</ItemColumn>
       <ItemColumn>{item.status}</ItemColumn>
       <ItemColumn>{item.date ? moment(item.date).format('DD/MM/YYYY HH:mm:ss') : null}</ItemColumn>
-      <ItemColumn>{item.date ? this.getDiffExecutionTime(item) : null}</ItemColumn>
+      <ItemColumn>{item.date ? this.getDiffExecutionTime(item, idx) : null}</ItemColumn>
       <ItemColumn>{item.score}</ItemColumn>
     </tr>
   )

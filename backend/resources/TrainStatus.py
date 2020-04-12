@@ -61,6 +61,7 @@ class TrainStatus(Resource):
     def post(self):
         try:
             data = []
+            data_obj = {}
             filename = self.get_filename_from_path('')
             output_folder = f"{current_app.config.get('TRAIN_TPOT_OUTPUT')}/{filename}"
             od_files = self.get_files_from_dir(output_folder)
@@ -69,12 +70,19 @@ class TrainStatus(Resource):
                score = self.get_score_from_content(file)
                date = self.get_date_from_filename(file)
 
-               data.append({
+               data_obj[date] = {
                    'date': date,
-                   'step': f"Treinamento {idx + 1}",
                    'status': 'Finalizado',
                    'score': utils.to_float(float(score))
-               })
+               }
+            
+            for idx, item in enumerate(data_obj):
+                data.append({
+                    'date': data_obj[item]['date'],
+                    'step': f"Treinamento {idx + 1}",
+                    'status': 'Finalizado',
+                    'score': data_obj[item]['score']
+                })
             
             return data
         except:

@@ -126,7 +126,7 @@ class Indicators extends Component {
           <Header>
             <h1>Selecione os indicadores</h1>
             <div>
-              <Button onClick={this.onSubmit.bind(this)}>Continuar</Button>
+              <Button onClick={this.onSubmit.bind(this)}>PRÉ-PROCESSAR BASE</Button>
             </div>
           </Header>
 
