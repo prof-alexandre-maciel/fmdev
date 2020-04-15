@@ -12,6 +12,7 @@ from resources.PreProcessing import PreProcessing
 from resources.Train import Train
 from resources.TrainStatus import TrainStatus
 from resources.TrainModel import TrainModelResource
+from resources.Metric import Metric
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
@@ -29,3 +30,4 @@ api.add_resource(Chart, '/chart')
 api.add_resource(Train, '/train')
 api.add_resource(TrainStatus, '/train-status')
 api.add_resource(TrainModelResource, '/train-model')
+api.add_resource(Metric, '/metric')

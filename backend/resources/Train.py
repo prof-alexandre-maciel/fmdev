@@ -54,12 +54,6 @@ class Train(Resource):
 
         return df
 
-    def load_model(self):
-        filename = self.get_filename_from_path('.sav')
-        loaded_model = joblib.load(open(filename, 'rb'))
-
-        return loaded_model
-
     def get_df_without_one_hot_encoding(self, target):
         df = self.get_dataframe_from_csv()
         df_categoric = df.copy()
@@ -88,6 +82,12 @@ class Train(Resource):
         filename = f"{current_app.config.get('TRAIN_PIPELINES')}/{filename}"
         tpot.export(filename)
 
+    def save_split(self, df, split_type):
+        filename = self.get_filename_from_path('.csv')
+        filename = f"{current_app.config.get(split_type)}/{filename}"
+
+        df.to_csv(filename, index=False)
+
     def post(self):
         try:
             payload = request.get_json()
@@ -111,6 +111,10 @@ class Train(Resource):
 
             self.save(tpot)
             self.export(tpot)
+            self.save_split(x_train, 'TRAIN_FEATURES')
+            self.save_split(y_train, 'TRAIN_TARGET')
+            self.save_split(x_test, 'TEST_FEATURES')
+            self.save_split(y_test, 'TEST_TARGET')
 
             return {
                 "score": tpot.score(x_test, y_test),
@@ -130,7 +134,13 @@ class Train(Resource):
             utils.delete_file(
                 f"{current_app.config.get('TRAIN_MODELS')}/{filename}.sav")
             utils.delete_file(
-                f"{current_app.config.get('TRAIN_PIPELINES')}/{filename}.py")
+                f"{current_app.config.get('TRAIN_FEATURES')}/{filename}.csv")
+            utils.delete_file(
+                f"{current_app.config.get('TRAIN_TARGET')}/{filename}.csv")
+            utils.delete_file(
+                f"{current_app.config.get('TEST_FEATURES')}/{filename}.csv")
+            utils.delete_file(
+                f"{current_app.config.get('TEST_TARGET')}/{filename}.csv")
 
             return {'msg': 'Deleted with successful'}
 
