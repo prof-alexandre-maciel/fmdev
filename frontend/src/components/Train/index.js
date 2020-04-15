@@ -6,10 +6,10 @@ import {
   Header, Table,
   FirstHeaderColumn, HeaderColumn,
   FirstItemColumn, ItemColumn, TrainInfo,
-  StatusMsgContainer
+  StatusMsgContainer, ScoreContainer
 } from './styles';
 import Button from '../../styles/Button';
-import { PRE_PROCESSING, ADD_TRAIN } from '../../constants';
+import { PRE_PROCESSING, ADD_TRAIN, TRAIN_MODEL } from '../../constants';
 import { connect } from 'react-redux';
 import Countdown from 'react-countdown';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -164,6 +164,10 @@ class Train extends Component {
     this.props.setDialog('trainSave');
   }
 
+  goToSaveModels = () => {
+    this.props.setScreen(TRAIN_MODEL, TRAIN_MODEL, null);
+  }
+
   render() {
     const { countdown } = this.state;
     const { train, screen, train_status, train_model } = this.props;
@@ -184,8 +188,13 @@ class Train extends Component {
 
             <Header>
               <h1>Treinamento</h1>
-              <div>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                {train.data && train.data.score ? <ScoreContainer>Score de Teste: <b>{train.data.score.toFixed(2)}</b></ScoreContainer> : null}
                 <Button disabled={!isFinished} filled={false}>Ver Métricas</Button>
+                {train_model.lastModelSaved ?
+                  <Button
+                    filled={false}
+                    onClick={this.goToSaveModels.bind(this)}>VER MODELOS SALVOS</Button> : null}
                 {!train_model.lastModelSaved ?
                   <Button
                     onClick={isFinished ? this.openSaveModel.bind(this) : null}

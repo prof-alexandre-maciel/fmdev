@@ -86,3 +86,11 @@ export const FirstItemColumn = styled.td`
 export const ItemColumn = styled.td`
   padding: .7rem;
 `;
+
+export const ScoreContainer = styled.div`
+  background: rgba(176, 190, 255, 0.31);
+  border-radius: 72px;
+  padding: 5px 20px;
+  margin-right: 2vw;
+  font-size: 14px;
+`;
