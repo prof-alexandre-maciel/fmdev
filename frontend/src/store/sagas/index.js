@@ -10,6 +10,7 @@ import { Types as PreProcessingTypes } from '../ducks/pre_processing';
 import { Types as TrainTypes } from '../ducks/train';
 import { Types as TrainStatusTypes } from '../ducks/train_status';
 import { Types as TrainModelTypes } from '../ducks/train_model';
+import { Types as TrainMetricTypes } from '../ducks/train_metric';
 
 import { getChart } from './chart';
 import { postTrain, deleteTrain } from './train';
@@ -20,6 +21,7 @@ import { getSemesters } from './semester';
 import { getIndicators } from './indicator';
 import { postTrainStatus } from './train_status';
 import { getTrainModel, postTrainModel } from './train_model';
+import { postTrainMetric } from './train_metric';
 import { signInRequest, signOutRequest } from './auth';
 import { getPreProcessing, deletePreProcessing } from './pre_processing';
 
@@ -41,5 +43,6 @@ export default function* rootSaga() {
     takeLatest(TrainStatusTypes.POST_TRAIN_STATUS, postTrainStatus),
     takeLatest(TrainModelTypes.GET_TRAIN_MODEL, getTrainModel),
     takeLatest(TrainModelTypes.POST_TRAIN_MODEL, postTrainModel),
+    takeLatest(TrainMetricTypes.POST_TRAIN_METRIC, postTrainMetric),
   ])
 }

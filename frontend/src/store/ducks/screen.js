@@ -1,6 +1,6 @@
 import { createReducer, createActions } from 'reduxsauce';
 import Immutable from 'seamless-immutable';
-import { TRAIN, ADD_TRAIN } from '../../constants';
+import { LMS_SELECT, ADD_TRAIN } from '../../constants';
 
 /* Types & Action Creators */
 
@@ -12,7 +12,7 @@ export const { Types, Creators } = createActions({
 
 export const INITIAL_STATE = Immutable({
   activeScreen: ADD_TRAIN,
-  activeComponent: TRAIN,
+  activeComponent: LMS_SELECT,
   data: {}
 });
 

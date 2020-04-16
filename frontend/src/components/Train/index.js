@@ -22,7 +22,9 @@ import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { Beforeunload } from 'react-beforeunload';
 import AlertDialog from '../AlertDialog';
 import TrainModelSaveDialog from '../TrainModelSaveDialog';
+import TrainMetricDialog from '../TrainMetricDialog';
 import { Creators as DialogActions } from '../../store/ducks/dialog';
+import { Creators as TrainMetricActions } from '../../store/ducks/train_metric';
 
 class Train extends Component {
 
@@ -164,6 +166,13 @@ class Train extends Component {
     this.props.setDialog('trainSave');
   }
 
+  openViewMetrics = () => {
+    const { path } = this.props.pre_processing;
+
+    this.props.postTrainMetric({ path });
+    this.props.setDialog('trainMetrics');
+  }
+
   goToSaveModels = () => {
     this.props.setScreen(TRAIN_MODEL, TRAIN_MODEL, null);
   }
@@ -190,7 +199,10 @@ class Train extends Component {
               <h1>Treinamento</h1>
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 {train.data && train.data.score ? <ScoreContainer>Score de Teste: <b>{train.data.score.toFixed(2)}</b></ScoreContainer> : null}
-                <Button disabled={!isFinished} filled={false}>Ver Métricas</Button>
+                <Button
+                  onClick={isFinished ? this.openViewMetrics.bind(this) : null}
+                  disabled={!isFinished}
+                  filled={false}>Ver Métricas</Button>
                 {train_model.lastModelSaved ?
                   <Button
                     filled={false}
@@ -252,6 +264,7 @@ class Train extends Component {
           </ConfigContainer >
           <AlertDialog onSubmit={this.deleteTrain}></AlertDialog>
           <TrainModelSaveDialog />
+          <TrainMetricDialog />
         </PerfectScrollbar>
       </Beforeunload>
     )
@@ -265,6 +278,6 @@ export default connect(mapStateToProps,
   {
     ...TrainStatusActions, ...toastrActions,
     ...ScreenActions, ...DialogActions,
-    ...TrainActions
+    ...TrainActions, ...TrainMetricActions
   }
 )(Train);

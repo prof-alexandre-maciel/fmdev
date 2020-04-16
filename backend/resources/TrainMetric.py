@@ -7,8 +7,8 @@ from sklearn.metrics import SCORERS
 from flask import request, current_app
 
 
-class Metric(Resource):
-    
+class TrainMetric(Resource):
+
     def get_test_data(self, split_type):
         filename = utils.get_filename_from_path(request, '.csv')
         filename = f"{current_app.config.get(split_type)}/{filename}"
@@ -16,13 +16,17 @@ class Metric(Resource):
 
         return data
 
+
     def get_metrics(self, tpot, x_test, y_test):
-        metrics = {
-            'score': tpot.score(x_test, y_test),
-            'precision': SCORERS['precision'](tpot, x_test, y_test),
-            'recall': SCORERS['recall'](tpot, x_test, y_test),
-            'roc_auc': SCORERS['roc_auc'](tpot, x_test, y_test)
-        }
+        metrics = [
+            {'name': 'Acurácia', 'value': tpot.score(x_test, y_test)},
+            {'name': 'Precisão', 'value':  SCORERS['precision'](
+                tpot, x_test, y_test)},
+            {'name': 'Recall', 'value': SCORERS['recall'](
+                tpot, x_test, y_test)},
+            {'name': 'Curva ROC', 'value': SCORERS['roc_auc'](
+                tpot, x_test, y_test)}
+        ]
 
         return metrics
 
@@ -35,6 +39,7 @@ class Metric(Resource):
 
     def post(self):
         try:
+            data = []
             tpot = self.load_model()
             x_test = self.get_test_data('TEST_FEATURES')
             y_test = self.get_test_data('TEST_TARGET')
