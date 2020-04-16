@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Header = styled.div`
   display: flex;
@@ -85,4 +85,13 @@ export const FirstItemColumn = styled.td`
 
 export const ItemColumn = styled.td`
   padding: .7rem;
+
+  ${props => props.isClicked && css`
+    display: flex;
+    justify-content: center;
+
+    &:hover {
+      cursor: pointer;
+    }
+  `}
 `;
