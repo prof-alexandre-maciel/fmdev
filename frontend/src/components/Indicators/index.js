@@ -190,6 +190,7 @@ class Indicators extends Component {
 
             <RightContainer>
               <PickList
+                metaKeySelection={false}
                 responsive={true}
                 showSourceControls={false}
                 showTargetControls={false}
@@ -199,7 +200,7 @@ class Indicators extends Component {
                 target={indicators}
                 onChange={this.onPickListChange.bind(this)}
                 itemTemplate={this.getPickListTemplate.bind(this)}
-                sourceStyle={{ height: '40vh', width: '25vw' }} targetStyle={{ height: '40vh', width: '25vw' }}
+                sourceStyle={{ height: '40vh', width: '28vw' }} targetStyle={{ height: '40vh', width: '28vw' }}
               />
             </RightContainer>
 

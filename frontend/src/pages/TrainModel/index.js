@@ -7,7 +7,8 @@ import {
   ItemColumn,
   FirstHeaderColumn,
   FirstItemColumn,
-  StatusMsgContainer
+  StatusMsgContainer,
+  LoadingContainer
 } from './styles';
 import { connect } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -25,6 +26,7 @@ import TrashIcon from 'react-feather/dist/icons/trash';
 import { primaryColor } from '../../styles/global';
 import { PRE_PROCESSING_RAW, TRAIN_PIPELINES } from '../../constants';
 import AlertDialog from '../../components/AlertDialog';
+import { ProgressSpinner } from 'primereact/progressspinner';
 
 class TrainModel extends Component {
 
@@ -157,8 +159,14 @@ class TrainModel extends Component {
           </Header>
 
 
-          {!data.length ?
+          {!data.length && !loading ?
             <StatusMsgContainer> Sem modelos salvos para serem exibidos. </StatusMsgContainer>
+            : null}
+
+          {loading ?
+            <LoadingContainer>
+              <ProgressSpinner style={{ width: '50px', height: '50px' }} strokeWidth="4" fill="#EEEEEE" animationDuration=".5s" />
+            </LoadingContainer>
             : null}
 
           {data.length && !loading ?

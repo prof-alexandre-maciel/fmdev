@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Flask
 from marshmallow import Schema, fields, pre_load, validate
 from flask_marshmallow import Marshmallow
@@ -7,6 +8,10 @@ from flask_sqlalchemy import SQLAlchemy
 ma = Marshmallow()
 db = SQLAlchemy()
 
+class TimestampMixin(object):
+    created_at = db.Column(
+        db.DateTime, nullable=False, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, onupdate=datetime.utcnow)
 
 class User(db.Model):
     __tablename__ = 'users'
@@ -88,8 +93,7 @@ class IndicatorSchema(ma.Schema):
     created_at = fields.DateTime()
     updated_at = fields.DateTime()
 
-
-class TrainModel(db.Model):
+class TrainModel(db.Model, TimestampMixin):
     __tablename__ = 'train_models'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(), nullable=False)
@@ -97,17 +101,17 @@ class TrainModel(db.Model):
     model_id = db.Column(db.String(), nullable=False, index=True)
     score = db.Column(db.Float())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    created_at = db.Column(db.DateTime(), nullable=False)
-    updated_at = db.Column(db.DateTime(), nullable=False)
+    # created_at = db.Column(db.DateTime(), nullable=False)
+    # updated_at = db.Column(db.DateTime(), nullable=False)
 
-    def __init__(self, name, description, model_id, score, user_id, created_at, updated_at):
+    def __init__(self, name, description, model_id, score, user_id):
         self.name = name
         self.description = description
         self.model_id = model_id
         self.score = score
         self.user_id = user_id
-        self.created_at = created_at
-        self.updated_at = updated_at
+        # self.created_at = created_at
+        # self.updated_at = updated_at
 
 
 class TrainModelSchema(ma.Schema):
@@ -117,5 +121,5 @@ class TrainModelSchema(ma.Schema):
     user_id = fields.Integer()
     model_id = fields.String()
     score = fields.Float()
-    created_at = fields.DateTime()
-    updated_at = fields.DateTime()
+    # created_at = fields.DateTime()
+    # updated_at = fields.DateTime()

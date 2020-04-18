@@ -6,6 +6,7 @@ const sizes = {
     margin-bottom: 20vh;
     margin-left: 20vw;
     width: 60%;
+    min-height: 60vh;
   `,
   big: css`
     margin-top: 5vh;
@@ -13,6 +14,7 @@ const sizes = {
     margin-left: 5vw;
     margin-right: 5vw;
     width: 90%;
+    min-height: 90vh;
   `
 };
 

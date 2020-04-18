@@ -23,17 +23,18 @@ class SideMenu extends Component {
   }
 
   render() {
-    
+
     const { signOutRequest } = this.props;
     const links = [
+      {
+        screen: TRAIN_MODEL,
+        component: TRAIN_MODEL,
+        icon: <TranModelIcon color={'#FFF'} strokeWidth={this.getStrokeWidth(TRAIN_MODEL)} />
+      },
       {
         screen: ADD_TRAIN,
         component: LMS_SELECT,
         icon: <AddIcon color={'#FFF'} strokeWidth={this.getStrokeWidth(ADD_TRAIN)} />
-      }, {
-        screen: TRAIN_MODEL,
-        component: TRAIN_MODEL,
-        icon: <TranModelIcon color={'#FFF'} strokeWidth={this.getStrokeWidth(TRAIN_MODEL)} />
       }
     ];
 

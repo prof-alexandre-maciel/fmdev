@@ -36,7 +36,7 @@ class TrainModelSaveDialog extends Component {
 
   submit = () => {
     const { path } = this.props.pre_processing;
-    const { score } = this.props.train;
+    const { score } = this.props.train.data;
     const { name, description } = this.state;
 
     if (!name || !description) {
@@ -45,7 +45,10 @@ class TrainModelSaveDialog extends Component {
     }
 
     this.props.postTrainModel({
-      name, description, path, score
+      name, 
+      description, 
+      path, 
+      score: score || null
     });
   }
 

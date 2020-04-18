@@ -1,6 +1,6 @@
 import { createReducer, createActions } from 'reduxsauce';
 import Immutable from 'seamless-immutable';
-import { TRAIN_MODEL, ADD_TRAIN } from '../../constants';
+import { TRAIN_MODEL } from '../../constants';
 
 /* Types & Action Creators */
 

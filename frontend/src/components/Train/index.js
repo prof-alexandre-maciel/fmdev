@@ -245,7 +245,7 @@ class Train extends Component {
                   <HeaderColumn>Status</HeaderColumn>
                   <HeaderColumn>Finalizado em</HeaderColumn>
                   <HeaderColumn>Tempo de Execução</HeaderColumn>
-                  <HeaderColumn>Score (Treinamento)</HeaderColumn>
+                  <HeaderColumn>Score de Treinamento</HeaderColumn>
                 </tr>
               </thead>
 

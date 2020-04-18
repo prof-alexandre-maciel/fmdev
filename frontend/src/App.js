@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { Provider } from 'react-redux';
-
 import GlobalStyle from './styles/global';
 import ReduxToastr from 'react-redux-toastr';
 
