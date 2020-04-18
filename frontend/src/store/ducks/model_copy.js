@@ -2,11 +2,11 @@ import { createActions, createReducer } from 'reduxsauce';
 import Immutable from 'seamless-immutable';
 
 export const { Types, Creators } = createActions({
-  copyInit: [],
-  copyRequest: [],
-  copySuccess: ['data'],
-  copyError: ['err'],
-  getCopy: ['id']
+  modelCopyInit: [],
+  modelCopyRequest: [],
+  modelCopySuccess: ['data'],
+  modelCopyError: ['err'],
+  getModelCopy: ['id']
 });
 
 /** --------------------------------
@@ -32,8 +32,8 @@ export const error = state => state.merge({ loading: false, error: true });
 /* Reducers to types */
 
 export default createReducer(INITIAL_STATE, {
-  [Types.COPY_INIT]: init,
-  [Types.COPY_REQUEST]: request,
-  [Types.COPY_SUCCESS]: success,
-  [Types.COPY_ERROR]: error
+  [Types.MODEL_COPY_INIT]: init,
+  [Types.MODEL_COPY_REQUEST]: request,
+  [Types.MODEL_COPY_SUCCESS]: success,
+  [Types.MODEL_COPY_ERROR]: error
 });

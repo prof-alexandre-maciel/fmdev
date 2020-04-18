@@ -8,7 +8,7 @@ from flask import request, current_app
 from flask_jwt_extended import jwt_required
 
 
-class Copy(Resource):
+class ModelCopy(Resource):
 
     def get_curl_template(self, key, data):
         template = f"""curl --location --request POST '{current_app.config.get('BASE_URL')}/api/predict/{key}' \

@@ -12,7 +12,7 @@ import {
 import { connect } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Creators as TrainModelActions } from '../../store/ducks/train_model';
-import { Creators as CopyActions } from '../../store/ducks/copy';
+import { Creators as ModelCopyActions } from '../../store/ducks/model_copy';
 import { actions as toastrActions } from 'react-redux-toastr';
 import { Menu, MenuItem } from '@material-ui/core';
 import MoreIcon from 'react-feather/dist/icons/more-horizontal';
@@ -60,7 +60,7 @@ class TrainModel extends Component {
     this.setState({ anchorEl: event.currentTarget, itemSelected: item });
   };
 
-  handleCopyToClipboard = (item, event) => this.props.getCopy(item.model_id);
+  handleCopyToClipboard = (item, event) => this.props.getModelCopy(item.model_id);
 
   renderMenuActions = () => {
     let actions = [
@@ -152,5 +152,5 @@ class TrainModel extends Component {
 const mapStateToProps = ({ train_model }) => ({ train_model });
 
 export default connect(mapStateToProps,
-  { ...TrainModelActions, ...toastrActions, ...CopyActions })
+  { ...TrainModelActions, ...toastrActions, ...ModelCopyActions })
   (TrainModel);

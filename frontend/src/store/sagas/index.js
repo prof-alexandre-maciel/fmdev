@@ -11,10 +11,10 @@ import { Types as TrainTypes } from '../ducks/train';
 import { Types as TrainStatusTypes } from '../ducks/train_status';
 import { Types as TrainModelTypes } from '../ducks/train_model';
 import { Types as TrainMetricTypes } from '../ducks/train_metric';
-import { Types as CopyTypes } from '../ducks/copy';
+import { Types as ModelCopyTypes } from '../ducks/model_copy';
 
 import { getChart } from './chart';
-import { getCopy } from './copy';
+import { getModelCopy } from './model_copy';
 import { postTrain, deleteTrain } from './train';
 import { getLms, putLms } from './lms';
 import { getCourses } from './course';
@@ -30,7 +30,7 @@ import { getPreProcessing, deletePreProcessing } from './pre_processing';
 export default function* rootSaga() {
   return yield all([
     takeLatest(ChartTypes.GET_CHART, getChart),
-    takeLatest(CopyTypes.GET_COPY, getCopy),
+    takeLatest(ModelCopyTypes.GET_MODEL_COPY, getModelCopy),
     takeLatest(AuthTypes.SIGN_IN_REQUEST, signInRequest),
     takeLatest(AuthTypes.SIGN_OUT_REQUEST, signOutRequest),
     takeLatest(LmsTypes.GET_LMS, getLms),
