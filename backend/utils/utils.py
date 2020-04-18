@@ -90,3 +90,5 @@ def delete_model_files(filename):
         f"{current_app.config.get('TEST_FEATURES')}/{filename}.csv")
     delete_file(
         f"{current_app.config.get('TEST_TARGET')}/{filename}.csv")
+    delete_file(
+        f"{current_app.config.get('TRAIN_PIPELINES')}/{filename}.py")
