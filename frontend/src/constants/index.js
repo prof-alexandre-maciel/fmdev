@@ -5,3 +5,5 @@ export const ADD_TRAIN = 'ADD_MODEL';
 export const TRAIN_MODEL = 'TRAIN_MODEL';
 export const TRAIN = 'TRAIN';
 export const MOODLE = 'moodle';
+export const PRE_PROCESSING_RAW = 'PRE_PROCESSING_RAW';
+export const TRAIN_PIPELINES = 'TRAIN_PIPELINES';

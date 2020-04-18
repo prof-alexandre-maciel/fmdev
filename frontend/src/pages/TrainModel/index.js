@@ -22,6 +22,7 @@ import DownloadIcon from 'react-feather/dist/icons/download';
 import CodeIcon from 'react-feather/dist/icons/terminal';
 import TrashIcon from 'react-feather/dist/icons/trash';
 import { primaryColor } from '../../styles/global';
+import { PRE_PROCESSING_RAW, TRAIN_PIPELINES } from '../../constants';
 
 class TrainModel extends Component {
 
@@ -118,8 +119,12 @@ class TrainModel extends Component {
   handleMenuItemClick = (option, event) => {
     const { itemSelected } = this.state;
 
+    if (option && option.action === 'download_data') {
+      this.props.getDownload(itemSelected.model_id, PRE_PROCESSING_RAW);
+    }
+
     if (option && option.action === 'download_pipeline') {
-      this.props.getDownload(itemSelected.model_id, 'TRAIN_PIPELINES');
+      this.props.getDownload(itemSelected.model_id, TRAIN_PIPELINES);
     }
 
     this.handleMenuItemClose();

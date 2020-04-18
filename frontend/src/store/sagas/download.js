@@ -9,9 +9,9 @@ export function* getDownload({ id, action }) {
   try {
     yield put(Creators.downloadRequest());
     const response = yield call(api.get, `download/${id}?action=${action}`, { responseType: 'blob' });
-  
+
     yield put(Creators.downloadSuccess(response.data));
-    downloadStream(id, response.data, id);
+    downloadStream({ id, content: response.data, action });
 
   } catch (err) {
     yield put(Creators.downloadError({ err }));
