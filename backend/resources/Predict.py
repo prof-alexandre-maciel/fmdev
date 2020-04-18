@@ -2,6 +2,7 @@ import json
 import joblib
 import traceback
 import pandas as pd
+from numpy import array
 from utils import utils
 from flask_restful import Resource
 from flask import request, current_app
@@ -10,21 +11,23 @@ from flask_jwt_extended import jwt_required
 
 class Predict(Resource):
 
-    def get_df_test_data(self, filename, split_type):
-        filename = f"{current_app.config.get(split_type)}/{filename}.csv"
-        df = pd.read_csv(filename)
+    def load_model(self, filename):
+        path = f"{current_app.config.get('TRAIN_MODELS')}/{filename}.sav"
+        loaded_model = joblib.load(open(path, 'rb'))
 
-        return df
+        return loaded_model
 
     @jwt_required
     def post(self, key):
         try:
             payload = request.get_json()
-            df = self.get_df_test_data(key, 'TEST_FEATURES')
+            x_test = pd.DataFrame(payload['data']) 
+            model = self.load_model(filename=key)
+            predict = model.predict(x_test)
 
-            print(df, payload)
+            data_predicted = predict.tolist()
 
-            return {}
+            return { 'data': data_predicted }
         except:
             traceback.print_exc()
             return {"msg": "Error on GET Copy"}, 500
