@@ -30,11 +30,8 @@ class ModelCopy(Resource):
         try:
             df = self.get_df_test_data(key, 'TEST_FEATURES')
 
-            fields = df.columns.to_numpy().tolist()
-
             data = {
-                "fields": fields,
-                "values": df.iloc[0].to_numpy().tolist()
+                'data': [df.iloc[0].to_dict()]
             }
 
             template = self.get_curl_template(key, data)
