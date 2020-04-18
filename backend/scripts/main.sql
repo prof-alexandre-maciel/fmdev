@@ -150,3 +150,6 @@ CREATE TABLE moodle (
     desempenho_binario double precision NOT NULL,
     desempenho_classes character varying NOT NULL
 );
+
+
+COPY moodle FROM '${base_path}' DELIMITER ';' CSV HEADER;

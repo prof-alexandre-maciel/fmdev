@@ -77,7 +77,7 @@ def get_filename_from_path(request, extension):
     return filename
 
 
-def delete_train_data(filename):
+def delete_model_files(filename):
     shutil.rmtree(
         f"{current_app.config.get('TRAIN_TPOT_OUTPUT')}/{filename}", ignore_errors=True)
     delete_file(

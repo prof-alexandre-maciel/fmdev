@@ -37,6 +37,7 @@ class TrainModelResource(Resource):
                 name=data['name'],
                 description=data['description'],
                 model_id=model_id,
+                score=data['score'],
                 user_id=user_id,
                 created_at=now,
                 updated_at=now
@@ -59,7 +60,7 @@ class TrainModelResource(Resource):
         try:
             model = TrainModel.query.filter_by(model_id=key).first()
 
-            utils.delete_train_data(key)
+            utils.delete_model_files(key)
             db.session.delete(model)
             db.session.commit()
 

@@ -1,6 +1,5 @@
 import os
 import joblib
-import shutil
 import traceback
 import numpy as np
 import pandas as pd
@@ -9,9 +8,9 @@ from tpot import TPOTClassifier
 from flask_restful import Resource
 from dask.distributed import Client
 from flask import request, current_app
+from flask_jwt_extended import jwt_required
 from sklearn.metrics import make_scorer, SCORERS
 from sklearn.model_selection import train_test_split
-from flask_jwt_extended import jwt_required
 
 class Train(Resource):
 
@@ -131,18 +130,7 @@ class Train(Resource):
     def delete(self):
         try:
             filename = self.get_filename_from_path('')
-            shutil.rmtree(
-                f"{current_app.config.get('TRAIN_TPOT_OUTPUT')}/{filename}", ignore_errors=True)
-            utils.delete_file(
-                f"{current_app.config.get('TRAIN_MODELS')}/{filename}.sav")
-            utils.delete_file(
-                f"{current_app.config.get('TRAIN_FEATURES')}/{filename}.csv")
-            utils.delete_file(
-                f"{current_app.config.get('TRAIN_TARGET')}/{filename}.csv")
-            utils.delete_file(
-                f"{current_app.config.get('TEST_FEATURES')}/{filename}.csv")
-            utils.delete_file(
-                f"{current_app.config.get('TEST_TARGET')}/{filename}.csv")
+            utils.delete_model_files(filename)
 
             return {'msg': 'Deleted with successful'}
 

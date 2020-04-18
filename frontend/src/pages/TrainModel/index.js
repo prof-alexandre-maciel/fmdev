@@ -46,6 +46,7 @@ class TrainModel extends Component {
       <FirstItemColumn>{item.name}</FirstItemColumn>
       <ItemColumn>{item.description}</ItemColumn>
       <ItemColumn>{moment(item.created_at).format('DD/MM/YYYY HH:mm:ss')}</ItemColumn>
+      <ItemColumn>{item.score ? item.score.toFixed(2) : null}</ItemColumn>
       <ItemColumn isClicked onClick={this.handleCopyToClipboard.bind(this, item)}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div><CopyIcon size={16} /></div>
@@ -167,6 +168,7 @@ class TrainModel extends Component {
                   <FirstHeaderColumn>Nome</FirstHeaderColumn>
                   <HeaderColumn>Descrição</HeaderColumn>
                   <HeaderColumn>Criado em</HeaderColumn>
+                  <HeaderColumn>Score de teste</HeaderColumn>
                   <HeaderColumn>&nbsp;</HeaderColumn>
                   <HeaderColumn><div style={{ display: 'flex', justifyContent: 'center' }}>Ações</div></HeaderColumn>
                 </tr>

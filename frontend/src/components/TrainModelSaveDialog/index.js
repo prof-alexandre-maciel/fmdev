@@ -36,6 +36,7 @@ class TrainModelSaveDialog extends Component {
 
   submit = () => {
     const { path } = this.props.pre_processing;
+    const { score } = this.props.train;
     const { name, description } = this.state;
 
     if (!name || !description) {
@@ -44,7 +45,7 @@ class TrainModelSaveDialog extends Component {
     }
 
     this.props.postTrainModel({
-      name, description, path
+      name, description, path, score
     });
   }
 
@@ -96,8 +97,8 @@ class TrainModelSaveDialog extends Component {
   }
 }
 
-const mapStateToProps = ({ dialog, train_model, pre_processing }) =>
-  ({ dialog, train_model, pre_processing });
+const mapStateToProps = ({ dialog, train_model, pre_processing, train }) =>
+  ({ dialog, train_model, pre_processing, train });
 
 export default connect(
   mapStateToProps, { ...DialogActions, ...toastrActions, ...TrainModelActions }
