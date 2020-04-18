@@ -22,7 +22,7 @@ class Download(Resource):
             file_action = request.args['action']
             extension = self.get_extension_by_file_action()
             path = f"{current_app.config.get(file_action)}/{key}.{extension}"
-            print(path)
+
             return send_file(path, as_attachment=True)
             
         except:
