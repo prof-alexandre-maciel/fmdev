@@ -43,3 +43,25 @@ export function* postTrainModel({ data }) {
     }));
   }
 }
+
+export function* deleteTrainModel({ id }) {
+  try {
+    yield put(Creators.trainModelRequest());
+    const response = yield call(api.delete, `train-model/${id}`);
+
+    yield put(Creators.trainModelSuccess(response.data, null));
+
+    yield put(toastrActions.add({
+      type: 'success',
+      title: 'Sucesso',
+      message: `Modelo removido com sucesso!`
+    }));
+  } catch (err) {
+    yield put(Creators.trainModelError({ err }));
+    yield put(toastrActions.add({
+      type: 'error',
+      title: 'Erro',
+      message: 'Falha ao remover modelo'
+    }));
+  }
+}

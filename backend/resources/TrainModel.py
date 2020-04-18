@@ -1,4 +1,3 @@
-import jwt
 import datetime
 import traceback
 from Model import db
@@ -56,16 +55,15 @@ class TrainModelResource(Resource):
             return [], 500
     
     @jwt_required
-    def delete(self):
+    def delete(self, key):
         try:
-            payload = request.get_json()
+            model = TrainModel.query.filter_by(model_id=key).first()
 
-            model = TrainModel.query.filter_by(id=payload['id']).first()
-
+            utils.delete_train_data(key)
             db.session.delete(model)
             db.session.commit()
 
-            return {'msg': f"Model {payload['id']} deleted with success"}
+            return self.get()
 
         except:
             traceback.print_exc()

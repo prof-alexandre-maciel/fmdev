@@ -7,7 +7,8 @@ export const { Types, Creators } = createActions({
   trainModelSuccess: ['data', 'lastModelSaved'],
   trainModelError: ['err'],
   getTrainModel: [],
-  postTrainModel: ['data']
+  postTrainModel: ['data'],
+  deleteTrainModel: ['id']
 });
 
 /** --------------------------------

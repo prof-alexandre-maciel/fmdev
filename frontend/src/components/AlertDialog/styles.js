@@ -29,11 +29,13 @@ export const DialogForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  color: #4A5173;
 
   h1 {
+    padding: 0;
     font-weight: 500;
     font-weight: 800;
-    font-size: 18px;
+    font-size: 22px;
     line-height: 31px;
     letter-spacing: 0.07em;
     justify-content: center;

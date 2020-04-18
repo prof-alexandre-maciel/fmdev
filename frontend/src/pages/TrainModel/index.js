@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Creators as TrainModelActions } from '../../store/ducks/train_model';
 import { Creators as ModelCopyActions } from '../../store/ducks/model_copy';
+import { Creators as DialogActions } from '../../store/ducks/dialog';
 import { Creators as DownloadActions } from '../../store/ducks/download';
 import { actions as toastrActions } from 'react-redux-toastr';
 import { Menu, MenuItem } from '@material-ui/core';
@@ -23,6 +24,7 @@ import CodeIcon from 'react-feather/dist/icons/terminal';
 import TrashIcon from 'react-feather/dist/icons/trash';
 import { primaryColor } from '../../styles/global';
 import { PRE_PROCESSING_RAW, TRAIN_PIPELINES } from '../../constants';
+import AlertDialog from '../../components/AlertDialog';
 
 class TrainModel extends Component {
 
@@ -61,6 +63,12 @@ class TrainModel extends Component {
   handleClickMenu = (item, event) => {
     this.setState({ anchorEl: event.currentTarget, itemSelected: item });
   };
+
+  deleteModel = () => {
+    const { itemSelected } = this.state;
+
+    this.props.deleteTrainModel(itemSelected.model_id);
+  }
 
   handleCopyToClipboard = (item, event) => this.props.getModelCopy(item.model_id);
 
@@ -127,6 +135,12 @@ class TrainModel extends Component {
       this.props.getDownload(itemSelected.model_id, TRAIN_PIPELINES);
     }
 
+    if (option && option.action === 'delete_model') {
+      this.props.setDialog('alert', {
+        description: 'Todos os gerados pelo modelo serão removidos. Deseja continuar?'
+      });
+    }
+
     this.handleMenuItemClose();
   };
 
@@ -165,6 +179,7 @@ class TrainModel extends Component {
             : null}
 
           {this.renderMenuActions()}
+          <AlertDialog onSubmit={this.deleteModel}></AlertDialog>
         </ConfigContainer >
       </PerfectScrollbar>
     )
@@ -176,6 +191,7 @@ const mapStateToProps = ({ train_model }) => ({ train_model });
 export default connect(mapStateToProps,
   {
     ...TrainModelActions, ...toastrActions,
-    ...ModelCopyActions, ...DownloadActions
+    ...ModelCopyActions, ...DownloadActions,
+    ...DialogActions
   })
   (TrainModel);
