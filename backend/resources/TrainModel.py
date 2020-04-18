@@ -6,10 +6,11 @@ from utils import utils
 from flask import request
 from flask_restful import Resource
 from Model import TrainModel, TrainModelSchema
-
+from flask_jwt_extended import jwt_required
 
 class TrainModelResource(Resource):
 
+    @jwt_required
     def get(self):
         try:
             user_id = utils.get_user_id(request)
@@ -24,6 +25,7 @@ class TrainModelResource(Resource):
             traceback.print_exc()
             return None, 500
 
+    @jwt_required
     def post(self):
         try:
             user_id = utils.get_user_id(request)
@@ -53,7 +55,7 @@ class TrainModelResource(Resource):
             traceback.print_exc()
             return [], 500
     
-
+    @jwt_required
     def delete(self):
         try:
             payload = request.get_json()

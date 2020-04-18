@@ -4,9 +4,12 @@ from Model import db
 from Model import Lms, LmsSchema
 from flask import request
 from flask_restful import Resource
+from flask_jwt_extended import jwt_required
 
 
 class LmsResource(Resource):
+
+    @jwt_required
     def post(self):
         try:
             data = request.get_json()
@@ -33,6 +36,7 @@ class LmsResource(Resource):
             traceback.print_exc()
             return None, 500
 
+    @jwt_required
     def get(self):
         try:
             res = Lms.query.order_by(Lms.id).with_entities(
@@ -47,6 +51,7 @@ class LmsResource(Resource):
             traceback.print_exc()
             return None, 500
 
+    @jwt_required
     def put(self):
         try:
             payload = request.get_json()

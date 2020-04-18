@@ -12,6 +12,7 @@ import {
 import { connect } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Creators as TrainModelActions } from '../../store/ducks/train_model';
+import { actions as toastrActions } from 'react-redux-toastr';
 import { Menu, MenuItem } from '@material-ui/core';
 import MoreIcon from 'react-feather/dist/icons/more-horizontal';
 import CopyIcon from 'react-feather/dist/icons/copy';
@@ -19,13 +20,18 @@ import DownloadIcon from 'react-feather/dist/icons/download';
 import CodeIcon from 'react-feather/dist/icons/terminal';
 import TrashIcon from 'react-feather/dist/icons/trash';
 import { primaryColor } from '../../styles/global';
+import { BASE_URL } from '../../services/api';
 
 class TrainModel extends Component {
 
-  state = {
-    itemSelected: null,
-    anchorEl: null
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      itemSelected: null,
+      anchorEl: null
+    };
+  }
 
   componentDidMount() {
     this.props.getTrainModel();
@@ -36,9 +42,24 @@ class TrainModel extends Component {
       <FirstItemColumn>{item.name}</FirstItemColumn>
       <ItemColumn>{item.description}</ItemColumn>
       <ItemColumn>{moment(item.created_at).format('DD/MM/YYYY HH:mm:ss')}</ItemColumn>
-      <ItemColumn isClicked onClick={this.handleClickListItem.bind(this, item)} ><MoreIcon /></ItemColumn>
+      <ItemColumn isClicked onClick={this.handleCopyToClipboard.bind(this, idx, item)}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div><CopyIcon size={16} /></div>
+          <div style={{ paddingLeft: '.5vw' }}>Copiar link do modelo</div>
+          <input onChange={() => { }} id={`${idx}_${item.model_id}`} value={this.getCopyURL(item)} type="tel" hidden={true} />
+        </div>
+      </ItemColumn>
+      <ItemColumn isClicked onClick={this.handleClickListItem.bind(this, item)}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><MoreIcon size={16} /></div>
+      </ItemColumn>
     </tr>
   )
+
+  getCopyURL = (item) => {
+    const curl = `curl --location --request GET '${BASE_URL}/predict/${item.model_id}`
+
+    return curl;
+  }
 
   handleMenuItemClose = () => this.setState({ anchorEl: null });
 
@@ -46,9 +67,20 @@ class TrainModel extends Component {
     this.setState({ anchorEl: event.currentTarget, itemSelected: item });
   };
 
+  handleCopyToClipboard(idx, item, event) {
+    const element = document.getElementById(`${idx}_${item.model_id}`);
+    console.log(element.value);
+
+    element.select();
+    element.setSelectionRange(0, 99999);
+
+    document.execCommand("copy");
+
+    alert("Copied the text: " + element.value);
+  }
+
   renderMenuActions = () => {
     let actions = [
-      { label: 'Copiar URL', icon: <CopyIcon size={16} color={primaryColor} /> },
       {
         label: 'Baixar dados do modelo', icon: <DownloadIcon size={16} color={primaryColor} />
       },
@@ -69,7 +101,7 @@ class TrainModel extends Component {
       >
         {actions.map((option, index) => (
           <MenuItem
-            style={{ color: primaryColor }}
+            style={{ color: primaryColor, fontSize: '14px' }}
             key={index}
             selected={false}
             onClick={this.handleMenuItemClick.bind(this)}
@@ -79,6 +111,14 @@ class TrainModel extends Component {
         ))}
       </Menu>
     )
+  }
+
+  renderSuccessMsg = ({ title, message }) => {
+    this.props.add({
+      type: 'success',
+      title: title || 'Sucesso',
+      message
+    });
   }
 
   handleMenuItemClick = (event) => {
@@ -108,7 +148,8 @@ class TrainModel extends Component {
                   <FirstHeaderColumn>Nome</FirstHeaderColumn>
                   <HeaderColumn>Descrição</HeaderColumn>
                   <HeaderColumn>Criado em</HeaderColumn>
-                  <HeaderColumn style={{ display: 'flex', justifyContent: 'center' }}>Ações</HeaderColumn>
+                  <HeaderColumn>&nbsp;</HeaderColumn>
+                  <HeaderColumn><div style={{ display: 'flex', justifyContent: 'center' }}>Ações</div></HeaderColumn>
                 </tr>
               </thead>
 
@@ -128,5 +169,5 @@ class TrainModel extends Component {
 const mapStateToProps = ({ train_model }) => ({ train_model });
 
 export default connect(mapStateToProps,
-  { ...TrainModelActions })
+  { ...TrainModelActions, ...toastrActions })
   (TrainModel);

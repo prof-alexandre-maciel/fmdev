@@ -6,7 +6,7 @@ import collections
 from utils import utils
 from flask import request, current_app
 from flask_restful import Resource
-
+from flask_jwt_extended import jwt_required
 
 class TrainStatus(Resource):
 
@@ -58,6 +58,7 @@ class TrainStatus(Resource):
 
         return datetime.datetime(year, month, day, hour, minute, second).isoformat()
     
+    @jwt_required
     def post(self):
         try:
             data = []

@@ -8,6 +8,8 @@ from flask_jwt_extended import create_access_token
 
 
 class Login(Resource):
+
+    @jwt_required
     def post(self):
         email = request.get_json()['email']
         password = request.get_json()['password']
@@ -21,7 +23,7 @@ class Login(Resource):
 
         if bcrypt.check_password_hash(user.password, password):
             access_token = create_access_token(
-                identity={'username': user.username, 'id': user.id})
+                identity={'username': user.username, 'id': user.id}, expires_delta=False)
             result = {
                 "refresh_token": None,
                 "token": access_token,

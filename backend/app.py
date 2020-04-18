@@ -13,6 +13,8 @@ from resources.Train import Train
 from resources.TrainStatus import TrainStatus
 from resources.TrainModel import TrainModelResource
 from resources.TrainMetric import TrainMetric
+from resources.Copy import Copy
+from resources.Predict import Predict
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
@@ -31,3 +33,5 @@ api.add_resource(Train, '/train')
 api.add_resource(TrainStatus, '/train-status')
 api.add_resource(TrainModelResource, '/train-model')
 api.add_resource(TrainMetric, '/train-metric')
+api.add_resource(Copy, '/copy/<string:key>')
+api.add_resource(Predict, '/predict/<string:key>')

@@ -3,6 +3,7 @@ import pandas as pd
 from utils import utils
 from flask import request
 from flask_restful import Resource
+from flask_jwt_extended import jwt_required
 
 
 class Chart(Resource):
@@ -18,6 +19,7 @@ class Chart(Resource):
 
         return res
 
+    @jwt_required
     def post(self):
         try:
             path = None

@@ -52,6 +52,7 @@ export const Table = styled.table`
   width: 100%;
   border-spacing: 0;
   padding-top: 1rem;
+  font-size: 14px;
 
   tr:nth-child(even) {
     background-color: #FAFAFA;
@@ -87,11 +88,9 @@ export const ItemColumn = styled.td`
   padding: .7rem;
 
   ${props => props.isClicked && css`
-    display: flex;
-    justify-content: center;
-
     &:hover {
       cursor: pointer;
+      text-decoration: underline;
     }
   `}
 `;

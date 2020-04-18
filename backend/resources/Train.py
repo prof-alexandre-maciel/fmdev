@@ -11,7 +11,7 @@ from dask.distributed import Client
 from flask import request, current_app
 from sklearn.metrics import make_scorer, SCORERS
 from sklearn.model_selection import train_test_split
-
+from flask_jwt_extended import jwt_required
 
 class Train(Resource):
 
@@ -88,6 +88,7 @@ class Train(Resource):
 
         df.to_csv(filename, index=False)
 
+    @jwt_required
     def post(self):
         try:
             payload = request.get_json()
@@ -126,6 +127,7 @@ class Train(Resource):
             traceback.print_exc()
             return {"msg": "Error on POST Train"}, 500
 
+    @jwt_required
     def delete(self):
         try:
             filename = self.get_filename_from_path('')

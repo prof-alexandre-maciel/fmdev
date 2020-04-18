@@ -8,6 +8,7 @@ from scipy.stats import spearmanr
 from flask_restful import Resource
 from flask import request, current_app
 from sklearn.impute import SimpleImputer
+from flask_jwt_extended import jwt_required
 
 
 class PreProcessing(Resource):
@@ -134,6 +135,7 @@ class PreProcessing(Resource):
 
         return df
 
+    @jwt_required
     def post(self):
         try:
             data = []
@@ -208,6 +210,7 @@ class PreProcessing(Resource):
             traceback.print_exc()
             return {"msg": "Error on POST PreProcessing"}, 500
 
+    @jwt_required
     def delete(self):
         try:
             payload = request.get_json()
