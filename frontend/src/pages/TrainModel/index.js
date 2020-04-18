@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Creators as TrainModelActions } from '../../store/ducks/train_model';
 import { Creators as ModelCopyActions } from '../../store/ducks/model_copy';
+import { Creators as DownloadActions } from '../../store/ducks/download';
 import { actions as toastrActions } from 'react-redux-toastr';
 import { Menu, MenuItem } from '@material-ui/core';
 import MoreIcon from 'react-feather/dist/icons/more-horizontal';
@@ -48,7 +49,7 @@ class TrainModel extends Component {
           <div style={{ paddingLeft: '.5vw' }}>Copiar link do modelo</div>
         </div>
       </ItemColumn>
-      <ItemColumn isClicked onClick={this.handleClickListItem.bind(this, item)}>
+      <ItemColumn isClicked onClick={this.handleClickMenu.bind(this, item)}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><MoreIcon size={16} /></div>
       </ItemColumn>
     </tr>
@@ -56,7 +57,7 @@ class TrainModel extends Component {
 
   handleMenuItemClose = () => this.setState({ anchorEl: null });
 
-  handleClickListItem = (item, event) => {
+  handleClickMenu = (item, event) => {
     this.setState({ anchorEl: event.currentTarget, itemSelected: item });
   };
 
@@ -65,10 +66,20 @@ class TrainModel extends Component {
   renderMenuActions = () => {
     let actions = [
       {
-        label: 'Baixar dados do modelo', icon: <DownloadIcon size={16} color={primaryColor} />
+        action: 'download_data',
+        label: 'Baixar dados do modelo',
+        icon: <DownloadIcon size={16} color={primaryColor} />
       },
-      { label: 'Baixar código do modelo', icon: <CodeIcon size={16} color={primaryColor} /> },
-      { label: 'Excluir modelo', icon: <TrashIcon size={16} color={primaryColor} /> }
+      {
+        action: 'download_pipeline',
+        label: 'Baixar código do modelo',
+        icon: <CodeIcon size={16} color={primaryColor} />
+      },
+      {
+        action: 'delete_model',
+        label: 'Excluir modelo',
+        icon: <TrashIcon size={16} color={primaryColor} />
+      }
     ];
 
     const { anchorEl } = this.state;
@@ -87,7 +98,7 @@ class TrainModel extends Component {
             style={{ color: primaryColor, fontSize: '14px' }}
             key={index}
             selected={false}
-            onClick={this.handleMenuItemClick.bind(this)}
+            onClick={this.handleMenuItemClick.bind(this, option)}
           >
             {option.icon}&nbsp;&nbsp;{option.label}
           </MenuItem>
@@ -104,7 +115,13 @@ class TrainModel extends Component {
     });
   }
 
-  handleMenuItemClick = (event) => {
+  handleMenuItemClick = (option, event) => {
+    const { itemSelected } = this.state;
+
+    if (option && option.action === 'download_pipeline') {
+      this.props.getDownload(itemSelected.model_id, 'TRAIN_PIPELINES');
+    }
+
     this.handleMenuItemClose();
   };
 
@@ -152,5 +169,8 @@ class TrainModel extends Component {
 const mapStateToProps = ({ train_model }) => ({ train_model });
 
 export default connect(mapStateToProps,
-  { ...TrainModelActions, ...toastrActions, ...ModelCopyActions })
+  {
+    ...TrainModelActions, ...toastrActions,
+    ...ModelCopyActions, ...DownloadActions
+  })
   (TrainModel);
