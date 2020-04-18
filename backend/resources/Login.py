@@ -9,7 +9,6 @@ from flask_jwt_extended import create_access_token
 
 class Login(Resource):
 
-    @jwt_required
     def post(self):
         email = request.get_json()['email']
         password = request.get_json()['password']

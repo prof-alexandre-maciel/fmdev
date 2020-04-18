@@ -4,7 +4,6 @@ from run import bcrypt
 from flask import request
 from Model import User
 from flask_restful import Resource
-from flask_jwt_extended import jwt_required
 
 
 class Register(Resource):

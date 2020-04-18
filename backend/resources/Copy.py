@@ -12,6 +12,7 @@ class Copy(Resource):
 
     def get_curl_template(self, key, data):
         template = f"""curl --location --request POST '{current_app.config.get('BASE_URL')}/api/predict/{key}' \
+                        --header 'Authorization: {request.headers['Authorization']}' \
                         --header 'Accept: application/json, text/plain, */*' \
                         --header 'Content-Type: application/json;charset=UTF-8' \
                         --header 'Content-Type: text/plain' \
@@ -38,7 +39,7 @@ class Copy(Resource):
 
             template = self.get_curl_template(key, data)
 
-            return { 'data': template }
+            return { 'request': template }
 
         except:
             traceback.print_exc()
