@@ -39,7 +39,7 @@ class Copy(Resource):
 
             template = self.get_curl_template(key, data)
 
-            return { 'request': template }
+            return { 'template': template }
 
         except:
             traceback.print_exc()

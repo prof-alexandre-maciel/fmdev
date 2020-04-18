@@ -12,6 +12,7 @@ import {
 import { connect } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Creators as TrainModelActions } from '../../store/ducks/train_model';
+import { Creators as CopyActions } from '../../store/ducks/copy';
 import { actions as toastrActions } from 'react-redux-toastr';
 import { Menu, MenuItem } from '@material-ui/core';
 import MoreIcon from 'react-feather/dist/icons/more-horizontal';
@@ -20,7 +21,6 @@ import DownloadIcon from 'react-feather/dist/icons/download';
 import CodeIcon from 'react-feather/dist/icons/terminal';
 import TrashIcon from 'react-feather/dist/icons/trash';
 import { primaryColor } from '../../styles/global';
-import { BASE_URL } from '../../services/api';
 
 class TrainModel extends Component {
 
@@ -42,11 +42,10 @@ class TrainModel extends Component {
       <FirstItemColumn>{item.name}</FirstItemColumn>
       <ItemColumn>{item.description}</ItemColumn>
       <ItemColumn>{moment(item.created_at).format('DD/MM/YYYY HH:mm:ss')}</ItemColumn>
-      <ItemColumn isClicked onClick={this.handleCopyToClipboard.bind(this, idx, item)}>
+      <ItemColumn isClicked onClick={this.handleCopyToClipboard.bind(this, item)}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <div><CopyIcon size={16} /></div>
           <div style={{ paddingLeft: '.5vw' }}>Copiar link do modelo</div>
-          <input onChange={() => { }} id={`${idx}_${item.model_id}`} value={this.getCopyURL(item)} type="tel" hidden={true} />
         </div>
       </ItemColumn>
       <ItemColumn isClicked onClick={this.handleClickListItem.bind(this, item)}>
@@ -55,29 +54,13 @@ class TrainModel extends Component {
     </tr>
   )
 
-  getCopyURL = (item) => {
-    const curl = `curl --location --request GET '${BASE_URL}/predict/${item.model_id}`
-
-    return curl;
-  }
-
   handleMenuItemClose = () => this.setState({ anchorEl: null });
 
   handleClickListItem = (item, event) => {
     this.setState({ anchorEl: event.currentTarget, itemSelected: item });
   };
 
-  handleCopyToClipboard(idx, item, event) {
-    const element = document.getElementById(`${idx}_${item.model_id}`);
-    console.log(element.value);
-
-    element.select();
-    element.setSelectionRange(0, 99999);
-
-    document.execCommand("copy");
-
-    alert("Copied the text: " + element.value);
-  }
+  handleCopyToClipboard = (item, event) => this.props.getCopy(item.model_id);
 
   renderMenuActions = () => {
     let actions = [
@@ -169,5 +152,5 @@ class TrainModel extends Component {
 const mapStateToProps = ({ train_model }) => ({ train_model });
 
 export default connect(mapStateToProps,
-  { ...TrainModelActions, ...toastrActions })
+  { ...TrainModelActions, ...toastrActions, ...CopyActions })
   (TrainModel);

@@ -113,6 +113,6 @@ class TrainModelSchema(ma.Schema):
     name = fields.String()
     description = fields.String()
     user_id = fields.Integer()
-    model_id = fields.Integer()
+    model_id = fields.String()
     created_at = fields.DateTime()
     updated_at = fields.DateTime()

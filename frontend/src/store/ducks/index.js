@@ -15,6 +15,7 @@ import pre_processing from './pre_processing';
 import train_status from './train_status';
 import train_model from './train_model';
 import train_metric from './train_metric';
+import copy from './copy';
 import { reducer as toastr } from 'react-redux-toastr';
 
 export default history => combineReducers({
@@ -33,5 +34,6 @@ export default history => combineReducers({
   train_status,
   train_model,
   train_metric,
+  copy,
   router: connectRouter(history)
 });
