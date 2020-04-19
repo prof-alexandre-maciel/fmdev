@@ -120,3 +120,5 @@ class TrainModelSchema(ma.Schema):
     model_id = fields.String()
     score = fields.Float()
     api_key = fields.String()
+    created_at = fields.DateTime()
+    updated_at = fields.DateTime()

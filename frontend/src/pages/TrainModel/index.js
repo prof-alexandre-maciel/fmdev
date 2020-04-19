@@ -78,7 +78,7 @@ class TrainModel extends Component {
       },
       {
         action: 'copy_url',
-        label: 'Copiar link do modelo',
+        label: 'Copiar URL do modelo',
         icon: <CopyIcon size={16} color={primaryColor} />
       },
       {
@@ -139,7 +139,7 @@ class TrainModel extends Component {
 
     if (option.action === 'delete_model') {
       this.props.setDialog('alert', {
-        description: 'Todos os gerados pelo modelo serão removidos. Deseja continuar?'
+        description: 'Todos os dados gerados pelo modelo serão removidos. Deseja continuar?'
       });
     }
 

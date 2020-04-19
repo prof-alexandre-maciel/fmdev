@@ -6,10 +6,23 @@ from numpy import array
 from utils import utils
 from flask_restful import Resource
 from flask import request, current_app
-from flask_jwt_extended import jwt_required
+from resources.TrainModel import TrainModelResource
 
 
 class Predict(Resource):
+
+    def is_api_key_valid(self, key):
+        train_model = TrainModelResource.get_by_id(key)
+        api_key = train_model.data['api_key']
+
+        if 'Fmdev-Api-Key' not in request.headers:
+            return False
+
+        if request.headers['Fmdev-Api-Key'] == api_key:
+            return True
+
+        return False
+
 
     def load_model(self, filename):
         path = f"{current_app.config.get('TRAIN_MODELS')}/{filename}.sav"
@@ -17,9 +30,13 @@ class Predict(Resource):
 
         return loaded_model
 
-    @jwt_required
     def post(self, key):
         try:
+            is_api_key_valid = self.is_api_key_valid(key)
+
+            if is_api_key_valid == False:
+                return {'msg': 'Fmdev-Api-Key is not valid'}, 401
+
             payload = request.get_json()
             x_test = pd.DataFrame(payload['data']) 
             model = self.load_model(filename=key)

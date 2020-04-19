@@ -4,10 +4,23 @@ from Model import db
 from utils import utils
 from flask_restful import Resource
 from flask import request, current_app
-from Model import TrainModel, TrainModelSchema
 from flask_jwt_extended import jwt_required
+from Model import TrainModel, TrainModelSchema
 
 class TrainModelResource(Resource):
+
+    def get_by_id(key):
+        try:
+            res = TrainModel.query.filter_by(model_id=key).first()
+
+            schema = TrainModelSchema()
+            data = schema.dump(res)
+
+            return data
+
+        except:
+            traceback.print_exc()
+            return {}, 500
 
     @jwt_required
     def get(self):
@@ -15,7 +28,7 @@ class TrainModelResource(Resource):
             user_id = utils.get_user_id(request)
             res = TrainModel.query.filter_by(user_id=user_id).all()
 
-            schema = TrainModelSchema(many=True)
+            schema = TrainModelSchema(exclude=['api_key'], many=True)
             data = schema.dump(res)
 
             return data
@@ -43,9 +56,6 @@ class TrainModelResource(Resource):
 
             db.session.add(train_model)
             db.session.commit()
-
-            schema = TrainModelSchema(exclude=("id"))
-            result = schema.dump(train_model)
 
             return self.get()
 

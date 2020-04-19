@@ -6,13 +6,17 @@ from utils import utils
 from flask_restful import Resource
 from flask import request, current_app
 from flask_jwt_extended import jwt_required
+from resources.TrainModel import TrainModelResource
 
 
 class ModelCopy(Resource):
 
     def get_curl_template(self, key, data):
+        model = TrainModelResource.get_by_id(key)
+        api_key = model.data['api_key']
+
         template = f"""curl --location --request POST '{current_app.config.get('BASE_URL')}/api/predict/{key}' \
-                        --header 'Authorization: {request.headers['Authorization']}' \
+                        --header 'Fmdev-Api-Key: {api_key}' \
                         --header 'Accept: application/json, text/plain, */*' \
                         --header 'Content-Type: application/json;charset=UTF-8' \
                         --header 'Content-Type: text/plain' \
