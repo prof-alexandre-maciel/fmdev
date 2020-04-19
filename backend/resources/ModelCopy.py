@@ -13,10 +13,9 @@ class ModelCopy(Resource):
 
     def get_curl_template(self, key, data):
         model = TrainModelResource.get_by_id(key)
-        api_key = model.data['api_key']
 
         template = f"""curl --location --request POST '{current_app.config.get('BASE_URL')}/api/predict/{key}' \
-                        --header 'Fmdev-Api-Key: {api_key}' \
+                        --header 'Fmdev-Api-Key: {model.api_key}' \
                         --header 'Accept: application/json, text/plain, */*' \
                         --header 'Content-Type: application/json;charset=UTF-8' \
                         --header 'Content-Type: text/plain' \

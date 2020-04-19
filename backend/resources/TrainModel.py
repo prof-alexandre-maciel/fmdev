@@ -2,6 +2,7 @@ import secrets
 import traceback
 from Model import db
 from utils import utils
+from datetime import datetime
 from flask_restful import Resource
 from flask import request, current_app
 from flask_jwt_extended import jwt_required
@@ -11,16 +12,29 @@ class TrainModelResource(Resource):
 
     def get_by_id(key):
         try:
-            res = TrainModel.query.filter_by(model_id=key).first()
-
-            schema = TrainModelSchema()
-            data = schema.dump(res)
-
-            return data
-
+            return TrainModel.query.filter_by(model_id=key).first()
         except:
             traceback.print_exc()
-            return {}, 500
+            return {}
+    
+    def update_predict(key):
+        try:
+            model = TrainModel.query.filter_by(model_id=key).first()
+
+            model.last_predict_at = datetime.utcnow()
+
+            if model.qtd_predict is None:
+                model.qtd_predict = 0
+            else:
+                model.qtd_predict += 1
+
+            db.session.add(model)
+            db.session.commit()
+
+            return True
+        except:
+            traceback.print_exc()
+            return False
 
     @jwt_required
     def get(self):

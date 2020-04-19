@@ -13,12 +13,11 @@ class Predict(Resource):
 
     def is_api_key_valid(self, key):
         train_model = TrainModelResource.get_by_id(key)
-        api_key = train_model.data['api_key']
 
         if 'Fmdev-Api-Key' not in request.headers:
             return False
 
-        if request.headers['Fmdev-Api-Key'] == api_key:
+        if request.headers['Fmdev-Api-Key'] == train_model.api_key:
             return True
 
         return False
@@ -43,6 +42,7 @@ class Predict(Resource):
             predict = model.predict(x_test)
 
             data_predicted = predict.tolist()
+            TrainModelResource.update_predict(key)
 
             return { 'data': data_predicted }
         except:

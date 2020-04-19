@@ -101,6 +101,8 @@ class TrainModel(db.Model, TimestampMixin):
     model_id = db.Column(db.String(), nullable=False, index=True)
     score = db.Column(db.Float())
     api_key = db.Column(db.String())
+    qtd_predict = db.Column(db.Integer(), default=0)
+    last_predict_at = db.Column(db.DateTime())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     def __init__(self, name, description, model_id, score, api_key, user_id):
@@ -122,3 +124,5 @@ class TrainModelSchema(ma.Schema):
     api_key = fields.String()
     created_at = fields.DateTime()
     updated_at = fields.DateTime()
+    qtd_predict = fields.Integer()
+    last_predict_at = fields.DateTime()
