@@ -1,51 +1,12 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 export const CardContainer = styled.div`
+  padding: 1rem;
+  padding-left: 1.5rem;
+  padding-right: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 1rem;
 `
-
-export const Image = styled.img`
-  width: 8vw;
-  height: 10vh;
-  cursor: pointer;
-
-  ${props => props.disabled && css`
-    mix-blend-mode: luminosity;
-    opacity: 0.7;
-    `}
-`;
-
-export const Card = styled.div`
-  display: flex;
-  background: #FBFBFB;
-  box-sizing: border-box;
-  margin-left: 2rem;
-  padding: 1rem;
-  margin-top: 1vh;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-  width: 10vw;
-  color: #000;
-  height: 20vh;
-`;
-
-export const CardVersion = styled.span`
-    font-weight: 300;
-    font-size: .7rem;
-    padding-top: 3vh;
-    color: #000000;
-    text-align: center;
-
-    ${props => props.disabled === true && css`
-      mix-blend-mode: luminosity;
-      opacity: 0.5;
-    `}
-`;
 
 export const DialogInput = styled.input`
     padding: 10px;

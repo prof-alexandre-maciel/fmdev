@@ -10,6 +10,7 @@ import 'primeicons/primeicons.css';
 export const primaryColor = '#4A5173';
 const secondaryColor = '#000';
 export const terciaryColor = '#DEB981';
+export const fontFamily = 'Avenir';
 
 loadTheme({
   palette: {
@@ -54,7 +55,7 @@ export default createGlobalStyle`
   body {
     background: #E5E5E5;
     color: #FFF;
-    font-family: 'Avenir', sans-serif;
+    font-family: ${fontFamily}, sans-serif;
     text-rendering: optimizeLegibility !important;
     -webkit-font-smoothing: antialised !important;
   }
@@ -68,13 +69,13 @@ export default createGlobalStyle`
   }
 
   .p-button {
-    background-color: #4A5173 !important;
-    border-color: #4A5173 !important;
+    background-color: ${primaryColor} !important;
+    border-color: ${primaryColor} !important;
   }
 
   .p-picklist .p-picklist-list .p-picklist-item.p-highlight {
-    background-color: #4A5173 !important;
-    border-color: #4A5173 !important;
+    background-color: ${primaryColor} !important;
+    border-color: ${primaryColor} !important;
   }
 
   .MuiList-padding {
@@ -95,6 +96,28 @@ export default createGlobalStyle`
     &:focus {
       border: 1px solid #000;
     }
+  }
+
+  .active-chip {
+    padding-left: .4vw !important;
+    font-family: ${fontFamily} !important;
+    color: #FFF !important;
+    background-color: ${primaryColor} !important;
+    }
+
+  .inactive-chip {
+    padding-left: .4vw !important;
+    color: ${primaryColor} !important;
+    font-family: ${fontFamily} !important;
+    background-color: transparent !important;
+    border: .8px solid ${primaryColor} !important;
+  }
+
+  .lms-card {
+    width: 30.5%;
+    margin: .5vw;
+    background-color: #FBFBFB !important; 
+    font-family: ${fontFamily} !important;
   }
 `;
 

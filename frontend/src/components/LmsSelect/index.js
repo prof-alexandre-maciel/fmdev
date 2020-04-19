@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-
 import {
-  Card, CardContainer, Image,
   DialogForm, DialogFormButtonContainer,
-  DialogInput, DialogSpan, CardVersion
+  DialogInput, DialogSpan, CardContainer
 } from './styles';
-
 import { Creators as DialogActions } from '../../store/ducks/dialog';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { Creators as LmsActions } from '../../store/ducks/lms';
@@ -13,18 +10,24 @@ import { Creators as IndicatorActions } from '../../store/ducks/indicator';
 import { actions as toastrActions } from 'react-redux-toastr';
 import { connect } from 'react-redux';
 
-import moodle from '../../assets/moodle.svg';
-import chamilo from '../../assets/chamilo.svg';
-import open_edx from '../../assets/open_edx.svg';
-import totara_learn from '../../assets/totara_learn.svg';
-
 import Dialog from '../Dialog';
-import Button from '../../styles/Button';
+import { default as CustomButton } from '../../styles/Button';
 import { ConfigContainer } from '../../styles/ConfigContainer';
 import { INDICATORS, MOODLE, ADD_TRAIN } from '../../constants';
 import Select from 'react-select';
-import { selectStyle } from '../../styles/global';
+import { selectStyle, Header, fontFamily, primaryColor } from '../../styles/global';
 import PerfectScrollbar from 'react-perfect-scrollbar';
+
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Chip from '@material-ui/core/Chip';
+
+import MonitorIcon from 'react-feather/dist/icons/monitor';
+import FileIcon from 'react-feather/dist/icons/file';
 
 const moodleOptions = [
   { value: '3.8.0', label: '3.8.0' },
@@ -39,7 +42,8 @@ class LmsSelect extends Component {
     name: null,
     url: null,
     token: null,
-    version: null
+    version: null,
+    chipSelected: 'ead'
   }
 
   submit() {
@@ -108,8 +112,8 @@ class LmsSelect extends Component {
           </div>
 
           <DialogFormButtonContainer>
-            <Button style={{ width: '45%' }} filled={false} onClick={setDialog.bind(this, MOODLE, null)}>Cancelar</Button>
-            <Button style={{ width: '45%', marginLeft: '2vw' }} onClick={this.submit.bind(this)}>Salvar</Button>
+            <CustomButton style={{ width: '45%' }} filled={false} onClick={setDialog.bind(this, MOODLE, null)}>Cancelar</CustomButton>
+            <CustomButton style={{ width: '45%', marginLeft: '2vw' }} onClick={this.submit.bind(this)}>Salvar</CustomButton>
           </DialogFormButtonContainer>
 
         </DialogForm>
@@ -117,27 +121,60 @@ class LmsSelect extends Component {
     )
   }
 
-  getImgFromName = (name) => {
-    if (name === MOODLE) {
-      return moodle;
-    }
-
-    if (name === 'chamilo') {
-      return chamilo;
-    }
-
-    if (name === 'open_edx') {
-      return open_edx;
-    }
-
-    if (name === 'totara_learn') {
-      return totara_learn;
-    }
-  }
-
   openDialog = (lms, item) => {
     this.setState({ ...item, version: { label: item.version, value: item.version } });
     this.props.setDialog(lms);
+  }
+
+  renderCard = (item, idx) => (
+    <Card className='lms-card' key={idx}>
+      <CardActionArea>
+        <CardContent style={{ backgroundColor: primaryColor, color: '#FFF' }}>
+          <Typography gutterBottom variant="h5" component="h2" style={{ fontFamily: fontFamily }}>
+            {item.description}
+          </Typography>
+          <Typography variant="body3" color="textSecondary" component="p" style={{ color: '#FFF', fontFamily: fontFamily }}>
+            Versão: {item.version || 'Não disponível'}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <Button size="small" disableRipple={true} style={{ fontFamily: fontFamily, color: primaryColor, fontSize: '11px' }}>
+          Configurar
+        </Button>
+        {item.version ?
+          <Button size="small" disableRipple={true} style={{ fontFamily: fontFamily, color: primaryColor, fontSize: '11px' }}>
+            Conectar
+        </Button> : null}
+      </CardActions>
+    </Card>
+  )
+
+  setChip = (value, event) => this.setState({ chipSelected: value });
+
+  renderDatasetOptions = () => {
+    const { chipSelected } = this.state;
+
+    return (
+      <div style={{ display: 'flex', paddingLeft: '2rem' }}>
+        <div>
+          <Chip
+            avatar={<MonitorIcon size={16} color={chipSelected === 'ead' ? '#FFF' : primaryColor} />}
+            label="Ambientes EAD"
+            className={chipSelected === 'ead' ? 'active-chip' : 'inactive-chip'}
+            onClick={this.setChip.bind(this, 'ead')}
+          />
+      </div>
+        <div style={{ paddingLeft: '.5vw' }}>
+          <Chip
+            avatar={<FileIcon size={16} color={chipSelected === 'csv' ? '#FFF' : primaryColor} />}
+            label="Arquivos CSV"
+            className={chipSelected === 'csv' ? 'active-chip' : 'inactive-chip'}
+            onClick={this.setChip.bind(this, 'csv')}
+          />
+        </div>
+      </div>
+    )
   }
 
   render() {
@@ -146,19 +183,17 @@ class LmsSelect extends Component {
     return (
       <PerfectScrollbar style={{ width: '100%' }}>
         <ConfigContainer style={{ minHeight: '70%' }}>
-          <h1>Escolha o LMS que você vai trabalhar</h1>
 
-          <CardContainer>
-            {lms.data.map(item => (
-              <Card key={item.id} onClick={item.name === MOODLE ? this.openDialog.bind(this, item.name, item) : null}>
-                <Image disabled={!item.version} alt="" src={this.getImgFromName(item.name)} />
-                <CardVersion
-                  disabled={!item.version}>
-                  {item.version ? `Versão: ${item.version}` : 'Não Configurado'}
-                </CardVersion>
-              </Card>
-            ))}
-          </CardContainer>
+          <Header>
+            <h1>Fontes de Dados</h1>
+            <div>
+              <CustomButton filled={false} onClick={() => { }}>Adicionar fonte de dados</CustomButton>
+            </div>
+          </Header>
+
+          {this.renderDatasetOptions()}
+
+          <CardContainer>{lms.data.map((item, idx) => this.renderCard(item, idx))}</CardContainer>
         </ConfigContainer>
         {dialog.moodle ? this.renderMoodleDialog() : null}
       </PerfectScrollbar>

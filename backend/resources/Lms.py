@@ -1,4 +1,3 @@
-import datetime
 import traceback
 from Model import db
 from Model import Lms, LmsSchema
@@ -13,15 +12,12 @@ class LmsResource(Resource):
     def post(self):
         try:
             data = request.get_json()
-            now = datetime.datetime.now()
 
             lms = Lms(
                 name=data['name'],
                 url=data['url'],
                 token=data['token'],
-                version=data['version'],
-                created_at=now,
-                updated_at=now
+                version=data['version']
             )
 
             db.session.add(lms)
@@ -40,7 +36,7 @@ class LmsResource(Resource):
     def get(self):
         try:
             res = Lms.query.order_by(Lms.id).with_entities(
-                Lms.id, Lms.name, Lms.url, Lms.token, Lms.version).all()
+                Lms.id, Lms.name, Lms.description, Lms.url, Lms.token, Lms.version).all()
 
             schema = LmsSchema(many=True)
             data = schema.dump(res)
@@ -55,7 +51,6 @@ class LmsResource(Resource):
     def put(self):
         try:
             payload = request.get_json()
-            now = datetime.datetime.now()
 
             lms = Lms.query.filter_by(id=payload['id']).first()
 
@@ -67,8 +62,6 @@ class LmsResource(Resource):
 
             if 'version' in payload:
                 lms.version = payload['version']
-
-            lms.updated_at = now
 
             db.session.add(lms)
             db.session.commit()
