@@ -9,6 +9,8 @@ import {
 } from './styles';
 import Button from '../../styles/Button';
 import MoreIcon from 'react-feather/dist/icons/more-horizontal';
+import ChevronDown from 'react-feather/dist/icons/chevron-down';
+import ChevronUp from 'react-feather/dist/icons/chevron-up';
 import AlertIcon from 'react-feather/dist/icons/alert-triangle';
 import TargetIcon from 'react-feather/dist/icons/crosshair';
 import Progress from '../Progress';
@@ -21,7 +23,7 @@ import { actions as toastrActions } from 'react-redux-toastr';
 import { Creators as ChartActions } from '../../store/ducks/chart';
 import Chart from '../Chart';
 import { Menu, MenuItem } from '@material-ui/core';
-import { terciaryColor } from '../../styles/global';
+import { terciaryColor, FirstHeaderColumn } from '../../styles/global';
 import PreProcessingDialog from '../PreProcessingDialog';
 import TrainConfigDialog from '../TrainConfigDialog';
 import { Creators as PreProcessingActions } from '../../store/ducks/pre_processing';
@@ -120,6 +122,17 @@ class PreProcessing extends Component {
     )
   }
 
+  renderIconDetail = (item) => {
+    let icon = <ChevronDown size={20} />;
+    const { expandedRow } = this.state;
+
+    if (expandedRow === item.name) {
+      icon = <ChevronUp size={20} />;
+    }
+
+    return <div style={{ display: 'flex', alignItems: 'center' }}>{icon}</div>
+  }
+
   renderItem(item) {
     const { targetSelected } = this.props.indicator;
     const isTarget = targetSelected && targetSelected.value === item.name ? true : false;
@@ -127,6 +140,7 @@ class PreProcessing extends Component {
 
     const itemRows = [
       <tr key={"row-data-" + item.name}>
+        <ItemColumnWrapped>{this.renderIconDetail(item)}</ItemColumnWrapped>
         <ItemColumnWrapped style={{ paddingLeft: '2rem' }}>{item.description}</ItemColumnWrapped>
         <ItemColumnWrapped title={item.missing ? `Qtd. Dados Faltantes: ${item.missing}` : null}>
           {item.missing ? <AlertIcon size={20} color="#FFF" fill="#A87878" /> : null}
@@ -263,6 +277,7 @@ class PreProcessing extends Component {
               <Table>
                 <thead>
                   <tr>
+                    <FirstHeaderColumn>&nbsp;</FirstHeaderColumn>
                     <HeaderColumn style={{ paddingLeft: '2rem' }}>Indicador</HeaderColumn>
                     <HeaderColumn>&nbsp;</HeaderColumn>
                     <HeaderColumn>&nbsp;</HeaderColumn>
