@@ -1,3 +1,4 @@
+import secrets
 import traceback
 from Model import db
 from utils import utils
@@ -36,7 +37,8 @@ class TrainModelResource(Resource):
                 description=data['description'],
                 model_id=model_id,
                 score=data['score'],
-                user_id=user_id
+                user_id=user_id,
+                api_key=secrets.token_hex()
             )
 
             db.session.add(train_model)
@@ -47,6 +49,25 @@ class TrainModelResource(Resource):
 
             return self.get()
 
+        except:
+            traceback.print_exc()
+            return [], 500
+    
+    @jwt_required
+    def put(self, key):
+        try:
+            payload = request.get_json()
+          
+            model = TrainModel.query.filter_by(model_id=key).first()
+
+            if 'action' in payload and payload['action'] == 'GENERATE_KEY':
+                 model.api_key = secrets.token_hex()
+
+            db.session.add(model)
+            db.session.commit()
+
+            return self.get()
+        
         except:
             traceback.print_exc()
             return [], 500

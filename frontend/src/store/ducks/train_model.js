@@ -8,6 +8,7 @@ export const { Types, Creators } = createActions({
   trainModelError: ['err'],
   getTrainModel: [],
   postTrainModel: ['data'],
+  putTrainModel: ['id', 'data'],
   deleteTrainModel: ['id']
 });
 

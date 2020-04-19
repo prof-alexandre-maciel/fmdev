@@ -44,6 +44,28 @@ export function* postTrainModel({ data }) {
   }
 }
 
+export function* putTrainModel({ id, data }) {
+  try {
+    yield put(Creators.trainModelRequest());
+    const response = yield call(api.put, `train-model/${id}`, data);
+
+    yield put(Creators.trainModelSuccess(response.data, null));
+
+    yield put(toastrActions.add({
+      type: 'success',
+      title: 'Sucesso',
+      message: `Chave de API regerada com sucesso!`
+    }));
+  } catch (err) {
+    yield put(Creators.trainModelError({ err }));
+    yield put(toastrActions.add({
+      type: 'error',
+      title: 'Erro',
+      message: 'Falha ao gerar nova chave de API'
+    }));
+  }
+}
+
 export function* deleteTrainModel({ id }) {
   try {
     yield put(Creators.trainModelRequest());

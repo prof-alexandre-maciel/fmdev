@@ -2,14 +2,10 @@ import * as moment from 'moment';
 import React, { Component } from 'react';
 import { ConfigContainer } from '../../styles/ConfigContainer';
 import {
-  Header, Table,
-  HeaderColumn,
-  ItemColumn,
-  FirstHeaderColumn,
-  FirstItemColumn,
-  StatusMsgContainer,
-  LoadingContainer
-} from './styles';
+  Header, Table, HeaderColumn, ItemColumn,
+  FirstHeaderColumn, FirstItemColumn,
+  StatusMsgContainer, LoadingContainer
+} from '../../styles/global';
 import { connect } from 'react-redux';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Creators as TrainModelActions } from '../../store/ducks/train_model';
@@ -20,6 +16,7 @@ import { actions as toastrActions } from 'react-redux-toastr';
 import { Menu, MenuItem } from '@material-ui/core';
 import MoreIcon from 'react-feather/dist/icons/more-horizontal';
 import CopyIcon from 'react-feather/dist/icons/copy';
+import KeyIcon from 'react-feather/dist/icons/key';
 import DownloadIcon from 'react-feather/dist/icons/download';
 import CodeIcon from 'react-feather/dist/icons/terminal';
 import TrashIcon from 'react-feather/dist/icons/trash';
@@ -49,12 +46,6 @@ class TrainModel extends Component {
       <ItemColumn>{item.description}</ItemColumn>
       <ItemColumn>{moment(item.created_at).format('DD/MM/YYYY HH:mm:ss')}</ItemColumn>
       <ItemColumn>{item.score ? item.score.toFixed(2) : null}</ItemColumn>
-      <ItemColumn isClicked onClick={this.handleCopyToClipboard.bind(this, item)}>
-        <div style={{ display: 'flex', alignItems: 'center' }}>
-          <div><CopyIcon size={16} /></div>
-          <div style={{ paddingLeft: '.5vw' }}>Copiar link do modelo</div>
-        </div>
-      </ItemColumn>
       <ItemColumn isClicked onClick={this.handleClickMenu.bind(this, item)}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><MoreIcon size={16} /></div>
       </ItemColumn>
@@ -73,8 +64,6 @@ class TrainModel extends Component {
     this.props.deleteTrainModel(itemSelected.model_id);
   }
 
-  handleCopyToClipboard = (item, event) => this.props.getModelCopy(item.model_id);
-
   renderMenuActions = () => {
     let actions = [
       {
@@ -86,6 +75,16 @@ class TrainModel extends Component {
         action: 'download_pipeline',
         label: 'Baixar código do modelo',
         icon: <CodeIcon size={16} color={primaryColor} />
+      },
+      {
+        action: 'copy_url',
+        label: 'Copiar link do modelo',
+        icon: <CopyIcon size={16} color={primaryColor} />
+      },
+      {
+        action: 'generate_key',
+        label: 'Gerar nova chave de API',
+        icon: <KeyIcon size={16} color={primaryColor} />
       },
       {
         action: 'delete_model',
@@ -128,20 +127,28 @@ class TrainModel extends Component {
   }
 
   handleMenuItemClick = (option, event) => {
-    const { itemSelected } = this.state;
+    const { model_id } = this.state.itemSelected;
 
-    if (option && option.action === 'download_data') {
-      this.props.getDownload(itemSelected.model_id, PRE_PROCESSING_RAW);
+    if (option.action === 'download_data') {
+      this.props.getDownload(model_id, PRE_PROCESSING_RAW);
     }
 
-    if (option && option.action === 'download_pipeline') {
-      this.props.getDownload(itemSelected.model_id, TRAIN_PIPELINES);
+    if (option.action === 'download_pipeline') {
+      this.props.getDownload(model_id, TRAIN_PIPELINES);
     }
 
-    if (option && option.action === 'delete_model') {
+    if (option.action === 'delete_model') {
       this.props.setDialog('alert', {
         description: 'Todos os gerados pelo modelo serão removidos. Deseja continuar?'
       });
+    }
+
+    if (option.action === 'copy_url') {
+      this.props.getModelCopy(model_id)
+    }
+
+    if (option.action === 'generate_key') {
+      this.props.putTrainModel(model_id, { data: {}, action: 'GENERATE_KEY' });
     }
 
     this.handleMenuItemClose();
@@ -177,7 +184,6 @@ class TrainModel extends Component {
                   <HeaderColumn>Descrição</HeaderColumn>
                   <HeaderColumn>Criado em</HeaderColumn>
                   <HeaderColumn>Score de teste</HeaderColumn>
-                  <HeaderColumn>&nbsp;</HeaderColumn>
                   <HeaderColumn><div style={{ display: 'flex', justifyContent: 'center' }}>Ações</div></HeaderColumn>
                 </tr>
               </thead>
