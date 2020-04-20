@@ -26,7 +26,6 @@ class MoodleConfigDialog extends Component {
 
   submit() {
     const { id, name, url, token, version } = this.props.dialog.data;
-    const { setDialog, setScreen, putLms, getIndicators } = this.props;
 
     if (!url) {
       this.renderWarningMsg('Informe a URL');
@@ -43,8 +42,8 @@ class MoodleConfigDialog extends Component {
       return;
     }
 
-    putLms({ id, url, token, version: version.value });
-    setDialog(name);
+    this.props.putLms({ id, url, token, version: version.value });
+    this.props.setDialog(name);
   }
 
   renderWarningMsg = (msg) => {

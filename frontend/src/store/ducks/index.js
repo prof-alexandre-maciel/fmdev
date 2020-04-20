@@ -17,6 +17,7 @@ import train_model from './train_model';
 import train_metric from './train_metric';
 import model_copy from './model_copy';
 import download from './download';
+import data_source from './data_source';
 import { reducer as toastr } from 'react-redux-toastr';
 
 export default history => combineReducers({
@@ -37,5 +38,6 @@ export default history => combineReducers({
   train_metric,
   model_copy,
   download,
+  data_source,
   router: connectRouter(history)
 });

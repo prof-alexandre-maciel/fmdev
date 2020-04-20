@@ -13,6 +13,7 @@ import { Types as TrainModelTypes } from '../ducks/train_model';
 import { Types as TrainMetricTypes } from '../ducks/train_metric';
 import { Types as ModelCopyTypes } from '../ducks/model_copy';
 import { Types as DownloadTypes } from '../ducks/download';
+import { Types as DataSourceTypes } from '../ducks/data_source';
 
 import { getChart } from './chart';
 import { getDownload } from './download';
@@ -28,6 +29,7 @@ import { getTrainModel, postTrainModel, deleteTrainModel, putTrainModel } from '
 import { postTrainMetric } from './train_metric';
 import { signInRequest, signOutRequest } from './auth';
 import { getPreProcessing, deletePreProcessing } from './pre_processing';
+import { getDataSource } from './data_source';
 
 export default function* rootSaga() {
   return yield all([
@@ -52,5 +54,6 @@ export default function* rootSaga() {
     takeLatest(TrainModelTypes.PUT_TRAIN_MODEL, putTrainModel),
     takeLatest(TrainModelTypes.DELETE_TRAIN_MODEL, deleteTrainModel),
     takeLatest(TrainMetricTypes.POST_TRAIN_METRIC, postTrainMetric),
+    takeLatest(DataSourceTypes.GET_DATA_SOURCE, getDataSource),
   ])
 }
