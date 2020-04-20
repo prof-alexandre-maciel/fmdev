@@ -26,6 +26,13 @@ export function* putLms({ filter }) {
     const response = yield call(api.put, 'lms', filter);
 
     yield put(Creators.lmsSuccess(response.data));
+
+    yield put(toastrActions.add({
+      type: 'success',
+      title: 'Sucesso',
+      message: 'Fonte de dados alterada com sucesso!'
+    }));
+
   } catch (err) {
     yield put(Creators.lmsError({ err }));
     yield put(toastrActions.add({
