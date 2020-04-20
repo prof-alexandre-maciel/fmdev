@@ -124,3 +124,24 @@ class TrainModelSchema(ma.Schema):
     updated_at = fields.DateTime()
     qtd_predict = fields.Integer()
     last_predict_at = fields.DateTime()
+
+
+
+class DatasourceModel(db.Model, TimestampMixin):
+    __tablename__ = 'datasources'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(), nullable=False)
+    file_id = db.Column(db.String(), nullable=False)
+    extension =  db.Column(db.String(), nullable=False)
+
+    def __init__(self, name, file_id, extension):
+        self.name = name
+        self.file_id = file_id
+        self.extension = extension
+
+
+class DatasourceSchema(ma.Schema):
+    id = fields.Integer(dump_only=True)
+    name = fields.String()
+    file_id = fields.String()
+    extension = fields.String()
