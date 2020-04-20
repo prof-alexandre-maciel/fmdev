@@ -6,12 +6,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import SideMenu from '../../components/SideMenu';
-import LmsSelect from '../../components/LmsSelect';
+import DataSource from '../../components/DataSource';
 import Indicators from '../../components/Indicators';
 import PreProcessing from '../../components/PreProcessing';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { Creators as LmsActions } from '../../store/ducks/lms';
-import { LMS_SELECT, INDICATORS, PRE_PROCESSING, TRAIN, TRAIN_MODEL } from '../../constants';
+import { DATASOURCE, INDICATORS, PRE_PROCESSING, TRAIN, TRAIN_MODEL } from '../../constants';
 import Train from '../../components/Train';
 import TrainModel from '../TrainModel';
 
@@ -24,8 +24,8 @@ class Main extends Component {
   renderContent = () => {
     const { activeComponent } = this.props.screen;
 
-    if (activeComponent === LMS_SELECT) {
-      return <LmsSelect />;
+    if (activeComponent === DATASOURCE) {
+      return <DataSource />;
     }
 
     if (activeComponent === INDICATORS) {

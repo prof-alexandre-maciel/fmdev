@@ -14,7 +14,7 @@ import {
   Header, Separator, Content, LeftContent,
   RightContainer, SelectText, SelectContainer
 } from './styles';
-import { LMS_SELECT, PRE_PROCESSING, ADD_TRAIN } from '../../constants';
+import { DATASOURCE, PRE_PROCESSING, ADD_TRAIN } from '../../constants';
 import { selectStyle } from '../../styles/global';
 import Select from 'react-select';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -122,7 +122,7 @@ class Indicators extends Component {
     return (
       <ConfigContainer size='big'>
         <PerfectScrollbar style={{ width: '100%' }}>
-          <BreadCrumb text='Voltar para ESCOLHA LMS' screen={ADD_TRAIN} destiny={LMS_SELECT} />
+          <BreadCrumb text='Voltar para ESCOLHA LMS' screen={ADD_TRAIN} destiny={DATASOURCE} />
           <Header>
             <h1>Selecione os indicadores</h1>
             <div>

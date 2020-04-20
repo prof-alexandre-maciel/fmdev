@@ -8,7 +8,7 @@ import { Creators as AuthActions } from '../../store/ducks/auth';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import AddIcon from 'react-feather/dist/icons/plus-circle';
 import TranModelIcon from 'react-feather/dist/icons/package';
-import { LMS_SELECT, TRAIN_MODEL, ADD_TRAIN } from '../../constants';
+import { DATASOURCE, TRAIN_MODEL, ADD_TRAIN } from '../../constants';
 
 class SideMenu extends Component {
 
@@ -33,7 +33,7 @@ class SideMenu extends Component {
       },
       {
         screen: ADD_TRAIN,
-        component: LMS_SELECT,
+        component: DATASOURCE,
         icon: <AddIcon color={'#FFF'} strokeWidth={this.getStrokeWidth(ADD_TRAIN)} />
       }
     ];

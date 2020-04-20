@@ -20,10 +20,11 @@ import MoodleConfigDialog from '../MoodleConfigDialog';
 import { INDICATORS, ADD_TRAIN } from '../../constants';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { Creators as IndicatorActions } from '../../store/ducks/indicator';
+import DataSourceDialog from '../DataSourceDialog';
 
 const availableLms = { moodle: true };
 
-class LmsSelect extends Component {
+class DataSource extends Component {
 
   state = {
     chipSelected: 'ead'
@@ -98,6 +99,8 @@ class LmsSelect extends Component {
     )
   }
 
+  addDataSource = () => this.props.setDialog('dataSource');
+
   render() {
     const { lms } = this.props;
 
@@ -108,7 +111,7 @@ class LmsSelect extends Component {
           <Header>
             <h1>Fontes de Dados</h1>
             <div>
-              <CustomButton filled={false} onClick={() => { }}>Adicionar fonte de dados</CustomButton>
+              <CustomButton filled={false} onClick={this.addDataSource}>Adicionar fonte de dados</CustomButton>
             </div>
           </Header>
 
@@ -117,6 +120,7 @@ class LmsSelect extends Component {
           <CardContainer>{lms.data.map((item, idx) => this.renderCard(item, idx))}</CardContainer>
         </ConfigContainer>
         <MoodleConfigDialog />
+        <DataSourceDialog />
       </PerfectScrollbar>
     );
   }
@@ -129,4 +133,4 @@ export default connect(
   ...DialogActions, ...LmsActions,
   ...ScreenActions, ...IndicatorActions
 }
-)(LmsSelect);
+)(DataSource);

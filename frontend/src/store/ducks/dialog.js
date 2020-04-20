@@ -14,6 +14,7 @@ export const INITIAL_STATE = Immutable({
   data: null,
   alert: false,
   moodle: false,
+  dataSource: false,
   preProcessingConstant: false,
   trainConfig: false,
   trainSave: false,
