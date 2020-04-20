@@ -13,7 +13,7 @@ class Datasource(Resource):
     @jwt_required
     def get(self):
         try:
-            res = DatasourceModel.query.filter_by(extension='csv').all()
+            res = DatasourceModel.query.all()
 
             schema = DatasourceModelSchema(many=True)
             data = schema.dump(res)

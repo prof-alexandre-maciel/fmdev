@@ -140,7 +140,7 @@ class DatasourceModel(db.Model, TimestampMixin):
         self.extension = extension
 
 
-class DatasourceSchema(ma.Schema):
+class DatasourceModelSchema(ma.Schema):
     id = fields.Integer(dump_only=True)
     name = fields.String()
     file_id = fields.String()

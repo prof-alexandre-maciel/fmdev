@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { CardContainer } from './styles';
 import { Creators as DialogActions } from '../../store/ducks/dialog';
 import { Creators as LmsActions } from '../../store/ducks/lms';
+import { Creators as DataSourceActions } from '../../store/ducks/data_source';
 import { connect } from 'react-redux';
 import { default as CustomButton } from '../../styles/Button';
 import { ConfigContainer } from '../../styles/ConfigContainer';
@@ -15,19 +16,28 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import MonitorIcon from 'react-feather/dist/icons/monitor';
+import EditIcon from 'react-feather/dist/icons/settings';
+import DeleteIcon from 'react-feather/dist/icons/trash-2';
+import PlayIcon from 'react-feather/dist/icons/play';
 import FileIcon from 'react-feather/dist/icons/file';
 import MoodleConfigDialog from '../MoodleConfigDialog';
 import { INDICATORS, ADD_TRAIN } from '../../constants';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { Creators as IndicatorActions } from '../../store/ducks/indicator';
 import DataSourceDialog from '../DataSourceDialog';
+import * as moment from 'moment';
+import IconButton from '@material-ui/core/IconButton';
 
 const availableLms = { moodle: true };
 
 class DataSource extends Component {
 
   state = {
-    chipSelected: 'ead'
+    chipSelected: 'lms'
+  }
+
+  componentWillMount() {
+    this.props.getDataSource();
   }
 
   openDialogConfig = (item, event) => {
@@ -41,26 +51,52 @@ class DataSource extends Component {
     })
   }
 
-  renderCard = (item, idx) => (
+  renderCardLMS = (item, idx) => (
     <Card className='lms-card' key={idx} style={{ opacity: availableLms[item.name] ? 1 : .3 }}>
       <CardActionArea>
         <CardContent style={{ backgroundColor: primaryColor, color: '#FFF' }}>
           <Typography gutterBottom variant="h5" component="h2" style={{ fontFamily: fontFamily }}>
             {item.description}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p" style={{ color: '#FFF', fontFamily: fontFamily, fontSize: '11px' }}>
+          <Typography variant="body2" color="textSecondary" component="p" style={{ color: '#FFF', fontFamily: fontFamily, fontSize: '10px' }}>
             Versão: {item.version ? item.version : 'Não disponível'}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button onClick={this.openDialogConfig.bind(this, item)}
-          size="small" disableRipple={true} style={{ fontFamily: fontFamily, color: primaryColor, fontSize: '11px' }}>
-          Configurar
-        </Button>
-        <Button onClick={this.goToIndicators.bind(this, item)} size="small" disableRipple={true} style={{ fontFamily: fontFamily, color: primaryColor, fontSize: '11px' }}>
-          utilizar esta fonte
-        </Button>
+        <IconButton onClick={this.openDialogConfig.bind(this, item)}>
+          <EditIcon size={20} color={primaryColor} />
+        </IconButton>
+
+        <IconButton onClick={this.goToIndicators.bind(this, item)}>
+          <PlayIcon size={20} color={primaryColor} />
+        </IconButton>
+      </CardActions>
+    </Card>
+  )
+
+  renderCardCSV = (item, idx) => (
+    <Card className='lms-card' key={idx}>
+      <CardActionArea>
+        <CardContent style={{ backgroundColor: primaryColor, color: '#FFF' }}>
+          <Typography gutterBottom variant="h5" component="h2" style={{ fontFamily: fontFamily }}>
+            {item.name}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p" style={{ color: '#FFF', fontFamily: fontFamily, fontSize: '10px' }}>
+            Atualizado em: {moment(item.created_at).format('DD/MM/YYYY HH:mm')}
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+      <CardActions>
+        <IconButton>
+          <EditIcon size={20} color={primaryColor} />
+        </IconButton>
+        <IconButton onClick={this.goToIndicators.bind(this, item)}>
+          <PlayIcon size={20} color={primaryColor} />
+        </IconButton>
+        <IconButton>
+          <DeleteIcon size={20} color={primaryColor} />
+        </IconButton>
       </CardActions>
     </Card>
   )
@@ -81,10 +117,10 @@ class DataSource extends Component {
       <div style={{ display: 'flex', paddingLeft: '2rem' }}>
         <div>
           <Chip
-            avatar={<MonitorIcon size={16} color={chipSelected === 'ead' ? '#FFF' : primaryColor} />}
+            avatar={<MonitorIcon size={16} color={chipSelected === 'lms' ? '#FFF' : primaryColor} />}
             label="Ambientes EAD"
-            className={chipSelected === 'ead' ? 'active-chip' : 'inactive-chip'}
-            onClick={this.setChip.bind(this, 'ead')}
+            className={chipSelected === 'lms' ? 'active-chip' : 'inactive-chip'}
+            onClick={this.setChip.bind(this, 'lms')}
           />
         </div>
         <div style={{ paddingLeft: '.5vw' }}>
@@ -102,7 +138,8 @@ class DataSource extends Component {
   addDataSource = () => this.props.setDialog('dataSource');
 
   render() {
-    const { lms } = this.props;
+    const { chipSelected } = this.state;
+    const { lms, data_source } = this.props;
 
     return (
       <PerfectScrollbar style={{ width: '100%' }}>
@@ -117,7 +154,13 @@ class DataSource extends Component {
 
           {this.renderDatasetOptions()}
 
-          <CardContainer>{lms.data.map((item, idx) => this.renderCard(item, idx))}</CardContainer>
+          {chipSelected === 'lms' ?
+            <CardContainer>{lms.data.map((item, idx) => this.renderCardLMS(item, idx))}</CardContainer>
+            : null}
+
+          {chipSelected === 'csv' ?
+            <CardContainer>{data_source.data.map((item, idx) => this.renderCardCSV(item, idx))}</CardContainer>
+            : null}
         </ConfigContainer>
         <MoodleConfigDialog />
         <DataSourceDialog />
@@ -126,11 +169,12 @@ class DataSource extends Component {
   }
 }
 
-const mapStateToProps = ({ lms }) => ({ lms });
+const mapStateToProps = ({ lms, data_source }) => ({ lms, data_source });
 
 export default connect(
   mapStateToProps, {
   ...DialogActions, ...LmsActions,
-  ...ScreenActions, ...IndicatorActions
+  ...ScreenActions, ...IndicatorActions,
+  ...DataSourceActions
 }
 )(DataSource);
