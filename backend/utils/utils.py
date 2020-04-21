@@ -92,3 +92,9 @@ def delete_model_files(filename):
         f"{current_app.config.get('TEST_TARGET')}/{filename}.csv")
     delete_file(
         f"{current_app.config.get('TRAIN_PIPELINES')}/{filename}.py")
+
+
+def get_extension_from_path(filename):
+    filename, file_extension = os.path.splitext(filename)
+
+    return file_extension

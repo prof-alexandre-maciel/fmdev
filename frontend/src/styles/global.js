@@ -6,6 +6,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
+import 'react-circular-progressbar/dist/styles.css';
 
 export const primaryColor = '#4A5173';
 const secondaryColor = '#000';
