@@ -86,7 +86,7 @@ class DataSource extends Component {
             {item.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p" style={{ color: primaryColor, fontFamily: fontFamily, fontSize: '10px' }}>
-            <b>Criado em:</b> {moment(item.created_at).format('DD/MM/YYYY HH:mm')}
+            <b>Importado em:</b> {moment(item.created_at).format('DD/MM/YYYY HH:mm')}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p" style={{ color: primaryColor, fontFamily: fontFamily, fontSize: '10px' }}>
             <b>Tamanho:</b> {filesize(item.size)}

@@ -16,7 +16,8 @@ class Datasource(Resource):
     @jwt_required
     def get(self):
         try:
-            res = db.session.query(DatasourceModel.id, DatasourceModel.name, FileModel.size) \
+            res = db.session.query(DatasourceModel.id, DatasourceModel.created_at,
+                                   DatasourceModel.name, FileModel.size) \
                 .join(FileModel, DatasourceModel.file_id == FileModel.id) \
                 .order_by(desc(DatasourceModel.created_at)).all()
 
