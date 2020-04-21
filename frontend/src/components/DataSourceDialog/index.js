@@ -52,6 +52,7 @@ class DataSourceDialog extends Component {
 
   submit = () => {
     const { name, uploadedFiles } = this.state;
+    const fileId = uploadedFiles.map(file => file.id);
 
     if (!name) {
       this.renderWarningMsg('Nome não informado');
@@ -63,7 +64,7 @@ class DataSourceDialog extends Component {
       return;
     }
 
-    this.props.postDataSource({ name });
+    this.props.postDataSource({ name, file_id: fileId[0] });
     this.onClose();
   }
 

@@ -3,6 +3,7 @@ import traceback
 from Model import db
 from utils import utils
 from datetime import datetime
+from resources.File import File
 from flask_restful import Resource
 from flask import request, current_app
 from flask_jwt_extended import jwt_required
@@ -30,7 +31,8 @@ class Datasource(Resource):
             data = request.get_json()
 
             model = DatasourceModel(
-                name=data['name']
+                name=data['name'],
+                file_id=data['file_id']
             )
 
             db.session.add(model)
@@ -63,11 +65,10 @@ class Datasource(Resource):
     def delete(self, key):
         try:
             model = DatasourceModel.query.filter_by(id=key).first()
-
-            # utils.delete_model_files(key)
-            # utils.delete_file(f"{current_app.config.get('PRE_PROCESSING_RAW')}/{key}.csv")
             db.session.delete(model)
             db.session.commit()
+
+            File.delete_from_database_and_from_file(key)
 
             return self.get()
 

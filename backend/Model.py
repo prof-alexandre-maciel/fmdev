@@ -132,7 +132,7 @@ class DatasourceModel(db.Model, TimestampMixin):
     name = db.Column(db.String(), nullable=False)
     file_id = db.Column(db.Integer, db.ForeignKey('files.id'), nullable=False)
 
-    def __init__(self, name, file_id, extension):
+    def __init__(self, name, file_id):
         self.name = name
         self.file_id = file_id
 

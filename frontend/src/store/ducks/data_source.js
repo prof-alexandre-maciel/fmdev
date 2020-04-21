@@ -6,7 +6,9 @@ export const { Types, Creators } = createActions({
   dataSourceRequest: [],
   dataSourceSuccess: ['data'],
   dataSourceError: ['err'],
-  getDataSource: []
+  getDataSource: [],
+  postDataSource: ['data'],
+  deleteDataSource: ['id']
 });
 
 /** --------------------------------

@@ -21,6 +21,11 @@ class File(Resource):
         
         return file_length
     
+    def delete_from_database_and_from_file(self, key):
+        path = f"{current_app.config.get('UPLOAD_FOLDER')}/{key}"
+        delete_file(path)
+        self.delete_from_database(key)
+    
     def delete_from_database(self, key):
         try:
             model = FileModel.query.filter_by(file_id=key).first()
@@ -88,9 +93,7 @@ class File(Resource):
     @jwt_required
     def delete(self, key):
         try:
-            path = f"{current_app.config.get('UPLOAD_FOLDER')}/{key}"
-            delete_file(path)
-            self.delete_from_database(key)
+            self.delete_from_database_and_from_file(key)
 
             return True
         except:
