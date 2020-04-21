@@ -13,7 +13,6 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import MonitorIcon from 'react-feather/dist/icons/monitor';
 import EditIcon from 'react-feather/dist/icons/settings';
@@ -33,7 +32,7 @@ const availableLms = { moodle: true };
 class DataSource extends Component {
 
   state = {
-    chipSelected: 'lms'
+    chipSelected: 'csv'
   }
 
   componentWillMount() {

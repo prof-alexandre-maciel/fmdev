@@ -17,12 +17,14 @@ from resources.ModelCopy import ModelCopy
 from resources.Predict import Predict
 from resources.Download import Download
 from resources.Datasource import Datasource
+from resources.Upload import Upload
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
 
 # Routes
 api.add_resource(Login, '/auth/login')
+api.add_resource(Upload, '/upload')
 api.add_resource(Register, '/auth/register')
 api.add_resource(LmsResource, '/lms')
 api.add_resource(Subject, '/subject')
