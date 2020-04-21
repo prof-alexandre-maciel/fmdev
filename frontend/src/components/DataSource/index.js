@@ -54,22 +54,22 @@ class DataSource extends Component {
   renderCardLMS = (item, idx) => (
     <Card className='lms-card' key={idx} style={{ opacity: availableLms[item.name] ? 1 : .3 }}>
       <CardActionArea>
-        <CardContent style={{ backgroundColor: primaryColor, color: '#FFF' }}>
+        <CardContent style={{ color: primaryColor }}>
           <Typography gutterBottom variant="h5" component="h2" style={{ fontFamily: fontFamily }}>
             {item.description}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p" style={{ color: '#FFF', fontFamily: fontFamily, fontSize: '10px' }}>
+          <Typography variant="body2" color="textSecondary" component="p" style={{ color: primaryColor, fontFamily: fontFamily, fontSize: '10px' }}>
             Versão: {item.version ? item.version : 'Não disponível'}
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions style={{ backgroundColor: primaryColor }}>
         <IconButton onClick={this.openDialogConfig.bind(this, item)}>
-          <EditIcon size={20} color={primaryColor} />
+          <EditIcon size={20} color={'#FFF'} />
         </IconButton>
 
         <IconButton onClick={this.goToIndicators.bind(this, item)}>
-          <PlayIcon size={20} color={primaryColor} />
+          <PlayIcon size={20} color={'#FFF'} />
         </IconButton>
       </CardActions>
     </Card>
@@ -78,24 +78,24 @@ class DataSource extends Component {
   renderCardCSV = (item, idx) => (
     <Card className='lms-card' key={idx}>
       <CardActionArea>
-        <CardContent style={{ backgroundColor: primaryColor, color: '#FFF' }}>
+        <CardContent style={{ color: primaryColor }}>
           <Typography gutterBottom variant="h5" component="h2" style={{ fontFamily: fontFamily }}>
             {item.name}
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p" style={{ color: '#FFF', fontFamily: fontFamily, fontSize: '10px' }}>
+          <Typography variant="body2" color="textSecondary" component="p" style={{ color: primaryColor, fontFamily: fontFamily, fontSize: '10px' }}>
             Atualizado em: {moment(item.created_at).format('DD/MM/YYYY HH:mm')}
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      <CardActions style={{ backgroundColor: primaryColor }}>
         <IconButton>
-          <EditIcon size={20} color={primaryColor} />
+          <EditIcon size={20} color={'#FFF'} />
         </IconButton>
         <IconButton onClick={this.goToIndicators.bind(this, item)}>
-          <PlayIcon size={20} color={primaryColor} />
+          <PlayIcon size={20} color={'#FFF'} />
         </IconButton>
         <IconButton>
-          <DeleteIcon size={20} color={primaryColor} />
+          <DeleteIcon size={20} color={'#FFF'} />
         </IconButton>
       </CardActions>
     </Card>
