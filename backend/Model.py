@@ -126,22 +126,41 @@ class TrainModelSchema(ma.Schema):
     last_predict_at = fields.DateTime()
 
 
-
 class DatasourceModel(db.Model, TimestampMixin):
     __tablename__ = 'datasources'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(), nullable=False)
-    file_id = db.Column(db.String(), nullable=False)
-    extension =  db.Column(db.String(), nullable=False)
+    file_id = db.Column(db.Integer, db.ForeignKey('files.id'), nullable=False)
 
     def __init__(self, name, file_id, extension):
         self.name = name
         self.file_id = file_id
-        self.extension = extension
 
 
 class DatasourceModelSchema(ma.Schema):
     id = fields.Integer(dump_only=True)
     name = fields.String()
+    file_id = fields.Integer()
+
+
+class FileModel(db.Model, TimestampMixin):
+    __tablename__ = 'files'
+    id = db.Column(db.Integer, primary_key=True)
+    file_id = db.Column(db.String(), nullable=False)
+    filename = db.Column(db.String(), nullable=False)
+    extension =  db.Column(db.String(), nullable=False)
+    size =  db.Column(db.Float(), nullable=False)
+
+    def __init__(self, file_id, filename, extension, size):
+        self.file_id = file_id
+        self.filename = filename
+        self.extension = extension
+        self.size = size
+
+
+class FileModelSchema(ma.Schema):
+    id = fields.Integer(dump_only=True)
     file_id = fields.String()
+    filename = fields.String()
     extension = fields.String()
+    size = fields.Float()

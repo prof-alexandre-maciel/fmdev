@@ -9,9 +9,9 @@ import api from '../../services/api';
 
 class UploadFileList extends Component {
 
-  handleDelete = async (id, event) => {
+  handleDelete = async id => {
     let newUploadedFiles = [];
-    await api.delete(`upload/${id}`);
+    await api.delete(`file/${id}`);
 
     newUploadedFiles = this.props.files.filter(file => file.id !== id);
 

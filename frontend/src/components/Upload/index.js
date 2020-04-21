@@ -51,7 +51,7 @@ export default class Upload extends Component {
     data.append("file", uploadedFile.file, uploadedFile.name);
 
     api
-      .post("upload", data, {
+      .post("file", data, {
         onUploadProgress: e => {
           const progress = parseInt(Math.round((e.loaded * 100) / e.total));
 
