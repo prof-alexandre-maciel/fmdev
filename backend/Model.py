@@ -141,6 +141,9 @@ class DatasourceModelSchema(ma.Schema):
     id = fields.Integer(dump_only=True)
     name = fields.String()
     file_id = fields.Integer()
+    size = fields.Float()
+    created_at = fields.DateTime()
+    updated_at = fields.DateTime()
 
 
 class FileModel(db.Model, TimestampMixin):
@@ -164,3 +167,5 @@ class FileModelSchema(ma.Schema):
     filename = fields.String()
     extension = fields.String()
     size = fields.Float()
+    created_at = fields.DateTime()
+    updated_at = fields.DateTime()

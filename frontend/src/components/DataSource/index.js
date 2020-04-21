@@ -28,6 +28,7 @@ import * as moment from 'moment';
 import IconButton from '@material-ui/core/IconButton';
 import { ProgressSpinner } from 'primereact/progressspinner';
 import AlertDialog from '../AlertDialog';
+import filesize from "filesize";
 
 const availableLms = { moodle: true };
 
@@ -85,7 +86,10 @@ class DataSource extends Component {
             {item.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p" style={{ color: primaryColor, fontFamily: fontFamily, fontSize: '10px' }}>
-            Criado em: {moment(item.created_at).format('DD/MM/YYYY HH:mm')}
+            <b>Criado em:</b> {moment(item.created_at).format('DD/MM/YYYY HH:mm')}
+          </Typography>
+          <Typography variant="body2" color="textSecondary" component="p" style={{ color: primaryColor, fontFamily: fontFamily, fontSize: '10px' }}>
+            <b>Tamanho:</b> {filesize(item.size)}
           </Typography>
         </CardContent>
       </CardActionArea>
