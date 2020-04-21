@@ -50,6 +50,12 @@ export function* deleteDataSource({ id }) {
     const response = yield call(api.delete, `data-source/${id}`);
 
     yield put(Creators.dataSourceSuccess(response.data));
+
+    yield put(toastrActions.add({
+      type: 'success',
+      title: 'Sucesso',
+      message: `Fonte de dados removida com sucesso!`
+    }));
   } catch (err) {
     yield put(Creators.dataSourceError({ err }));
     yield put(toastrActions.add({

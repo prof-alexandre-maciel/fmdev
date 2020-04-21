@@ -6,7 +6,7 @@ import { Creators as DataSourceActions } from '../../store/ducks/data_source';
 import { connect } from 'react-redux';
 import { default as CustomButton } from '../../styles/Button';
 import { ConfigContainer } from '../../styles/ConfigContainer';
-import { Header, fontFamily, primaryColor } from '../../styles/global';
+import { Header, fontFamily, primaryColor, StatusMsgContainer } from '../../styles/global';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -26,12 +26,15 @@ import { Creators as IndicatorActions } from '../../store/ducks/indicator';
 import DataSourceDialog from '../DataSourceDialog';
 import * as moment from 'moment';
 import IconButton from '@material-ui/core/IconButton';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import AlertDialog from '../AlertDialog';
 
 const availableLms = { moodle: true };
 
 class DataSource extends Component {
 
   state = {
+    selectedItem: null,
     chipSelected: 'csv'
   }
 
@@ -90,14 +93,28 @@ class DataSource extends Component {
         <IconButton onClick={this.goToIndicators.bind(this, item)}>
           <PlayIcon size={20} color={'#FFF'} />
         </IconButton>
-        <IconButton onClick={this.delete.bind(this, item)}>
+        <IconButton onClick={this.handleMsgDelete.bind(this, item)}>
           <DeleteIcon size={20} color={'#FFF'} />
         </IconButton>
       </CardActions>
     </Card>
   )
 
-  delete = (item, event) => this.props.deleteDataSource(item.id);
+  handleMsgDelete = (item, event) => {
+    this.setState({ selectedItem: item });
+
+    this.props.setDialog('alert', {
+      description: 'Você realmente deseja excluir esta fonte de dados?'
+    });
+  }
+
+  handleDelete = () => {
+    const { selectedItem } = this.state;
+
+    if (!selectedItem || !selectedItem.id) return;
+
+    this.props.deleteDataSource(selectedItem.id);
+  }
 
   goToIndicators = (item, event) => {
     if (!availableLms[item.name]) return;
@@ -138,6 +155,8 @@ class DataSource extends Component {
   render() {
     const { chipSelected } = this.state;
     const { lms, data_source } = this.props;
+    const loading = chipSelected === 'csv' && data_source.loading ? true : false;
+    const hasData = chipSelected === 'csv' && data_source.data.length ? true : false;
 
     return (
       <PerfectScrollbar style={{ width: '100%' }}>
@@ -159,9 +178,20 @@ class DataSource extends Component {
           {chipSelected === 'csv' ?
             <CardContainer>{data_source.data.map((item, idx) => this.renderCardCSV(item, idx))}</CardContainer>
             : null}
+
+          {loading && (
+            <StatusMsgContainer>
+              <ProgressSpinner style={{ width: '50px', height: '50px' }} strokeWidth="4" fill="#EEEEEE" animationDuration=".5s" />
+            </StatusMsgContainer>
+          )}
+
+          {!hasData && !loading && (
+            <StatusMsgContainer>Nenhuma fonte de dados cadastrada</StatusMsgContainer>
+          )}
         </ConfigContainer>
         <MoodleConfigDialog />
         <DataSourceDialog />
+        <AlertDialog onSubmit={this.handleDelete}></AlertDialog>
       </PerfectScrollbar>
     );
   }
