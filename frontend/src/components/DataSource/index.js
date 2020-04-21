@@ -155,8 +155,8 @@ class DataSource extends Component {
   render() {
     const { chipSelected } = this.state;
     const { lms, data_source } = this.props;
-    const loading = chipSelected === 'csv' && data_source.loading ? true : false;
-    const hasData = chipSelected === 'csv' && data_source.data.length ? true : false;
+    const loading = !!data_source.loading;
+    const hasData = !!data_source.data.length;
 
     return (
       <PerfectScrollbar style={{ width: '100%' }}>
@@ -179,13 +179,13 @@ class DataSource extends Component {
             <CardContainer>{data_source.data.map((item, idx) => this.renderCardCSV(item, idx))}</CardContainer>
             : null}
 
-          {loading && (
+          {chipSelected === 'csv' && loading && (
             <StatusMsgContainer>
               <ProgressSpinner style={{ width: '50px', height: '50px' }} strokeWidth="4" fill="#EEEEEE" animationDuration=".5s" />
             </StatusMsgContainer>
           )}
 
-          {!hasData && !loading && (
+          {chipSelected === 'csv' && !hasData && !loading && (
             <StatusMsgContainer>Nenhuma fonte de dados cadastrada</StatusMsgContainer>
           )}
         </ConfigContainer>
