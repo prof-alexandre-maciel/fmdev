@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import DropZone from 'react-dropzone';
 import { DropContainer, UploadMessage } from './styles';
 import api from '../../services/api';
-import { uniqueId } from "lodash";
 import filesize from "filesize";
 
 export default class Upload extends Component {
@@ -14,7 +13,7 @@ export default class Upload extends Component {
   handleUpload = files => {
     const uploadedFiles = files.map(file => ({
       file,
-      id: uniqueId(),
+      id: null,
       name: file.name,
       readableSize: filesize(file.size),
       preview: URL.createObjectURL(file),

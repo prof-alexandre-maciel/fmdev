@@ -25,15 +25,15 @@ class UploadFileList extends Component {
 
     return (
       <Container>
-        {files.map(uploadedFile => (
-          <li key={uploadedFile.id}>
+        {files.map((uploadedFile, idx) => (
+          <li key={uploadedFile.id || idx}>
             <FileInfo>
               <Preview><FileIcon size={24} color={primaryColor} /></Preview>
               <div>
                 <strong>{uploadedFile.name}</strong>
                 <span>
                   {uploadedFile.readableSize}{" "}
-                  {!!uploadedFile.url && (
+                  {!!uploadedFile.id && (
                     <div onClick={() => this.handleDelete(uploadedFile.id)}>
                       Excluir
                     </div>

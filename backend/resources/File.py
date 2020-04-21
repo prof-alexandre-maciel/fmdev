@@ -2,10 +2,10 @@ import os
 import uuid
 import traceback
 from Model import db
-from Model import FileModel
 from flask_restful import Resource
 from flask import request, current_app
 from flask_jwt_extended import jwt_required
+from Model import FileModel, FileModelSchema
 from utils.utils import get_extension_from_path, delete_file
 
 
@@ -21,7 +21,19 @@ class File(Resource):
         
         return file_length
     
-    def insert(self, data):
+    def delete_from_database(self, key):
+        try:
+            model = FileModel.query.filter_by(file_id=key).first()
+
+            db.session.delete(model)
+            db.session.commit()
+
+            return model
+        except:
+            traceback.print_exc()
+            return None
+    
+    def insert_on_database(self, data):
         try:
             model = FileModel(
                 file_id=data['id'],
@@ -33,7 +45,10 @@ class File(Resource):
             db.session.add(model)
             db.session.commit()
 
-            return model
+            schema = FileModelSchema()
+            data = schema.dump(model)
+
+            return data
         except:
             traceback.print_exc()
             return None
@@ -63,9 +78,9 @@ class File(Resource):
                 'url': f"{upload_folder}/{file_id}"
             }
 
-            self.insert(data)
+            model = self.insert_on_database(data)
 
-            return data
+            return model
         except:
             traceback.print_exc()
             return {'msg': f"Error on save file"}, 500
@@ -75,6 +90,7 @@ class File(Resource):
         try:
             path = f"{current_app.config.get('UPLOAD_FOLDER')}/{key}"
             delete_file(path)
+            self.delete_from_database(key)
 
             return True
         except:
