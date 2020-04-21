@@ -24,7 +24,7 @@ api = Api(api_bp)
 
 # Routes
 api.add_resource(Login, '/auth/login')
-api.add_resource(Upload, '/upload')
+api.add_resource(Upload, '/upload', '/upload/<string:key>')
 api.add_resource(Register, '/auth/register')
 api.add_resource(LmsResource, '/lms')
 api.add_resource(Subject, '/subject')

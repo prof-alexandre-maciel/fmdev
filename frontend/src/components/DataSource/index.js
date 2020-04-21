@@ -82,14 +82,11 @@ class DataSource extends Component {
             {item.name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p" style={{ color: primaryColor, fontFamily: fontFamily, fontSize: '10px' }}>
-            Atualizado em: {moment(item.created_at).format('DD/MM/YYYY HH:mm')}
+            Criado em: {moment(item.created_at).format('DD/MM/YYYY HH:mm')}
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions style={{ backgroundColor: primaryColor }}>
-        <IconButton>
-          <EditIcon size={20} color={'#FFF'} />
-        </IconButton>
         <IconButton onClick={this.goToIndicators.bind(this, item)}>
           <PlayIcon size={20} color={'#FFF'} />
         </IconButton>

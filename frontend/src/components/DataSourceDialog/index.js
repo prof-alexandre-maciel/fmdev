@@ -18,11 +18,19 @@ import filesize from "filesize";
 class DataSourceDialog extends Component {
 
   state = {
-    name: null,
+    name: '',
     uploadedFiles: []
   };
 
   onClose = () => {
+    this.props.setDialog('dataSource');
+  }
+
+  onCancel = () => {
+    const { uploadedFiles } = this.state;
+
+    uploadedFiles.forEach(file => this.handleDelete(file.id));
+
     this.props.setDialog('dataSource');
   }
 
@@ -66,6 +74,8 @@ class DataSourceDialog extends Component {
         onUploadProgress: e => {
           const progress = parseInt(Math.round((e.loaded * 100) / e.total));
 
+          console.log(progress);
+
           this.updateFile(uploadedFile.id, {
             progress
           });
@@ -74,7 +84,7 @@ class DataSourceDialog extends Component {
       .then(response => {
         this.updateFile(uploadedFile.id, {
           uploaded: true,
-          id: response.data._id,
+          id: response.data.id,
           url: response.data.url
         });
       })
@@ -101,13 +111,18 @@ class DataSourceDialog extends Component {
     });
   }
 
-  handleChangeInput = e => this.props.setDialogData({ [e.target.name]: e.target.value });
+  handleChangeInput = e => this.setState({ [e.target.name]: e.target.value });
 
   submit = () => {
-    const { name } = this.state;
+    const { name, uploadedFiles } = this.state;
 
     if (!name) {
       this.renderWarningMsg('Nome não informado');
+      return;
+    }
+
+    if (!uploadedFiles.length) {
+      this.renderWarningMsg('Nenhum arquivo importado');
       return;
     }
 
@@ -116,9 +131,8 @@ class DataSourceDialog extends Component {
   }
 
   render() {
-    const { uploadedFiles } = this.state;
-    const { name } = this.props.dialog.data || {};
-    const { dataSource, data } = this.props.dialog;
+    const { name, uploadedFiles } = this.state;
+    const { dataSource } = this.props.dialog;
 
     if (!dataSource) {
       return null;
@@ -127,8 +141,7 @@ class DataSourceDialog extends Component {
     return (
       <Dialog>
         <DialogForm>
-          {!data || !data.id ? <h1>Adicionar Fonte de Dados</h1> : null}
-          {data && data.id ? <h1>Editar Fonte de Dados</h1> : null}
+          <h1>Adicionar Fonte de Dados</h1>
 
           <DialogSpan>Informe o nome da fonte de dados:</DialogSpan>
           <DialogInput
@@ -138,13 +151,14 @@ class DataSourceDialog extends Component {
             name="name">
           </DialogInput>
 
-          <div style={{ paddingTop: '2vh' }}>
-            <Upload
-              onUpload={this.handleUpload}
-              accept="text/csv"
-              message="Arraste um arquivo ou clique aqui."
-            />
-          </div>
+          {!uploadedFiles.length && (
+            <div style={{ paddingTop: '2vh' }}>
+              <Upload
+                onUpload={this.handleUpload}
+                accept="text/csv"
+                message="Arraste um arquivo ou clique aqui."
+              />
+            </div>)}
 
           {!!uploadedFiles.length && (
             <UploadFileList files={uploadedFiles} onDelete={this.handleDelete} />
@@ -152,7 +166,7 @@ class DataSourceDialog extends Component {
 
           <DialogFormButtonContainer>
             <Button onClick={this.submit.bind(this)}>Salvar</Button>
-            <Button color="gray" isCancel={true} onClick={this.onClose}>Cancelar</Button>
+            <Button color="gray" isCancel={true} onClick={this.onCancel}>Cancelar</Button>
           </DialogFormButtonContainer>
 
         </DialogForm>

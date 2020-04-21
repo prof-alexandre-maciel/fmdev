@@ -1,7 +1,7 @@
 import os
 import uuid
 import traceback
-from utils.utils import get_extension_from_path
+from utils.utils import get_extension_from_path, delete_file
 from flask_restful import Resource
 from flask import request, current_app
 from flask_jwt_extended import jwt_required
@@ -20,22 +20,32 @@ class Upload(Resource):
             if 'file' not in request.files:
                 return {'msg': 'No file part'}, 500
 
-            file_id = str(uuid.uuid4())
             file = request.files['file']
             extension = get_extension_from_path(file.filename)
             upload_folder = current_app.config.get('UPLOAD_FOLDER')
-            
+            file_id = f"{str(uuid.uuid4())}{extension}"
+
             if file and self.allowed_file(file.filename):
-                file.save(os.path.join(
-                    current_app.config.get('UPLOAD_FOLDER'), f"{file_id}{extension}"))
+                file.save(os.path.join(upload_folder, file_id))
             else:
                 return {'msg': 'Extension file invalid'}, 500
 
-            return { 
+            return {
                 'id': file_id,
                 'filename': file.filename,
                 'url': f"{upload_folder}/{file_id}{extension}"
-             }
+            }
         except:
             traceback.print_exc()
             return {'msg': f"Error on upload file"}, 500
+
+    @jwt_required
+    def delete(self, key):
+        try:
+            path = f"{current_app.config.get('UPLOAD_FOLDER')}/{key}"
+            delete_file(path)
+
+            return True
+        except:
+            traceback.print_exc()
+            return {'msg': f"Error on delete file"}, 500

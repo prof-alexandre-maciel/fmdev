@@ -17,9 +17,9 @@ const UploadFileList = ({ files, onDelete }) => (
             <span>
               {uploadedFile.readableSize}{" "}
               {!!uploadedFile.url && (
-                <button onClick={() => onDelete(uploadedFile.id)}>
+                <div onClick={() => onDelete(uploadedFile.id)}>
                   Excluir
-                </button>
+                </div>
               )}
             </span>
           </div>
@@ -30,11 +30,12 @@ const UploadFileList = ({ files, onDelete }) => (
             !uploadedFile.error && (
               <CircularProgressbar
                 styles={{
-                  root: { width: 24 },
-                  path: { stroke: "#7159c1" }
+                  root: { width: 45 },
+                  path: { stroke: primaryColor }
                 }}
                 strokeWidth={10}
-                percentage={uploadedFile.progress}
+                value={uploadedFile.progress} 
+                text={`${uploadedFile.progress}%`}
               />
             )}
 

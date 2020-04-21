@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Container = styled.ul`
   margin-top: 20px;
-  font-size: 14px;
   li {
     display: flex;
     justify-content: space-between;
@@ -24,12 +23,17 @@ export const FileInfo = styled.div`
       font-size: 12px;
       color: #999;
       margin-top: 5px;
-      button {
+      div {
         border: 0;
+        display: inline;
         background: transparent;
         color: #e57878;
         margin-left: 5px;
-        cursor: pointer;
+        
+        &:hover {
+          text-decoration: underline;
+          cursor: pointer;
+        }
       }
     }
   }
