@@ -21,23 +21,6 @@ class File(Resource):
         
         return file_length
     
-    def delete_from_database_and_from_file(self, key):
-        path = f"{current_app.config.get('UPLOAD_FOLDER')}/{key}"
-        delete_file(path)
-        self.delete_from_database(key)
-    
-    def delete_from_database(self, key):
-        try:
-            model = FileModel.query.filter_by(file_id=key).first()
-
-            db.session.delete(model)
-            db.session.commit()
-
-            return model
-        except:
-            traceback.print_exc()
-            return None
-    
     def insert_on_database(self, data):
         try:
             model = FileModel(
@@ -93,7 +76,12 @@ class File(Resource):
     @jwt_required
     def delete(self, key):
         try:
-            self.delete_from_database_and_from_file(key)
+            file = FileModel.query.filter_by(id=key).first()
+            path = f"{current_app.config.get('UPLOAD_FOLDER')}/{file.file_id}"
+            delete_file(path)
+            
+            db.session.delete(file)
+            db.session.commit()
 
             return True
         except:

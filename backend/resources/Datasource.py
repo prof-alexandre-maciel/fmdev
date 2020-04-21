@@ -7,7 +7,7 @@ from resources.File import File
 from flask_restful import Resource
 from flask import request, current_app
 from flask_jwt_extended import jwt_required
-from Model import DatasourceModel, DatasourceModelSchema
+from Model import FileModel, DatasourceModel, DatasourceModelSchema
 
 class Datasource(Resource):
 
@@ -64,11 +64,17 @@ class Datasource(Resource):
     @jwt_required
     def delete(self, key):
         try:
-            model = DatasourceModel.query.filter_by(id=key).first()
-            db.session.delete(model)
+            datasource = DatasourceModel.query.filter_by(id=key).first()
+            file = FileModel.query.filter_by(id=datasource.file_id).first()
+            
+            path = f"{current_app.config.get('UPLOAD_FOLDER')}/{file.file_id}"
+            utils.delete_file(path)
+
+            db.session.delete(datasource)
             db.session.commit()
 
-            File.delete_from_database_and_from_file(key)
+            db.session.delete(file)
+            db.session.commit()
 
             return self.get()
 

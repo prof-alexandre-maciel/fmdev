@@ -90,12 +90,14 @@ class DataSource extends Component {
         <IconButton onClick={this.goToIndicators.bind(this, item)}>
           <PlayIcon size={20} color={'#FFF'} />
         </IconButton>
-        <IconButton>
+        <IconButton onClick={this.delete.bind(this, item)}>
           <DeleteIcon size={20} color={'#FFF'} />
         </IconButton>
       </CardActions>
     </Card>
   )
+
+  delete = (item, event) => this.props.deleteDataSource(item.id);
 
   goToIndicators = (item, event) => {
     if (!availableLms[item.name]) return;

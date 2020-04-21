@@ -22,6 +22,7 @@ class DataSourceDialog extends Component {
 
   onClose = () => {
     this.props.setDialog('dataSource');
+    this.setState({ name: '', uploadedFiles: [] });
   }
 
   onCancel = () => {
@@ -29,7 +30,7 @@ class DataSourceDialog extends Component {
 
     uploadedFiles.forEach(file => this.handleDelete(file.id));
 
-    this.props.setDialog('dataSource');
+    this.onClose();
   }
 
   handleDelete = async id => {
