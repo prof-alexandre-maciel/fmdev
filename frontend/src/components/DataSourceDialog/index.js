@@ -12,8 +12,6 @@ import { actions as toastrActions } from 'react-redux-toastr';
 import Upload from '../Upload';
 import UploadFileList from '../UploadFileList';
 import api from '../../services/api';
-import { uniqueId } from "lodash";
-import filesize from "filesize";
 
 class DataSourceDialog extends Component {
 
@@ -33,67 +31,6 @@ class DataSourceDialog extends Component {
 
     this.props.setDialog('dataSource');
   }
-
-  handleUpload = files => {
-    const uploadedFiles = files.map(file => ({
-      file,
-      id: uniqueId(),
-      name: file.name,
-      readableSize: filesize(file.size),
-      preview: URL.createObjectURL(file),
-      progress: 0,
-      uploaded: false,
-      error: false,
-      url: null
-    }));
-
-    this.setState({
-      uploadedFiles: this.state.uploadedFiles.concat(uploadedFiles)
-    });
-
-    uploadedFiles.forEach(this.processUpload);
-  };
-
-  updateFile = (id, data) => {
-    this.setState({
-      uploadedFiles: this.state.uploadedFiles.map(uploadedFile => {
-        return id === uploadedFile.id
-          ? { ...uploadedFile, ...data }
-          : uploadedFile;
-      })
-    });
-  };
-
-  processUpload = uploadedFile => {
-    const data = new FormData();
-
-    data.append("file", uploadedFile.file, uploadedFile.name);
-
-    api
-      .post("upload", data, {
-        onUploadProgress: e => {
-          const progress = parseInt(Math.round((e.loaded * 100) / e.total));
-
-          console.log(progress);
-
-          this.updateFile(uploadedFile.id, {
-            progress
-          });
-        }
-      })
-      .then(response => {
-        this.updateFile(uploadedFile.id, {
-          uploaded: true,
-          id: response.data.id,
-          url: response.data.url
-        });
-      })
-      .catch(() => {
-        this.updateFile(uploadedFile.id, {
-          error: true
-        });
-      });
-  };
 
   handleDelete = async id => {
     await api.delete(`upload/${id}`);
@@ -154,14 +91,16 @@ class DataSourceDialog extends Component {
           {!uploadedFiles.length && (
             <div style={{ paddingTop: '2vh' }}>
               <Upload
-                onUpload={this.handleUpload}
+                onUpload={(uploadedFiles) => this.setState({ uploadedFiles })}
                 accept="text/csv"
                 message="Arraste um arquivo ou clique aqui."
               />
             </div>)}
 
           {!!uploadedFiles.length && (
-            <UploadFileList files={uploadedFiles} onDelete={this.handleDelete} />
+            <UploadFileList
+              files={uploadedFiles}
+              onDelete={(uploadedFiles) => this.setState({ uploadedFiles })} />
           )}
 
           <DialogFormButtonContainer>
