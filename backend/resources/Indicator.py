@@ -52,8 +52,6 @@ class Indicator(Resource):
         try:
             context = request.get_json()['context']
 
-            print(request.get_json())
-
             if context == 'LMS':
                 return self.get_indicators_by_lms()
             
