@@ -67,12 +67,11 @@ class DataSource extends Component {
         </CardContent>
       </CardActionArea>
       <CardActions style={{ backgroundColor: primaryColor }}>
+       <IconButton onClick={this.goToIndicators.bind(this, 'lms', item.name)}>
+          <PlayIcon size={20} color={'#FFF'} />
+        </IconButton>
         <IconButton onClick={this.openDialogConfig.bind(this, item)}>
           <EditIcon size={20} color={'#FFF'} />
-        </IconButton>
-
-        <IconButton onClick={this.goToIndicators.bind(this, item)}>
-          <PlayIcon size={20} color={'#FFF'} />
         </IconButton>
       </CardActions>
     </Card>
@@ -94,7 +93,7 @@ class DataSource extends Component {
         </CardContent>
       </CardActionArea>
       <CardActions style={{ backgroundColor: primaryColor }}>
-        <IconButton onClick={this.goToIndicators.bind(this, item)}>
+        <IconButton onClick={this.goToIndicators.bind(this, 'csv', item.id)}>
           <PlayIcon size={20} color={'#FFF'} />
         </IconButton>
         <IconButton onClick={this.handleMsgDelete.bind(this, item)}>
@@ -120,11 +119,12 @@ class DataSource extends Component {
     this.props.deleteDataSource(selectedItem.id);
   }
 
-  goToIndicators = (item, event) => {
-    if (!availableLms[item.name]) return;
+  goToIndicators = (type, id, event) => {
+    if (type === 'lms' && !availableLms[id]) return;
 
     this.props.setScreen(ADD_TRAIN, INDICATORS);
-    this.props.getIndicators({ lms: item.name });
+    this.props.setIndicator('datasource', `${type}/${id}`);
+    this.props.getIndicators({ lms: id });
   }
 
   setChip = (value, event) => this.setState({ chipSelected: value });

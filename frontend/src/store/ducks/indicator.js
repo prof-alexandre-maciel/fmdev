@@ -17,6 +17,7 @@ export const { Types, Creators } = createActions({
 
 const INITIAL_STATE = Immutable({
   data: [],
+  datsource: null,
   loading: false,
   error: false,
   source: [],

@@ -23,6 +23,8 @@ import { PickList } from 'primereact/picklist';
 class Indicators extends Component {
 
   componentDidMount() {
+    const { datasource } = this.props.indicator;
+
     this.props.getCourses();
   }
 
@@ -77,6 +79,7 @@ class Indicators extends Component {
   onSubmit = () => {
     let filter = {};
     const { setScreen } = this.props;
+    const { datasource } = this.props.indicator;
     const { indicators, targetSelected, courseSelected, subjectSelected, semesterSelected } = this.props.indicator;
 
     if (!targetSelected || !targetSelected.value) {
@@ -94,7 +97,7 @@ class Indicators extends Component {
       return;
     }
 
-    filter.lms = 'moodle';
+    filter.lms = datasource.split('/')[1];
     filter.target = targetSelected.value;
     filter.courses = this.getValueFromSelect(courseSelected);
     filter.subjects = this.getValueFromSelect(subjectSelected);

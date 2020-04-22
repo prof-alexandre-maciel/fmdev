@@ -19,6 +19,12 @@ export const FileInfo = styled.div`
   div {
     display: flex;
     flex-direction: column;
+    max-width: 220px;
+    strong {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
     span {
       font-size: 12px;
       color: #999;
