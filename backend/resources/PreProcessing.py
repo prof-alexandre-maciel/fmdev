@@ -9,6 +9,7 @@ from flask_restful import Resource
 from flask import request, current_app
 from sklearn.impute import SimpleImputer
 from flask_jwt_extended import jwt_required
+from Model import FileModel, DatasourceModel
 
 
 class PreProcessing(Resource):
@@ -30,9 +31,38 @@ class PreProcessing(Resource):
         return correlation_items
 
     def get_indicators_description(self):
+        payload = request.get_json()
+
+        if payload['context'] == 'LMS':
+            return self.get_indicators_description_from_lms()
+        
+        if payload['context'] == 'CSV':
+            return self.get_indicators_description_from_csv()
+        
+        return {}
+
+    
+    def get_indicators_description_from_csv(self):
         descriptions = {}
         payload = request.get_json()
-        lms = payload['lms']
+        datasource = DatasourceModel.query.filter_by(id=payload['id']).first()
+        file = FileModel.query.filter_by(id=datasource.file_id).first()
+
+        upload_folder = current_app.config.get('UPLOAD_FOLDER')
+        path = f"{upload_folder}/{file.file_id}"
+
+        df = pd.read_csv(path, names=payload['indicators'])
+
+        for column in df.columns:
+            descriptions[column] = column
+        
+        return descriptions
+
+
+    def get_indicators_description_from_lms(self):
+        descriptions = {}
+        payload = request.get_json()
+        lms_id = payload['id']
 
         query = f"""SELECT
                         name,
@@ -40,7 +70,7 @@ class PreProcessing(Resource):
                     FROM
                         indicators
                     WHERE
-                        lms='{lms}'
+                        lms='{lms_id}'
                     AND
                         name IN ({utils.list_to_sql_string(payload['indicators'])})
                     GROUP BY
@@ -54,7 +84,33 @@ class PreProcessing(Resource):
 
         return descriptions
 
-    def get_dataframe_from_sql(self):
+    def get_initial_dataframe(self):
+        payload = request.get_json()
+
+        if payload['context'] == 'LMS':
+            return self.get_initial_dataframe_from_lms()
+        
+        if payload['context'] == 'CSV':
+            return self.get_initial_dataframe_from_csv()
+
+        return None
+    
+
+    def get_initial_dataframe_from_csv(self):
+        indicators = []
+        payload = request.get_json()
+        datasource = DatasourceModel.query.filter_by(id=payload['id']).first()
+        file = FileModel.query.filter_by(id=datasource.file_id).first()
+
+        upload_folder = current_app.config.get('UPLOAD_FOLDER')
+        path = f"{upload_folder}/{file.file_id}"
+
+        df = pd.read_csv(path, names=payload['indicators'])
+
+        return df
+
+    
+    def get_initial_dataframe_from_lms(self):
         query_where = ''
         where = 'WHERE'
         fields = "*"
@@ -82,7 +138,7 @@ class PreProcessing(Resource):
                     SELECT
                         {fields}
                     FROM
-                        {payload['lms']}
+                        {payload['id']}
                         {query_where}
                         {group_by}
                 """
@@ -104,7 +160,7 @@ class PreProcessing(Resource):
 
         return path
 
-    def get_dataframe_from_csv(self):
+    def get_dataframe_from_cache(self):
         payload = request.get_json()
 
         path = payload['path']
@@ -116,9 +172,9 @@ class PreProcessing(Resource):
         payload = request.get_json()
 
         if 'path' in payload:
-            return self.get_dataframe_from_csv()
+            return self.get_dataframe_from_cache()
         else:
-            return self.get_dataframe_from_sql()
+            return self.get_initial_dataframe()
 
     def get_df_pre_processed(self, df):
         payload = request.get_json()
@@ -179,7 +235,7 @@ class PreProcessing(Resource):
 
                 if column in correlation_items:
                     corr = utils.to_float(correlation_items[column])
-
+                
                 item = {
                     'name': column,
                     'description': indicators_description[column],
@@ -187,13 +243,13 @@ class PreProcessing(Resource):
                     'missing': null_items[column],
                     'unique': unique_items[column],
                     'count': len(df.index),
-                    'mean': utils.to_float(descriptive['mean']),
-                    "std": utils.to_float(descriptive['std']),
-                    "min": utils.to_float(descriptive['min']),
-                    "25%": utils.to_float(descriptive['25%']),
-                    "50%": utils.to_float(descriptive['50%']),
-                    "75%": utils.to_float(descriptive['75%']),
-                    "max": utils.to_float(descriptive['max']),
+                    'mean': utils.to_float(descriptive.get('mean')),
+                    "std": utils.to_float(descriptive.get('std')),
+                    "min": utils.to_float(descriptive.get('min')),
+                    "25%": utils.to_float(descriptive.get('25%')),
+                    "50%": utils.to_float(descriptive.get('50%')),
+                    "75%": utils.to_float(descriptive.get('75%')),
+                    "max": utils.to_float(descriptive.get('max')),
                     "corr": corr
                 }
 

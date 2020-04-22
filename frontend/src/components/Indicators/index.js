@@ -102,7 +102,8 @@ class Indicators extends Component {
       return;
     }
 
-    filter.lms = this.getDataSourceId();
+    filter.context = this.getDataSourceContext();
+    filter.id = this.getDataSourceId();
     filter.target = targetSelected.value;
     filter.courses = this.getValueFromSelect(courseSelected);
     filter.subjects = this.getValueFromSelect(subjectSelected);

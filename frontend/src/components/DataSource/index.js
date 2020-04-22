@@ -67,7 +67,7 @@ class DataSource extends Component {
         </CardContent>
       </CardActionArea>
       <CardActions style={{ backgroundColor: primaryColor }}>
-       <IconButton onClick={this.goToIndicators.bind(this, LMS, item.name)}>
+       <IconButton onClick={this.goToIndicators.bind(this, LMS, item.name, item.description)}>
           <PlayIcon size={20} color={'#FFF'} />
         </IconButton>
         <IconButton onClick={this.openDialogConfig.bind(this, item)}>
@@ -93,7 +93,7 @@ class DataSource extends Component {
         </CardContent>
       </CardActionArea>
       <CardActions style={{ backgroundColor: primaryColor }}>
-        <IconButton onClick={this.goToIndicators.bind(this, CSV, item.id)}>
+        <IconButton onClick={this.goToIndicators.bind(this, CSV, item.id, item.name)}>
           <PlayIcon size={20} color={'#FFF'} />
         </IconButton>
         <IconButton onClick={this.handleMsgDelete.bind(this, item)}>
@@ -119,11 +119,13 @@ class DataSource extends Component {
     this.props.deleteDataSource(selectedItem.id);
   }
 
-  goToIndicators = (context, id, event) => {
+  goToIndicators = (context, id, name, event) => {
+    const key = `${context}/${id}/${name}`;
+  
     if (context === LMS && !availableLms[id]) return;
 
     this.props.setScreen(ADD_TRAIN, INDICATORS);
-    this.props.setIndicator('datasource', `${context}/${id}`);
+    this.props.setIndicator('datasource', key);
     this.props.getIndicators({ context, id });
   }
 

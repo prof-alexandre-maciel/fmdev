@@ -40,6 +40,10 @@ class PreProcessing extends Component {
     expandedRow: null
   };
 
+  getDataSourceContext = () => this.props.indicator.datasource ? this.props.indicator.datasource.split('/')[0] : null;
+
+  getDataSourceName = () => this.props.indicator.datasource ? this.props.indicator.datasource.split('/')[2] : null;
+
   handleRowClick(item) {
     const { expandedRow } = this.state;
     const { path } = this.props.pre_processing;
@@ -235,6 +239,8 @@ class PreProcessing extends Component {
   }
 
   render() {
+    const dataSourceContext = this.getDataSourceContext();
+    const dataSourceName = this.getDataSourceName();
     const { data, loading, error } = this.props.pre_processing;
 
     return (
@@ -255,8 +261,8 @@ class PreProcessing extends Component {
           </Header>
 
           <LmsText>
-            <span>LMS - Moodle {data.length && !loading ? `(Total de Instâncias : ${data[0].count})` : null}</span>
-          </LmsText>
+            <span>{dataSourceContext} - {dataSourceName} {data.length && !loading ? `(Total de Instâncias : ${data[0].count})` : null}</span>
+          </LmsText>  
 
           {loading ?
             <LoadingContainer>
