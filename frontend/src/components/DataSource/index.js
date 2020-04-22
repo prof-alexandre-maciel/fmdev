@@ -36,7 +36,7 @@ class DataSource extends Component {
 
   state = {
     selectedItem: null,
-    chipSelected: CSV
+    chipSelected: LMS
   }
 
   componentWillMount() {

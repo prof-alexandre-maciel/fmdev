@@ -132,7 +132,7 @@ class Indicators extends Component {
     return (
       <ConfigContainer size='big'>
         <PerfectScrollbar style={{ width: '100%' }}>
-          <BreadCrumb text='Voltar para ESCOLHA LMS' screen={ADD_TRAIN} destiny={DATASOURCE} />
+          <BreadCrumb text='Voltar para Escolha de Fontes de dados' screen={ADD_TRAIN} destiny={DATASOURCE} />
           <Header>
             <h1>Selecione os indicadores</h1>
             <div>
