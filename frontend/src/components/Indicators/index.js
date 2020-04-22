@@ -14,7 +14,7 @@ import {
   Header, Separator, Content, LeftContent,
   RightContainer, SelectText, SelectContainer
 } from './styles';
-import { DATASOURCE, PRE_PROCESSING, ADD_TRAIN } from '../../constants';
+import { DATASOURCE, PRE_PROCESSING, ADD_TRAIN, LMS } from '../../constants';
 import { selectStyle } from '../../styles/global';
 import Select from 'react-select';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -23,10 +23,16 @@ import { PickList } from 'primereact/picklist';
 class Indicators extends Component {
 
   componentDidMount() {
-    const { datasource } = this.props.indicator;
+    const dataSourceContext = this.getDataSourceContext();
 
-    this.props.getCourses();
+    if (dataSourceContext === LMS) {
+      this.props.getCourses({ datasource: this.getDataSourceId() });
+    };
   }
+
+  getDataSourceContext = () => this.props.indicator.datasource ? this.props.indicator.datasource.split('/')[0] : null;
+
+  getDataSourceId = () => this.props.indicator.datasource ? this.props.indicator.datasource.split('/')[1] : null;
 
   getPickListTemplate(item) {
     return (
@@ -79,7 +85,6 @@ class Indicators extends Component {
   onSubmit = () => {
     let filter = {};
     const { setScreen } = this.props;
-    const { datasource } = this.props.indicator;
     const { indicators, targetSelected, courseSelected, subjectSelected, semesterSelected } = this.props.indicator;
 
     if (!targetSelected || !targetSelected.value) {
@@ -97,7 +102,7 @@ class Indicators extends Component {
       return;
     }
 
-    filter.lms = datasource.split('/')[1];
+    filter.lms = this.getDataSourceId();
     filter.target = targetSelected.value;
     filter.courses = this.getValueFromSelect(courseSelected);
     filter.subjects = this.getValueFromSelect(subjectSelected);
@@ -121,6 +126,7 @@ class Indicators extends Component {
     const { course, subject, semester, indicator } = this.props;
     const { source, indicators, targetSelected, courseSelected,
       subjectSelected, semesterSelected } = this.props.indicator;
+    const dataSourceContext = this.getDataSourceContext();
 
     return (
       <ConfigContainer size='big'>
@@ -135,46 +141,50 @@ class Indicators extends Component {
 
           <Content>
             <LeftContent>
-              <SelectText>Cursos</SelectText>
-              <SelectContainer>
-                <Select
-                  isMulti
-                  isClearable
-                  value={courseSelected}
-                  noOptionsMessage={() => 'Sem dados'}
-                  onChange={(e) => this.handleChange(e, 'courseSelected')}
-                  placeholder={'Selecione os Cursos'}
-                  styles={selectStyle}
-                  options={course.data.asMutable()} />
-              </SelectContainer>
+              {dataSourceContext === LMS && (
+                <React.Fragment>
+                  <SelectText>Cursos</SelectText>
+                  <SelectContainer>
+                    <Select
+                      isMulti
+                      isClearable
+                      value={courseSelected}
+                      noOptionsMessage={() => 'Sem dados'}
+                      onChange={(e) => this.handleChange(e, 'courseSelected')}
+                      placeholder={'Selecione os Cursos'}
+                      styles={selectStyle}
+                      options={course.data.asMutable()} />
+                  </SelectContainer>
 
 
-              <SelectText>Disciplinas</SelectText>
-              <SelectContainer>
-                <Select
-                  isMulti
-                  isClearable
-                  noOptionsMessage={() => 'Sem dados'}
-                  value={subjectSelected}
-                  onChange={(e) => this.handleChange(e, 'subjectSelected')}
-                  placeholder={'Selecione as Disciplinas'}
-                  styles={selectStyle}
-                  options={subject.data.asMutable()} />
-              </SelectContainer>
+                  <SelectText>Disciplinas</SelectText>
+                  <SelectContainer>
+                    <Select
+                      isMulti
+                      isClearable
+                      noOptionsMessage={() => 'Sem dados'}
+                      value={subjectSelected}
+                      onChange={(e) => this.handleChange(e, 'subjectSelected')}
+                      placeholder={'Selecione as Disciplinas'}
+                      styles={selectStyle}
+                      options={subject.data.asMutable()} />
+                  </SelectContainer>
 
 
-              <SelectText>Turmas</SelectText>
-              <SelectContainer>
-                <Select
-                  isMulti
-                  isClearable
-                  value={semesterSelected}
-                  noOptionsMessage={() => 'Sem dados'}
-                  onChange={(e) => this.handleChange(e, 'semesterSelected')}
-                  placeholder={'Selecione as Turmas'}
-                  styles={selectStyle}
-                  options={semester.data.asMutable()} />
-              </SelectContainer>
+                  <SelectText>Turmas</SelectText>
+                  <SelectContainer>
+                    <Select
+                      isMulti
+                      isClearable
+                      value={semesterSelected}
+                      noOptionsMessage={() => 'Sem dados'}
+                      onChange={(e) => this.handleChange(e, 'semesterSelected')}
+                      placeholder={'Selecione as Turmas'}
+                      styles={selectStyle}
+                      options={semester.data.asMutable()} />
+                  </SelectContainer>
+                </React.Fragment>
+              )}
 
               <SelectText>Indicador Alvo</SelectText>
               <SelectContainer>

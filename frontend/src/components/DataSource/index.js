@@ -20,7 +20,7 @@ import DeleteIcon from 'react-feather/dist/icons/trash-2';
 import PlayIcon from 'react-feather/dist/icons/play';
 import FileIcon from 'react-feather/dist/icons/file';
 import MoodleConfigDialog from '../MoodleConfigDialog';
-import { INDICATORS, ADD_TRAIN } from '../../constants';
+import { INDICATORS, ADD_TRAIN, LMS, CSV } from '../../constants';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { Creators as IndicatorActions } from '../../store/ducks/indicator';
 import DataSourceDialog from '../DataSourceDialog';
@@ -36,7 +36,7 @@ class DataSource extends Component {
 
   state = {
     selectedItem: null,
-    chipSelected: 'csv'
+    chipSelected: CSV
   }
 
   componentWillMount() {
@@ -67,7 +67,7 @@ class DataSource extends Component {
         </CardContent>
       </CardActionArea>
       <CardActions style={{ backgroundColor: primaryColor }}>
-       <IconButton onClick={this.goToIndicators.bind(this, 'lms', item.name)}>
+       <IconButton onClick={this.goToIndicators.bind(this, LMS, item.name)}>
           <PlayIcon size={20} color={'#FFF'} />
         </IconButton>
         <IconButton onClick={this.openDialogConfig.bind(this, item)}>
@@ -93,7 +93,7 @@ class DataSource extends Component {
         </CardContent>
       </CardActionArea>
       <CardActions style={{ backgroundColor: primaryColor }}>
-        <IconButton onClick={this.goToIndicators.bind(this, 'csv', item.id)}>
+        <IconButton onClick={this.goToIndicators.bind(this, CSV, item.id)}>
           <PlayIcon size={20} color={'#FFF'} />
         </IconButton>
         <IconButton onClick={this.handleMsgDelete.bind(this, item)}>
@@ -119,12 +119,12 @@ class DataSource extends Component {
     this.props.deleteDataSource(selectedItem.id);
   }
 
-  goToIndicators = (type, id, event) => {
-    if (type === 'lms' && !availableLms[id]) return;
+  goToIndicators = (context, id, event) => {
+    if (context === LMS && !availableLms[id]) return;
 
     this.props.setScreen(ADD_TRAIN, INDICATORS);
-    this.props.setIndicator('datasource', `${type}/${id}`);
-    this.props.getIndicators({ lms: id });
+    this.props.setIndicator('datasource', `${context}/${id}`);
+    this.props.getIndicators({ context, id });
   }
 
   setChip = (value, event) => this.setState({ chipSelected: value });
@@ -136,18 +136,18 @@ class DataSource extends Component {
       <div style={{ display: 'flex', paddingLeft: '2rem' }}>
         <div>
           <Chip
-            avatar={<MonitorIcon size={16} color={chipSelected === 'lms' ? '#FFF' : primaryColor} />}
+            avatar={<MonitorIcon size={16} color={chipSelected === LMS ? '#FFF' : primaryColor} />}
             label="Ambientes EAD"
-            className={chipSelected === 'lms' ? 'active-chip' : 'inactive-chip'}
-            onClick={this.setChip.bind(this, 'lms')}
+            className={chipSelected === LMS ? 'active-chip' : 'inactive-chip'}
+            onClick={this.setChip.bind(this, LMS)}
           />
         </div>
         <div style={{ paddingLeft: '.5vw' }}>
           <Chip
-            avatar={<FileIcon size={16} color={chipSelected === 'csv' ? '#FFF' : primaryColor} />}
+            avatar={<FileIcon size={16} color={chipSelected === CSV ? '#FFF' : primaryColor} />}
             label="Arquivos CSV"
-            className={chipSelected === 'csv' ? 'active-chip' : 'inactive-chip'}
-            onClick={this.setChip.bind(this, 'csv')}
+            className={chipSelected === CSV ? 'active-chip' : 'inactive-chip'}
+            onClick={this.setChip.bind(this, CSV)}
           />
         </div>
       </div>
@@ -175,21 +175,21 @@ class DataSource extends Component {
 
           {this.renderDatasetOptions()}
 
-          {chipSelected === 'lms' ?
+          {chipSelected === LMS ?
             <CardContainer>{lms.data.map((item, idx) => this.renderCardLMS(item, idx))}</CardContainer>
             : null}
 
-          {chipSelected === 'csv' ?
+          {chipSelected === CSV ?
             <CardContainer>{data_source.data.map((item, idx) => this.renderCardCSV(item, idx))}</CardContainer>
             : null}
 
-          {chipSelected === 'csv' && loading && (
+          {chipSelected === CSV && loading && (
             <StatusMsgContainer>
               <ProgressSpinner style={{ width: '50px', height: '50px' }} strokeWidth="4" fill="#EEEEEE" animationDuration=".5s" />
             </StatusMsgContainer>
           )}
 
-          {chipSelected === 'csv' && !hasData && !loading && (
+          {chipSelected === CSV && !hasData && !loading && (
             <StatusMsgContainer>Nenhuma fonte de dados cadastrada</StatusMsgContainer>
           )}
         </ConfigContainer>

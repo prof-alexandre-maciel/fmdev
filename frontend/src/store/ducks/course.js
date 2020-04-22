@@ -6,7 +6,7 @@ export const { Types, Creators } = createActions({
   courseRequest: [],
   courseSuccess: ['data'],
   courseError: ['err'],
-  getCourses: []
+  getCourses: ['filter']
 });
 
 /** --------------------------------

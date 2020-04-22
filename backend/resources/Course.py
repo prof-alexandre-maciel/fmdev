@@ -4,15 +4,21 @@ from flask import request
 from flask_restful import Resource
 from flask_jwt_extended import jwt_required
 
+
 class Course(Resource):
 
     @jwt_required
     def post(self):
         try:
+            payload = request.get_json()
+
+            if 'datasource' not in payload:
+                return {'msg': 'Datasource not found'}, 500
+
             query = f"""SELECT 
                             curso as label, 
                             curso as value 
-                        FROM moodle
+                        FROM {payload['datasource']}
                         GROUP BY curso
                         ORDER BY curso"""
 
@@ -20,4 +26,4 @@ class Course(Resource):
 
         except:
             traceback.print_exc()
-            return {"msg": "Error on GET Course"}, 500
+            return {"msg": "Error on POST Course"}, 500
