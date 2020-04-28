@@ -24,7 +24,7 @@ export const DialogSpan = styled.span`
 
 export const DialogForm = styled.form`
   border-radius: 5px;
-  padding: 40px;
+  padding: 30px;
   width: 400px;
   display: flex;
   flex-direction: column;
@@ -57,46 +57,6 @@ export const DialogForm = styled.form`
       color: #FFF;
     }
   }
-`
-
-export const Table = styled.table`
-  color: black;
-  width: 100%;
-  border-spacing: 0;
-  padding-top: 1rem;
-
-  tr:nth-child(even) {
-    background-color: #FAFAFA;
-  }
-
-  button {
-    background: transparent;
-    color: black;
-    border: 1px solid black;
-
-    &:hover {
-      color: #FFF;
-    }
-  }
-`;
-
-export const FirstHeaderColumn = styled.td`
-  padding: .7rem;
-  padding-left: 2rem;
-  font-weight: bold;
-`;
-
-export const HeaderColumn = styled.td`
-  padding: .7rem;
-  font-weight: bold;
-`;
-
-export const FirstItemColumn = styled.td`
-  padding-left: 2rem;
-`;
-
-export const ItemColumn = styled.td`
-  padding: .7rem;
 `;
 
 export const DialogFormButtonContainer = styled.div`

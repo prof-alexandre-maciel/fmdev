@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import {
-  DialogForm, DialogFormButtonContainer,
-  Table, ItemColumn
-} from './styles';
+import { DialogForm, DialogFormButtonContainer } from './styles';
+import { Table, ItemColumn } from '../../styles/global';
 import { Creators as DialogActions } from '../../store/ducks/dialog';
 import { connect } from 'react-redux';
 import Dialog from '../Dialog';
@@ -19,7 +17,7 @@ class TrainMetricDialog extends Component {
 
   renderItem = (item, idx) => (
     <tr key={idx}>
-      <ItemColumn><b>{item.name}</b></ItemColumn>
+      <ItemColumn style={{ paddingLeft: '1rem' }}><b>{item.name}</b></ItemColumn>
       <ItemColumn>{item.value.toFixed(2)}</ItemColumn>
     </tr>
   )
@@ -35,7 +33,7 @@ class TrainMetricDialog extends Component {
     return (
       <Dialog>
         <DialogForm>
-          <h1>Métricas</h1>
+          <h1 style={{ paddingLeft: '1rem' }}>Métricas</h1>
 
           {loading ?
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '15vh' }}>
