@@ -3,11 +3,12 @@ import React, { Component } from 'react';
 import { ConfigContainer } from '../../styles/ConfigContainer';
 import BreadCrumb from '../BreadCrumb';
 import {
-  Header, Table,
-  FirstHeaderColumn, HeaderColumn,
-  FirstItemColumn, ItemColumn, TrainInfo,
-  StatusMsgContainer, ScoreContainer
+  TrainInfo, ScoreContainer
 } from './styles';
+import {
+  Header, Table, FirstHeaderColumn, HeaderColumn,
+  FirstItemColumn, ItemColumn, StatusMsgContainer
+} from '../../styles/global';
 import Button from '../../styles/Button';
 import { PRE_PROCESSING, ADD_TRAIN, TRAIN_MODEL } from '../../constants';
 import { connect } from 'react-redux';
