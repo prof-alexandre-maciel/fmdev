@@ -28,6 +28,8 @@ class Indicators extends Component {
     if (dataSourceContext === LMS) {
       this.props.getCourses({ datasource: this.getDataSourceId() });
     };
+
+    this.props.indicatorInitFilter();
   }
 
   getDataSourceContext = () => this.props.indicator.datasource ? this.props.indicator.datasource.split('/')[0] : null;
