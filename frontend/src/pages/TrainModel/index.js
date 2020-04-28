@@ -48,7 +48,7 @@ class TrainModel extends Component {
       <ItemColumn>{item.score ? item.score.toFixed(2) : null}</ItemColumn>
       <ItemColumn>{item.last_predict_at ? moment(item.last_predict_at).format('DD/MM/YYYY HH:mm:ss') : null}</ItemColumn>
       <ItemColumn>{item.qtd_predict ? item.qtd_predict : 0}</ItemColumn>
-      <ItemColumn isClicked onClick={this.handleClickMenu.bind(this, item)}>
+      <ItemColumn isClickable onClick={this.handleClickMenu.bind(this, item)}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}><MoreIcon size={16} /></div>
       </ItemColumn>
     </tr>
@@ -185,7 +185,7 @@ class TrainModel extends Component {
                   <FirstHeaderColumn>Nome</FirstHeaderColumn>
                   <HeaderColumn>Descrição</HeaderColumn>
                   <HeaderColumn>Criado em</HeaderColumn>
-                  <HeaderColumn>Score de teste</HeaderColumn>
+                  <HeaderColumn>Acurácia de teste</HeaderColumn>
                   <HeaderColumn>Última predição em</HeaderColumn>
                   <HeaderColumn>Predições realizadas</HeaderColumn>
                   <HeaderColumn><div style={{ display: 'flex', justifyContent: 'center' }}>Ações</div></HeaderColumn>

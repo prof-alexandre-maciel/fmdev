@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ConfigContainer } from '../../styles/ConfigContainer';
 import BreadCrumb from '../BreadCrumb';
+import { LmsText, RowDetail } from './styles';
 import {
-  Header, LmsText, Table, HeaderColumn,
-  StatusMsgContainer, ItemColumn,
-  RowDetail, LoadingContainer
-} from './styles';
+  Header, Table, HeaderColumn, StatusMsgContainer,
+  FirstItemColumn, ItemColumn, LoadingContainer
+} from '../../styles/global';
 import Button from '../../styles/Button';
 import MoreIcon from 'react-feather/dist/icons/more-horizontal';
 import ChevronDown from 'react-feather/dist/icons/chevron-down';
@@ -30,7 +30,7 @@ import { Creators as PreProcessingActions } from '../../store/ducks/pre_processi
 import { Creators as TrainActions } from '../../store/ducks/train';
 import AlertDialog from '../AlertDialog';
 
-export const ItemColumnWrapper = onClick => ({ ...props }) => <ItemColumn onClick={onClick} {...props} />
+export const ItemColumnWrapper = onClick => ({ ...props }) => <ItemColumn isClickable={true} onClick={onClick} {...props} />
 
 class PreProcessing extends Component {
 
@@ -144,7 +144,7 @@ class PreProcessing extends Component {
 
     const itemRows = [
       <tr key={"row-data-" + item.name}>
-        <ItemColumnWrapped>{this.renderIconDetail(item)}</ItemColumnWrapped>
+        <FirstItemColumn onClick={this.handleRowClick.bind(this, item)} isClickable={true}>{this.renderIconDetail(item)}</FirstItemColumn>
         <ItemColumnWrapped style={{ paddingLeft: '2rem' }}>{item.description}</ItemColumnWrapped>
         <ItemColumnWrapped title={item.missing ? `Qtd. Dados Faltantes: ${item.missing}` : null}>
           {item.missing ? <AlertIcon size={20} color="#FFF" fill="#A87878" /> : null}
@@ -262,7 +262,7 @@ class PreProcessing extends Component {
 
           <LmsText>
             <span>{dataSourceContext} - {dataSourceName} {data.length && !loading ? `(Total de Instâncias : ${data[0].count})` : null}</span>
-          </LmsText>  
+          </LmsText>
 
           {loading ?
             <LoadingContainer>

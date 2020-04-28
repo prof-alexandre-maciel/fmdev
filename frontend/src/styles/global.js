@@ -230,14 +230,10 @@ export const Table = styled.table`
   width: 100%;
   border-spacing: 0;
   padding-top: 1rem;
-  font-size: 14px;
+  font-size: 13px;
 
-  tr:nth-child(even) {
+  tbody > tr:nth-child(odd) {
     background-color: #FAFAFA;
-  }
-
-  thead > tr > td {
-    border-bottom: 1px dashed #000;
   }
 
   button {
@@ -260,19 +256,32 @@ export const FirstHeaderColumn = styled.td`
 export const HeaderColumn = styled.td`
   padding: .7rem;
   font-weight: bold;
+
+  ${props => props.align && css`
+    text-align: ${props.align};
+  `}
 `;
 
 export const FirstItemColumn = styled.td`
   padding-left: 2rem;
+
+  ${props => props.isClickable && css`
+    &:hover {
+      cursor: pointer;
+    }
+  `}
 `;
 
 export const ItemColumn = styled.td`
   padding: .7rem;
 
-  ${props => props.isClicked && css`
+  ${props => props.align && css`
+    text-align: ${props.align};
+  `}
+
+  ${props => props.isClickable && css`
     &:hover {
       cursor: pointer;
-      text-decoration: underline;
     }
   `}
 `;

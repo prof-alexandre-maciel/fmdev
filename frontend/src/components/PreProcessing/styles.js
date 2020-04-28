@@ -1,14 +1,4 @@
-import styled, { css } from 'styled-components';
-
-export const Header = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  button {
-    margin-right: 2rem;
-  }
-`;
+import styled from 'styled-components';
 
 export const LmsText = styled.div`
   display: flex;
@@ -16,53 +6,6 @@ export const LmsText = styled.div`
   color: #000;
   font-size: 14px;
   line-height: 23px;
-`;
-
-export const Table = styled.table`
-  color: black;
-  width: 100%;
-  border-spacing: 0;
-  padding-top: 1rem;
-
-  tr {
-    cursor: pointer;
-  }
-
-  tr:nth-child(even) {
-    background-color: #FAFAFA;
-  }
-
-  button {
-    background: transparent;
-    color: black;
-    border: 1px solid black;
-
-    &:hover {
-      color: #FFF;
-    }
-  }
-`;
-
-export const HeaderColumn = styled.td`
-  padding: .7rem;
-  font-weight: bold;
-
-  ${props => props.align && css`
-    text-align: ${props.align};
-  `}
-`;
-
-export const ItemColumn = styled.td`
-  padding: .7rem;
-
-  ${props => props.align && css`
-    text-align: ${props.align};
-  `}
-`;
-
-export const DetailText = styled.div`
-  font-size: 14px;
-  line-height: 21px;
 `;
 
 export const RowDetail = styled.tr`
@@ -76,21 +19,4 @@ export const RowDetail = styled.tr`
       cursor: default;
     }
   }
-`;
-
-export const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  padding-top: 15vh;
-  padding-bottom: 15vh;
-`;
-
-export const StatusMsgContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  padding-top: 15vh;
-  padding-bottom: 15vh;
-  color: #000;
-  opacity: .5;
-  font-size: 1.2rem;
 `;

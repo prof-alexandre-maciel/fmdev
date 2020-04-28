@@ -102,7 +102,6 @@ class Train extends Component {
       <ItemColumn>{item.status}</ItemColumn>
       <ItemColumn>{item.date ? moment(item.date).format('DD/MM/YYYY HH:mm:ss') : null}</ItemColumn>
       <ItemColumn>{item.date ? this.getDiffExecutionTime(item, idx) : null}</ItemColumn>
-      <ItemColumn>{item.score}</ItemColumn>
     </tr>
   )
 
@@ -198,7 +197,7 @@ class Train extends Component {
             <Header>
               <h1>Treinamento</h1>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                {train.data && train.data.score ? <ScoreContainer>Score de Teste: <b>{train.data.score.toFixed(2)}</b></ScoreContainer> : null}
+                {train.data && train.data.score ? <ScoreContainer>Acurácia de Teste: <b>{train.data.score.toFixed(2)}</b></ScoreContainer> : null}
                 <Button
                   onClick={isFinished ? this.openViewMetrics.bind(this) : null}
                   disabled={!isFinished}
@@ -245,7 +244,6 @@ class Train extends Component {
                   <HeaderColumn>Status</HeaderColumn>
                   <HeaderColumn>Finalizado em</HeaderColumn>
                   <HeaderColumn>Tempo de Execução</HeaderColumn>
-                  <HeaderColumn>Score de Treinamento</HeaderColumn>
                 </tr>
               </thead>
 
