@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const TrainInfo = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   margin-left: 2rem;
   margin-right: 2rem;
   color: #4A5173;

@@ -29,12 +29,11 @@ class Train(Resource):
 
         return pipelines
 
-    def train(self, x_train, y_train, time):
+    def train(self, x_train, y_train, generations):
         client = Client(processes=False)
         output_folder = f"{current_app.config.get('TRAIN_TPOT_OUTPUT')}/{self.get_filename_from_path('')}"
 
-        tpot = TPOTClassifier(generations=5,
-                              max_time_mins=time,
+        tpot = TPOTClassifier(generations=generations,
                               population_size=20, cv=5,
                               random_state=42, verbosity=3,
                               use_dask=True,
@@ -91,7 +90,7 @@ class Train(Resource):
     def post(self):
         try:
             payload = request.get_json()
-            mandatory_fields = ['train', 'test', 'time', 'path', 'target']
+            mandatory_fields = ['train', 'test', 'generations', 'path', 'target']
 
             for field in mandatory_fields:
                 if field not in payload:
@@ -100,14 +99,14 @@ class Train(Resource):
             train = payload['train'] / 100
             test = payload['test'] / 100
             target = payload['target']
-            time = payload['time']
+            generations = payload['generations']
 
             df, df_x = self.get_df_without_one_hot_encoding(target)
 
             x_train, x_test, y_train, y_test = train_test_split(
                 df_x, df[target], train_size=train, test_size=test)
 
-            tpot = self.train(x_train, y_train, time)
+            tpot = self.train(x_train, y_train, generations)
 
             self.save(tpot)
             self.export(tpot)

@@ -14,7 +14,7 @@ class TrainConfigDialog extends Component {
   state = {
     train: 70,
     test: 30,
-    time: 10
+    generations: 100
   };
 
   onClose = () => {
@@ -30,7 +30,7 @@ class TrainConfigDialog extends Component {
   }
 
   submit = () => {
-    const { train, test, time } = this.state;
+    const { train, test, generations } = this.state;
     const { onSubmit } = this.props;
 
     if (!train || train <= 0) {
@@ -43,12 +43,12 @@ class TrainConfigDialog extends Component {
       return;
     }
 
-    if (!time || time <= 0) {
+    if (!generations || generations <= 0) {
       this.renderWarningMsg('O tempo máximo de execução é inválido!');
       return;
     }
 
-    if (time > 1440) {
+    if (generations > 1440) {
       this.renderWarningMsg('O tempo máximo de execução não pode ser superior à 1 dia (1440 minutos)');
       return;
     }
@@ -56,7 +56,7 @@ class TrainConfigDialog extends Component {
     this.onClose();
 
     if (onSubmit) {
-      onSubmit({ data: { train, test, time } });
+      onSubmit({ data: { train, test, generations } });
     }
   }
 
@@ -83,7 +83,7 @@ class TrainConfigDialog extends Component {
   }
 
   render() {
-    const { train, test, time } = this.state;
+    const { train, test, generations } = this.state;
     const { trainConfig } = this.props.dialog;
     const inputParams = {
       suffix: "%",
@@ -116,14 +116,14 @@ class TrainConfigDialog extends Component {
             name="test"
           />
 
-          <DialogSpan>Tempo máx. execução em minutos</DialogSpan>
+          <DialogSpan>Qtd. máxima de treinos</DialogSpan>
           <CurrencyInput
             {...inputParams}
             suffix=""
             precision="0"
             onChangeEvent={this.handleChange}
-            value={time}
-            name="time"
+            value={generations}
+            name="generations"
           />
 
           <DialogFormButtonContainer>

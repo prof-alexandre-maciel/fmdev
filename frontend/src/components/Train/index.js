@@ -12,7 +12,6 @@ import {
 import Button from '../../styles/Button';
 import { PRE_PROCESSING, ADD_TRAIN, TRAIN_MODEL } from '../../constants';
 import { connect } from 'react-redux';
-import Countdown from 'react-countdown';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import CheckIcon from 'react-feather/dist/icons/check';
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -178,7 +177,6 @@ class Train extends Component {
   }
 
   render() {
-    const { countdown } = this.state;
     const { train, screen, train_status, train_model } = this.props;
     const { loading, error } = this.props.train;
     const { data } = this.props.pre_processing;
@@ -218,20 +216,9 @@ class Train extends Component {
 
             <TrainInfo>
               <div><b>Total de instâncias:</b> {data && data.length > 0 ? data[0].count : 'N/A'}</div>
-              {screen.data.time && loading ? <div><b>Tempo máximo de execução (previsto):</b> {screen.data.time} minutos</div> : null}
-              {!loading ? <div>&nbsp;</div> : null}
-            </TrainInfo>
-
-            <TrainInfo>
+              <div><b>Qtd. máxima de treinos:</b> {screen.data.generations || null}</div>
               <div><b>Treinamento:</b> {screen.data.train}% ({this.getSplit('train')} instâncias)  | <b>Testes:</b> {screen.data.test}% ({this.getSplit('test')} instâncias)</div>
-              {screen.data.time && loading ?
-                <div>
-                  <b>Tempo restante (previsto):</b> {loading ? <Countdown date={countdown + 1000 * 60 * screen.data.time} /> : 'N/A'}
-                </div>
-                : null}
-              {!loading ? <div>&nbsp;</div> : null}
             </TrainInfo>
-
 
             {!loading && !error && !train_status.data.length ?
               <StatusMsgContainer> Sem dados de treinamento para serem exibidos. </StatusMsgContainer>
@@ -241,7 +228,7 @@ class Train extends Component {
               <thead>
                 <tr>
                   <FirstHeaderColumn>&nbsp;</FirstHeaderColumn>
-                  <HeaderColumn>Etapa</HeaderColumn>
+                  <HeaderColumn>Treinamento</HeaderColumn>
                   <HeaderColumn>Status</HeaderColumn>
                   <HeaderColumn>Finalizado em</HeaderColumn>
                   <HeaderColumn>Tempo de Execução</HeaderColumn>
