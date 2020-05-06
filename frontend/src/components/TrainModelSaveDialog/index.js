@@ -72,7 +72,7 @@ class TrainModelSaveDialog extends Component {
             </div>
           : null}
 
-          {!loading ? <DialogSpan>Informe o nome do modelo</DialogSpan> : null}
+          {!loading ? <DialogSpan>Nome do modelo</DialogSpan> : null}
           {!loading ? <DialogInput
             value={name}
             autoComplete="off"
@@ -80,7 +80,7 @@ class TrainModelSaveDialog extends Component {
             name="name">
           </DialogInput> : null}
 
-          {!loading ? <DialogSpan>Informe detalhes do modelo</DialogSpan> : null}
+          {!loading ? <DialogSpan>Detalhes do modelo</DialogSpan> : null}
           {!loading ? <DialogInput
             value={description}
             autoComplete="off"

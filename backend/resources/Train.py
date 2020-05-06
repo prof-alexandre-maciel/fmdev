@@ -29,12 +29,12 @@ class Train(Resource):
 
         return pipelines
 
-    def train(self, x_train, y_train, generations):
+    def train(self, x_train, y_train, generations, kfold):
         client = Client(processes=False)
         output_folder = f"{current_app.config.get('TRAIN_TPOT_OUTPUT')}/{self.get_filename_from_path('')}"
 
         tpot = TPOTClassifier(generations=generations,
-                              population_size=20, cv=5,
+                              population_size=20, cv=kfold,
                               random_state=42, verbosity=3,
                               use_dask=True,
                               periodic_checkpoint_folder=output_folder)
@@ -100,13 +100,14 @@ class Train(Resource):
             test = payload['test'] / 100
             target = payload['target']
             generations = payload['generations']
+            kfold = payload['kfold']
 
             df, df_x = self.get_df_without_one_hot_encoding(target)
 
             x_train, x_test, y_train, y_test = train_test_split(
                 df_x, df[target], train_size=train, test_size=test)
 
-            tpot = self.train(x_train, y_train, generations)
+            tpot = self.train(x_train, y_train, generations, kfold)
 
             self.save(tpot)
             self.export(tpot)

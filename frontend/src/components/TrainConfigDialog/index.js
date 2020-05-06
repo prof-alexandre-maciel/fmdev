@@ -14,7 +14,8 @@ class TrainConfigDialog extends Component {
   state = {
     train: 70,
     test: 30,
-    generations: 100
+    generations: 5,
+    kfold: 5
   };
 
   onClose = () => {
@@ -30,7 +31,7 @@ class TrainConfigDialog extends Component {
   }
 
   submit = () => {
-    const { train, test, generations } = this.state;
+    const { train, test, generations, kfold } = this.state;
     const { onSubmit } = this.props;
 
     if (!train || train <= 0) {
@@ -44,19 +45,19 @@ class TrainConfigDialog extends Component {
     }
 
     if (!generations || generations <= 0) {
-      this.renderWarningMsg('O tempo máximo de execução é inválido!');
+      this.renderWarningMsg('A Qtd. máxima de treinos é inválida!');
       return;
     }
 
-    if (generations > 1440) {
-      this.renderWarningMsg('O tempo máximo de execução não pode ser superior à 1 dia (1440 minutos)');
+    if (!kfold || kfold <= 0) {
+      this.renderWarningMsg('A Qtd. de kfolds é inválida!');
       return;
     }
 
     this.onClose();
 
     if (onSubmit) {
-      onSubmit({ data: { train, test, generations } });
+      onSubmit({ data: { train, test, generations, kfold } });
     }
   }
 
@@ -83,7 +84,7 @@ class TrainConfigDialog extends Component {
   }
 
   render() {
-    const { train, test, generations } = this.state;
+    const { train, test, generations, kfold } = this.state;
     const { trainConfig } = this.props.dialog;
     const inputParams = {
       suffix: "%",
@@ -101,15 +102,16 @@ class TrainConfigDialog extends Component {
       <Dialog>
         <DialogForm>
           <h1>Parâmetros do treinamento</h1>
+          <h2>Use os parâmetros default ou altere-os caso seja necessário.</h2>
 
-          <DialogSpan>Informe o percentual de treinamento</DialogSpan>
+          <DialogSpan>Percentual de treinamento</DialogSpan>
           <CurrencyInput
             {...inputParams}
             value={train}
             name="train"
           />
 
-          <DialogSpan>Informe o percentual de testes</DialogSpan>
+          <DialogSpan>Percentual de testes</DialogSpan>
           <CurrencyInput
             {...inputParams}
             value={test}
@@ -124,6 +126,16 @@ class TrainConfigDialog extends Component {
             onChangeEvent={this.handleChange}
             value={generations}
             name="generations"
+          />
+
+          <DialogSpan>Qtd. de K-fold</DialogSpan>
+          <CurrencyInput
+            {...inputParams}
+            suffix=""
+            precision="0"
+            onChangeEvent={this.handleChange}
+            value={kfold}
+            name="kfold"
           />
 
           <DialogFormButtonContainer>

@@ -25,7 +25,7 @@ export const DialogForm = styled.form`
   }
 
   h2 {
-    font-size: 12px;
+    font-size: 11px;
   }
 
   button {

@@ -88,11 +88,10 @@ export default createGlobalStyle`
     padding: 10px;
     border-radius: 3px;
     border: none;
-    background-color: rgba(0, 0, 0, 0.1);
     margin-top: 8px;
     transition: border 0.15s ease;
     font-size: 16px;
-    border: 1px solid #FFF;
+    border: 1px solid #BBB;
 
     &:focus {
       border: 1px solid #000;
@@ -323,11 +322,10 @@ export const DialogInput = styled.input`
     padding: 10px;
     border-radius: 3px;
     border: none;
-    background-color: rgba(0, 0, 0, 0.1);
     margin-top: 8px;
     transition: border 0.15s ease;
     font-size: 16px;
-    border: 1px solid #FFF;
+    border: 1px solid #BBB;
 
     &:focus {
       border: 1px solid #000;

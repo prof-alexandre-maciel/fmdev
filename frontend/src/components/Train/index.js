@@ -33,6 +33,10 @@ class Train extends Component {
     countdown: Date.now()
   };
 
+  getDataSourceContext = () => this.props.indicator.datasource ? this.props.indicator.datasource.split('/')[0] : null;
+
+  getDataSourceName = () => this.props.indicator.datasource ? this.props.indicator.datasource.split('/')[2] : null;
+
   componentDidMount() {
     const interval = window.setInterval(this.callTrainStatus, 1000 * 20);
 
@@ -177,6 +181,8 @@ class Train extends Component {
   }
 
   render() {
+    const dataSourceContext = this.getDataSourceContext();
+    const dataSourceName = this.getDataSourceName();
     const { train, screen, train_status, train_model } = this.props;
     const { loading, error } = this.props.train;
     const { data } = this.props.pre_processing;
@@ -215,8 +221,9 @@ class Train extends Component {
             </Header>
 
             <TrainInfo>
-              <div><b>Total de instâncias:</b> {data && data.length > 0 ? data[0].count : 'N/A'}</div>
+              <div><b>Fonte de dados: </b> {dataSourceContext}/{dataSourceName} {data.length && !loading ? `(Total de Instâncias : ${data[0].count})` : null}</div>
               <div><b>Qtd. máxima de treinos:</b> {screen.data.generations || null}</div>
+              <div><b>Qtd. de kfolds:</b> {screen.data.kfold || null}</div>
               <div><b>Treinamento:</b> {screen.data.train}% ({this.getSplit('train')} instâncias)  | <b>Testes:</b> {screen.data.test}% ({this.getSplit('test')} instâncias)</div>
             </TrainInfo>
 
@@ -257,8 +264,8 @@ class Train extends Component {
   }
 }
 
-const mapStateToProps = ({ train, screen, pre_processing, train_status, train_model }) =>
-  ({ train, screen, pre_processing, train_status, train_model });
+const mapStateToProps = ({ train, screen, pre_processing, train_status, train_model, indicator }) =>
+  ({ train, screen, pre_processing, train_status, train_model, indicator });
 
 export default connect(mapStateToProps,
   {

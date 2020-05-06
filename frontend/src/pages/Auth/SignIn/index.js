@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import logo from '../../../assets/login_logo.svg';
 import squares from '../../../assets/login_squares.svg';
 import { Creators as AuthActions } from '../../../store/ducks/auth';
+import { DialogInput } from '../../../styles/global';
 
 class SignIn extends Component {
 
@@ -40,10 +41,10 @@ class SignIn extends Component {
           <h1>ACESSE A PLATAFORMA</h1>
 
           <span>Email</span>
-          <input type="email" value={email} onChange={this.handleInputChange} name="email" />
+          <DialogInput type="email" value={email} onChange={this.handleInputChange} name="email" />
 
           <span>Senha</span>
-          <input type="password" value={password} onChange={this.handleInputChange} name="password" />
+          <DialogInput type="password" value={password} onChange={this.handleInputChange} name="password" />
 
           <Button size="big" onClick={this.handleSubmit}>Acessar o meu ambiente</Button>
 

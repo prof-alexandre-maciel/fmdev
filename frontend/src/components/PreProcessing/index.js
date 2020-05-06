@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ConfigContainer } from '../../styles/ConfigContainer';
 import BreadCrumb from '../BreadCrumb';
-import { LmsText, RowDetail } from './styles';
+import { DataSourceText, RowDetail } from './styles';
 import {
   Header, Table, HeaderColumn, StatusMsgContainer,
   FirstItemColumn, ItemColumn, LoadingContainer
@@ -260,9 +260,9 @@ class PreProcessing extends Component {
             </div>
           </Header>
 
-          <LmsText>
-            <span>{dataSourceContext} - {dataSourceName} {data.length && !loading ? `(Total de Instâncias : ${data[0].count})` : null}</span>
-          </LmsText>
+          <DataSourceText>
+            <span><b>Fonte de dados: </b> {dataSourceContext}/{dataSourceName} {data.length && !loading ? `(Total de Instâncias : ${data[0].count})` : null}</span>
+          </DataSourceText>
 
           {loading ?
             <LoadingContainer>

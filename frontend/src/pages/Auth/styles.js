@@ -43,21 +43,6 @@ export const SignForm = styled.form`
     margin-top: 15px;
   }
 
-  input {
-    height: 50px;
-    padding: 10px;
-    border-radius: 3px;
-    border: none;
-    background-color: rgba(0, 0, 0, 0.1);
-    margin-top: 8px;
-    transition: border 0.15s ease;
-    font-size: 16px;
-
-    &:focus {
-      border: 1px solid #4A5173;
-    }
-  }
-
   button {
     margin: 30px 0 0;
     color: #4A5173;

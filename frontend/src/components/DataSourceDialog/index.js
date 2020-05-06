@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   DialogForm, DialogFormButtonContainer,
   DialogInput, DialogSpan
-} from './styles';
+} from '../../styles/global';
 import { Creators as DialogActions } from '../../store/ducks/dialog';
 import { Creators as DataSourceActions } from '../../store/ducks/data_source';
 import { connect } from 'react-redux';
@@ -82,7 +82,7 @@ class DataSourceDialog extends Component {
         <DialogForm>
           <h1>Adicionar Fonte de Dados</h1>
 
-          <DialogSpan>Informe o nome da fonte de dados:</DialogSpan>
+          <DialogSpan>Fonte de dados:</DialogSpan>
           <DialogInput
             value={name}
             autoComplete="off"
@@ -92,6 +92,7 @@ class DataSourceDialog extends Component {
 
           {!uploadedFiles.length && (
             <div style={{ paddingTop: '2vh' }}>
+              <div style={{ paddingBottom: '.5vh' }}><DialogSpan>Arquivo:</DialogSpan></div>
               <Upload
                 onUpload={(uploadedFiles) => this.setState({ uploadedFiles })}
                 accept="text/csv"
@@ -107,7 +108,7 @@ class DataSourceDialog extends Component {
 
           <DialogFormButtonContainer>
             <Button onClick={this.submit.bind(this)}>Salvar</Button>
-            <Button color="gray" isCancel={true} onClick={this.onCancel}>Cancelar</Button>
+            <Button style={{ marginLeft: '1vw' }} color="gray" isCancel={true} onClick={this.onCancel}>Cancelar</Button>
           </DialogFormButtonContainer>
 
         </DialogForm>

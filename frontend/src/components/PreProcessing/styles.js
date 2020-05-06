@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const LmsText = styled.div`
+export const DataSourceText = styled.div`
   display: flex;
   margin-left: 2rem;
   color: #000;

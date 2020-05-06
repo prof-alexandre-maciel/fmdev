@@ -71,7 +71,7 @@ class PreProcessingDialog extends Component {
           <h1>Pré-processamento</h1>
           <h2>(Indicador: {data && data.description ? `${data.description})` : null}</h2>
 
-          <DialogSpan>Informe a constante {inputType === 'number' ? '(Apenas números)' : null}</DialogSpan>
+          <DialogSpan>Constante {inputType === 'number' ? '(Apenas números)' : null}</DialogSpan>
           <DialogInput
             type={inputType}
             value={constant}
