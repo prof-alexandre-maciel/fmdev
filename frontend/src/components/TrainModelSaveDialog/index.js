@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {
   DialogForm, DialogFormButtonContainer,
   DialogInput, DialogSpan
-} from './styles';
+} from '../../styles/global';
 import { Creators as DialogActions } from '../../store/ducks/dialog';
 import { connect } from 'react-redux';
 import Dialog from '../Dialog';
@@ -90,7 +90,7 @@ class TrainModelSaveDialog extends Component {
 
           {!loading ? <DialogFormButtonContainer>
             <Button onClick={this.submit.bind(this)}>Salvar</Button>
-            <Button color="gray" isCancel={true} onClick={this.onClose}>Cancelar</Button>
+            <Button style={{ marginLeft: '1vw' }} color="gray" isCancel={true} onClick={this.onClose}>Cancelar</Button>
           </DialogFormButtonContainer> : null}
 
 

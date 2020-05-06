@@ -25,6 +25,7 @@ import TrainModelSaveDialog from '../TrainModelSaveDialog';
 import TrainMetricDialog from '../TrainMetricDialog';
 import { Creators as DialogActions } from '../../store/ducks/dialog';
 import { Creators as TrainMetricActions } from '../../store/ducks/train_metric';
+import TrainAlgorithmDialog from '../TrainAlgorithmDialog';
 
 class Train extends Component {
 
@@ -176,6 +177,10 @@ class Train extends Component {
     this.props.setDialog('trainMetrics');
   }
 
+  openViewAlgorithms = () => {
+    this.props.setDialog('trainAlgorithm');
+  }
+
   goToSaveModels = () => {
     this.props.setScreen(TRAIN_MODEL, TRAIN_MODEL, null);
   }
@@ -202,21 +207,29 @@ class Train extends Component {
             <Header>
               <h1>Treinamento</h1>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                {train.data && train.data.score ? <ScoreContainer>Acurácia de Teste: <b>{train.data.score.toFixed(2)}</b></ScoreContainer> : null}
-                <Button
+                {train.data && train.data.score && (
+                  <ScoreContainer>Acurácia de Teste: <b>{train.data.score.toFixed(2)}</b></ScoreContainer>
+                )}
+                < Button
+                  style={{ margin: '.5vw' }}
                   onClick={isFinished ? this.openViewMetrics.bind(this) : null}
                   disabled={!isFinished}
                   filled={false}>Ver Métricas</Button>
+                <Button
+                  style={{ margin: '.5vw' }}
+                  onClick={isFinished ? this.openViewAlgorithms.bind(this) : null}
+                  disabled={!isFinished}
+                  filled={false}>Ver Classificadores</Button>
                 {train_model.lastModelSaved ?
                   <Button
-                    filled={false}
+                    style={{ marginLeft: '.5vw' }}
                     onClick={this.goToSaveModels.bind(this)}>VER MODELOS SALVOS</Button> : null}
                 {!train_model.lastModelSaved ?
                   <Button
+                    style={{ marginLeft: '.5vw' }}
                     onClick={isFinished ? this.openSaveModel.bind(this) : null}
                     disabled={!isFinished}>SALVAR MODELO</Button>
                   : null}
-                {train_model.lastModelSaved ? <Button disabled={true}>MODELO SALVO</Button> : null}
               </div>
             </Header>
 
@@ -258,6 +271,7 @@ class Train extends Component {
           <AlertDialog onSubmit={this.deleteTrain}></AlertDialog>
           <TrainModelSaveDialog />
           <TrainMetricDialog />
+          <TrainAlgorithmDialog />
         </PerfectScrollbar>
       </Beforeunload>
     )
