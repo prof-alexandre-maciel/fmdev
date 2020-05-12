@@ -7,6 +7,7 @@ import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'react-circular-progressbar/dist/styles.css';
+import { createMuiTheme } from '@material-ui/core';
 
 export const primaryColor = '#4A5173';
 const secondaryColor = '#000';
@@ -375,3 +376,20 @@ export const DialogForm = styled.form`
     }
   }
 `;
+
+export const materialUIStyle = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+    fontFamily: fontFamily,
+    h3: {
+      "&.appTitle": {
+        marginBottom: 24,
+      },
+    },
+  },
+  palette: {
+    primary: {
+      main: primaryColor,
+    },
+  },
+});
