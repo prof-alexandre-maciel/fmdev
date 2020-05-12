@@ -215,13 +215,13 @@ class Train extends Component {
                   onClick={isFinished ? this.openViewMetrics.bind(this) : null}
                   disabled={!isFinished}
                   filled={false}>Ver Métricas</Button>
-                {train_model.lastModelSaved ?
+                {train.data && train.data.score && (
                   <Button
                     style={{ margin: '.5vw' }}
                     onClick={isFinished ? this.openViewAlgorithms.bind(this) : null}
                     disabled={!isFinished}
                     filled={false}>Ver Classificadores</Button>
-                  : null}
+                  )}
                 {train_model.lastModelSaved ?
                   <Button
                     style={{ marginLeft: '.5vw' }}
