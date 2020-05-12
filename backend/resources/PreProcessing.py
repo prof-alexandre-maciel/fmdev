@@ -51,7 +51,7 @@ class PreProcessing(Resource):
         upload_folder = current_app.config.get('UPLOAD_FOLDER')
         path = f"{upload_folder}/{file.file_id}"
 
-        df = pd.read_csv(path, names=payload['indicators'])
+        df = pd.read_csv(path, names=payload['indicators'], skiprows=1)
 
         for column in df.columns:
             descriptions[column] = column
@@ -105,7 +105,7 @@ class PreProcessing(Resource):
         upload_folder = current_app.config.get('UPLOAD_FOLDER')
         path = f"{upload_folder}/{file.file_id}"
 
-        df = pd.read_csv(path, names=payload['indicators'])
+        df = pd.read_csv(path, names=payload['indicators'], skiprows=1)
 
         return df
 

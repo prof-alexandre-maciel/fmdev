@@ -106,6 +106,14 @@ class DataSourceDialog extends Component {
               onDelete={(uploadedFiles) => this.setState({ uploadedFiles })} />
           )}
 
+          {!uploadedFiles.length && (
+            <div style={{ paddingTop: '.5vh' }}>
+              <h2 style={{ fontWeight: 500 }}>* Arquivo deve estar separado por vírgulas</h2>
+              <h2 style={{ fontWeight: 500 }}>* Primeira linha deve ser o cabeçalho</h2>
+              <h2 style={{ fontWeight: 500 }}>* As variáveis alvo devem ser numéricas</h2>
+            </div>
+          )}
+
           <DialogFormButtonContainer>
             <Button onClick={this.submit.bind(this)}>Salvar</Button>
             <Button style={{ marginLeft: '1vw' }} color="gray" isCancel={true} onClick={this.onCancel}>Cancelar</Button>

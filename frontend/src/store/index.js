@@ -12,14 +12,13 @@ const sagaMiddleware = createSagaMiddleware();
 
 const middlewares = [sagaMiddleware, routerMiddleware(history)];
 
-function configureStore(initialState) {
-  const state = initialState ? Immutable(initialState) : initialState;
-
-  const store = createStore(rootReducer(history), state, composeWithDevTools(
-    applyMiddleware(...middlewares)
-  ));
-
-  return store;
+const configureStore = (initialState) => {
+  return createStore(
+    rootReducer(history),
+    Immutable(initialState),
+    composeWithDevTools(
+      applyMiddleware(...middlewares)
+    ));
 }
 
 const store = configureStore();

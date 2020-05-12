@@ -215,11 +215,13 @@ class Train extends Component {
                   onClick={isFinished ? this.openViewMetrics.bind(this) : null}
                   disabled={!isFinished}
                   filled={false}>Ver Métricas</Button>
-                <Button
-                  style={{ margin: '.5vw' }}
-                  onClick={isFinished ? this.openViewAlgorithms.bind(this) : null}
-                  disabled={!isFinished}
-                  filled={false}>Ver Classificadores</Button>
+                {train_model.lastModelSaved ?
+                  <Button
+                    style={{ margin: '.5vw' }}
+                    onClick={isFinished ? this.openViewAlgorithms.bind(this) : null}
+                    disabled={!isFinished}
+                    filled={false}>Ver Classificadores</Button>
+                  : null}
                 {train_model.lastModelSaved ?
                   <Button
                     style={{ marginLeft: '.5vw' }}
@@ -234,7 +236,7 @@ class Train extends Component {
             </Header>
 
             <TrainInfo>
-              <div><b>Fonte de dados: </b> {dataSourceContext}/{dataSourceName} {data.length && !loading ? `(Total de Instâncias : ${data[0].count})` : null}</div>
+              <div><b>Fonte de dados:</b> {dataSourceContext}/{dataSourceName} {data.length && !loading ? `(Total de Instâncias : ${data[0].count})` : null}</div>
               <div><b>Qtd. máxima de treinos:</b> {screen.data.generations || null}</div>
               <div><b>Qtd. de kfolds:</b> {screen.data.kfold || null}</div>
               <div><b>Treinamento:</b> {screen.data.train}% ({this.getSplit('train')} instâncias)  | <b>Testes:</b> {screen.data.test}% ({this.getSplit('test')} instâncias)</div>
