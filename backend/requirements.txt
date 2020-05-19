@@ -22,6 +22,7 @@ Flask-RESTful==0.3.6
 Flask-Script==2.0.6
 Flask-SQLAlchemy==2.3.2
 fsspec==0.7.2
+gunicorn==20.0.4
 HeapDict==1.0.1
 idna==2.9
 itsdangerous==1.1.0
