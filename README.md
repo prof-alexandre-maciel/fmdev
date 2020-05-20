@@ -4,8 +4,6 @@ Framework for Educational Data Mining Developed By Universidade de Pernambuco.
 
 # 1. Install Dependencies
 
-Advise: We strongly recommended to use Ubuntu `18.04` for this guide.
-
 ## Requirements
 
 * Python `3.7.6`
@@ -128,3 +126,77 @@ pip install -r requirements.txt
 jupyter notebook --ip=127.0.0.1
 ```
 
+# 3. Deploy on Ubuntu `18.04`
+
+## 3.1 Nginx
+
+### 3.1.1 Install Nginx
+
+```sh
+sudo apt update
+sudo apt install nginx
+```
+### 3.1.2 Adjusting the Firewall
+
+```sh
+sudo ufw app list
+```
+
+You can enable this by typing:
+
+```sh
+sudo ufw allow 'Nginx HTTP'
+```
+
+You can verify the change by typing:
+
+```sh
+sudo ufw status
+```
+
+You should see HTTP traffic allowed in the displayed output:
+
+```sh
+Output
+Status: active
+
+To                         Action      From
+--                         ------      ----
+OpenSSH                    ALLOW       Anywhere                  
+Nginx HTTP                 ALLOW       Anywhere                  
+OpenSSH (v6)               ALLOW       Anywhere (v6)             
+Nginx HTTP (v6)            ALLOW       Anywhere (v6)
+```
+
+### 3.1.3 Checking your Web Server
+
+At the end of the installation process, Ubuntu 18.04 starts Nginx. The web server should already be up and running.
+
+We can check with the systemd init system to make sure the service is running by typing:
+
+```sh
+systemctl status nginx
+```
+
+```sh
+Output
+● nginx.service - A high performance web server and a reverse proxy server
+   Loaded: loaded (/lib/systemd/system/nginx.service; enabled; vendor preset: enabled)
+   Active: active (running) since Fri 2018-04-20 16:08:19 UTC; 3 days ago
+     Docs: man:nginx(8)
+ Main PID: 2369 (nginx)
+    Tasks: 2 (limit: 1153)
+   CGroup: /system.slice/nginx.service
+           ├─2369 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+           └─2380 nginx: worker process
+```
+
+When you have your server’s IP address, enter it into your browser’s address bar:
+
+```sh
+http://your_server_ip
+```
+
+# 4. Deploy on Docker
+
+In Progress
