@@ -95,7 +95,7 @@ python3.7 -V
 
 ```sh
 cd backend
-virtualenv -p python3 venv
+python3.7 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 python run.py
@@ -112,15 +112,15 @@ python migrate.py db upgrade
 
 ```sh
 cd frontend
-npm install
-npm start
+yarn install
+yarn start
 ```
 
 ## Analysis Module
 
 ```sh
 cd analysis
-virtualenv -p python3 venv
+python3.7 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
 jupyter notebook --ip=127.0.0.1
