@@ -169,7 +169,7 @@ http://your_server_ip
 
 ## 2.2 Yarn
 
-Please check `1.1 Section`
+[Please check installation Yarn Section](#11-yarn)
 
 ## 2.3 NVM
 
