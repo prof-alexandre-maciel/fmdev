@@ -104,7 +104,7 @@ node --version
 npm --version
 ```
 
-### 2.3 Python
+### 2.3 Install Backend (Python)
 
 #### 2.3.1 Prerequsiteis 
 
@@ -183,7 +183,72 @@ pip install -r requirements.txt
 sudo ufw allow 5000
 ```
 
-### 2.8 Install Yarn Dependencies
+### 2.8 Configure Gunicorn as Service
+
+Create service
+
+```sh
+nano /etc/systemd/system/fmdev.service
+```
+
+Copy and Paste this code. Remember to check if FMDEV path is correct.
+
+```sh
+[Unit]
+Description=FMDEV Service
+After=network.target
+
+[Service]
+User=root
+WorkingDirectory=/root/fmdev/backend
+Environment="PATH=/root/fmdev/backend/venv/bin"
+ExecStart=/root/fmdev/backend/venv/bin/gunicorn -b 127.0.0.1:5000 wsgi:app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Reload Daemons:
+
+```sh
+sudo systemctl daemon-reload
+```
+
+Enable Service:
+
+```sh
+sudo systemctl start fmdev
+```
+
+Check if service its running:
+
+```sh
+sudo systemctl status fmdev
+```
+
+You will see a status like this:
+
+```sh
+● fmdev.service - FMDEV Service
+   Loaded: loaded (/etc/systemd/system/fmdev.service; enabled; vendor preset: enabled)
+   Active: active (running) since Wed 2020-05-20 20:43:26 UTC; 9min ago
+ Main PID: 26626 (gunicorn)
+    Tasks: 2 (limit: 4704)
+   CGroup: /system.slice/fmdev.service
+           ├─26626 /root/fmdev/backend/venv/bin/python3.7 /root/fmdev/backend/venv/bin/gunicorn 
+           └─26646 /root/fmdev/backend/venv/bin/python3.7 /root/fmdev/backend/venv/bin/gunicorn 
+
+May 20 20:43:26 fmdev systemd[1]: Started FMDEV Service.
+May 20 20:43:26 fmdev gunicorn[26626]: [2020-05-20 20:43:26 +0000] [26626] [INFO] Starting gunic
+May 20 20:43:26 fmdev gunicorn[26626]: [2020-05-20 20:43:26 +0000] [26626] [INFO] Listening at: 
+May 20 20:43:26 fmdev gunicorn[26626]: [2020-05-20 20:43:26 +0000] [26626] [INFO] Using worker: 
+May 20 20:43:26 fmdev gunicorn[26626]: [2020-05-20 20:43:26 +0000] [26646] [INFO] Booting worker
+```
+
+## 2.4 Install Frontend (React.js)
+
+### 2.4.1 Install Yarn
 
 ```sh
 cd ~/fmdev/frontend
@@ -191,13 +256,13 @@ cd ~/fmdev/frontend
 yarn install
 ```
 
-### 2.9 Configure node memory limit to increase build
+### 2.4.2 Configure node memory limit to increase build
 
 ```sh
 export NODE_OPTIONS=--max_old_space_size=3072
 ```
 
-### 2.10 Build Frontend
+### 2.4.3 Build
 
 ```sh
 cd ~/fmdev/frontend
@@ -205,12 +270,17 @@ cd ~/fmdev/frontend
 yarn build
 ```
 
-### 2.11 Rollback Max Space After Build
+### 2.4.4 Rollback Max Space After Build
 
 ```sh
 export NODE_OPTIONS=--max_old_space_size=512
 ```
 
+### 2.5 Rollback Max Space After Build
+
+```sh
+export NODE_OPTIONS=--max_old_space_size=512
+```
 
 # 3. Deploy on Docker
 
