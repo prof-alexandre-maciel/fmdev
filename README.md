@@ -118,26 +118,6 @@ You can enable this by typing:
 sudo ufw allow 'Nginx HTTP'
 ```
 
-You can verify the change by typing:
-
-```sh
-sudo ufw status
-```
-
-You should see HTTP traffic allowed in the displayed output:
-
-```sh
-Output
-Status: active
-
-To                         Action      From
---                         ------      ----
-OpenSSH                    ALLOW       Anywhere                  
-Nginx HTTP                 ALLOW       Anywhere                  
-OpenSSH (v6)               ALLOW       Anywhere (v6)             
-Nginx HTTP (v6)            ALLOW       Anywhere (v6)
-```
-
 ### 2.1.3 Checking your Web Server
 
 At the end of the installation process, Ubuntu 18.04 starts Nginx. The web server should already be up and running.
