@@ -6,8 +6,9 @@ import { materialUIStyle } from './styles/global';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 
 import store from './store';
-
 import Routes from './routes';
+
+require('dotenv').config();
 
 const App = () => (
   <Provider store={store}>
