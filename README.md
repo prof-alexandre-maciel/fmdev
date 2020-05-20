@@ -171,9 +171,7 @@ http://your_server_ip
 
 Please check `1.1 Section`
 
-## 2.3 Nodejs and NPM
-
-[Please check NVM Install Section](#12-nvm-node-version-manager)
+## [2.3 Nodejs and NPM](#12-nvm-node-version-manager)
 
 # 3. Deploy on Docker
 
