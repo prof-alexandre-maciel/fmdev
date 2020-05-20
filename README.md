@@ -8,6 +8,7 @@ Framework for Educational Data Mining Developed By Universidade de Pernambuco.
 * Yarn `1.22.0`
 * npm `6.13.7`
 * nodejs `13.9.0`
+* Git `2.17.1` or superior
 
 # 1. Install Dependencies
 
@@ -94,6 +95,64 @@ sudo make altinstall
 
 ```sh
 python3.7 -V
+```
+
+### 1.4 Download Repository
+
+```sh
+cd ~/
+
+git clone https://github.com/prof-alexandre-maciel/fmdev.git
+```
+
+### 1.5 Install and Activate Virtualenv
+
+```sh
+cd backend
+
+python3.7 -m venv venv
+
+source venv/bin/activate
+```
+
+### 1.6 Install Python Requirements
+
+```sh
+pip install -r requirements.txt
+```
+
+### 1.7 Enable Firewall UFW
+
+```sh
+sudo ufw allow 5000
+```
+
+### 1.8 Install Yarn Dependencies
+
+```sh
+cd ~/fmdev/frontend
+
+yarn install
+```
+
+### 1.9 Configure node memory limit to increase build
+
+```sh
+export NODE_OPTIONS=--max_old_space_size=3072
+```
+
+### 1.10 Build Frontend
+
+```sh
+cd ~/fmdev/frontend
+
+yarn build
+```
+
+### 1.11 Rollback Max Space After Build
+
+```sh
+export NODE_OPTIONS=--max_old_space_size=512
 ```
 
 # 2. Deploy on Ubuntu `18.04`
