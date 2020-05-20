@@ -2,16 +2,16 @@
 
 Framework for Educational Data Mining Developed By Universidade de Pernambuco.
 
-# 1. Install Dependencies
-
-## Requirements
+## Used Techonologies:
 
 * Python `3.7.6`
 * Yarn `1.22.0`
 * npm `6.13.7`
 * nodejs `13.9.0`
 
-### Yarn
+# 1. Install Dependencies
+
+### 1.1 Yarn
 
 ```sh 
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
@@ -24,25 +24,25 @@ sudo apt update
 sudo apt install yarn
 ```
 
-### Node.js
+### 1.2 NVM (Node Version Manager)
+
+This tool, helps to install Node.js and NPM (Node Package Manager).
 
 ```sh
 sudo apt update
 
-sudo apt install nodejs
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh
+
+source ~/.nvm/nvm.sh
+
+nvm install 13.9.0
+
+nvm use 13.9.0
 ```
 
-### NPM (Node Package Manager)
+### 1.3 Python
 
-```sh
-sudo apt update
-
-sudo apt install npm
-```
-
-### Python
-
-#### 1. Prerequsiteis 
+#### 1.3.1 Prerequsiteis 
 
 Use the following command to install prerequisites for Python before installing it.
 
@@ -53,7 +53,7 @@ sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev \
     libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 ```
 
-#### 2. Download Python 3.7 
+#### 1.3.2 Download Python 3.7 
 
 Download Python using following command from python official site. You can also download latest version in place of specified below.
 
@@ -69,7 +69,7 @@ Now extract the downloaded package.
 sudo tar xzf Python-3.7.6.tgz
 ```
 
-#### 3. Compile Python Source
+#### 1.3.3 Compile Python Source
 
 Use below set of commands to compile Python source code on your system using altinstall.
 
@@ -83,60 +83,23 @@ sudo make altinstall
 
 `make altinstall` is used to prevent replacing the default python binary file /usr/bin/python.
 
-#### 4. Check Python Version
+#### 1.3.4 Check Python Version
 
 ```sh
 python3.7 -V
 ```
 
-# 2. Local Development
+# 2. Deploy on Ubuntu `18.04`
 
-## Backend Module
+## 2.1 Nginx
 
-```sh
-cd backend
-python3.7 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python run.py
-```
-
-## Manage Database (Flask-Migrate)
-
-```sh
-python migrate.py db migrate
-python migrate.py db upgrade
-```
-
-## Frontend Module
-
-```sh
-cd frontend
-yarn install
-yarn start
-```
-
-## Analysis Module
-
-```sh
-cd analysis
-python3.7 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-jupyter notebook --ip=127.0.0.1
-```
-
-# 3. Deploy on Ubuntu `18.04`
-
-## 3.1 Nginx
-
-### 3.1.1 Install Nginx
+### 2.1.1 Install Nginx
 
 ```sh
 sudo apt update
 sudo apt install nginx
 ```
-### 3.1.2 Adjusting the Firewall
+### 2.1.2 Adjusting the Firewall
 
 ```sh
 sudo ufw app list
@@ -168,7 +131,7 @@ OpenSSH (v6)               ALLOW       Anywhere (v6)
 Nginx HTTP (v6)            ALLOW       Anywhere (v6)
 ```
 
-### 3.1.3 Checking your Web Server
+### 2.1.3 Checking your Web Server
 
 At the end of the installation process, Ubuntu 18.04 starts Nginx. The web server should already be up and running.
 
@@ -197,6 +160,43 @@ When you have your server’s IP address, enter it into your browser’s address
 http://your_server_ip
 ```
 
-# 4. Deploy on Docker
+# 3. Deploy on Docker
 
 In Progress
+
+# 4. Local Development
+
+## 4.1 Backend Module
+
+```sh
+cd backend
+python3.7 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python run.py
+```
+
+## 4.2 Manage Database (Flask-Migrate)
+
+```sh
+python migrate.py db migrate
+python migrate.py db upgrade
+```
+
+## 4.3 Frontend Module
+
+```sh
+cd frontend
+yarn install
+yarn start
+```
+
+## Analysis Module (For view jupyter notebook analysis - Not required)
+
+```sh
+cd analysis
+python3.7 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+jupyter notebook --ip=127.0.0.1
+```
