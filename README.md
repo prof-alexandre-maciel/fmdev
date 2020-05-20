@@ -42,9 +42,9 @@ nvm use 13.9.0
 Check installation:
 
 ```sh
-node -V
+node --version
 
-npm -V
+npm --version
 ```
 
 ### 1.3 Python
