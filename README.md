@@ -40,6 +40,14 @@ nvm install 13.9.0
 nvm use 13.9.0
 ```
 
+Check installation:
+
+```sh
+node -V
+
+npm -V
+```
+
 ### 1.3 Python
 
 #### 1.3.1 Prerequsiteis 
@@ -159,6 +167,14 @@ When you have your server’s IP address, enter it into your browser’s address
 ```sh
 http://your_server_ip
 ```
+
+## 2.2 Yarn
+
+Please check `1.1 Section`
+
+## 2.3 Node.js and NPM
+
+Please check `1.2 Section`
 
 # 3. Deploy on Docker
 
