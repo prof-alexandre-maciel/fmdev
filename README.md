@@ -173,7 +173,7 @@ Please check `1.1 Section`
 
 ## 2.3 Node.js and NPM
 
-[Please check NVM Install Section](#Nvm)
+[Please check NVM Install Section](#12-nvm-node-version-manager)
 
 # 3. Deploy on Docker
 
