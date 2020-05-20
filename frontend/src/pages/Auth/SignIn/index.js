@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Button from '../../../styles/Button';
-import { Container, SignForm, } from '../styles';
+import { Container, SignForm } from './styles';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import logo from '../../../assets/login_logo.svg';

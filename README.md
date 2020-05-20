@@ -275,13 +275,13 @@ May 20 20:43:26 fmdev gunicorn[26626]: [2020-05-20 20:43:26 +0000] [26626] [INFO
 May 20 20:43:26 fmdev gunicorn[26626]: [2020-05-20 20:43:26 +0000] [26646] [INFO] Booting worker
 ```
 
-# 3. Deploy on Docker
+# 2. Deploy on Docker
 
 In Progress
 
-# 4. Local Development
+# 3. Local Development
 
-## 4.1 Backend Module
+## 3.1 Backend Module
 
 ```sh
 cd backend
@@ -291,14 +291,14 @@ pip install -r requirements.txt
 python run.py
 ```
 
-## 4.2 Manage Database (Flask-Migrate)
+## 3.2 Manage Database (Flask-Migrate)
 
 ```sh
 python migrate.py db migrate
 python migrate.py db upgrade
 ```
 
-## 4.3 Frontend Module
+## 3.3 Frontend Module
 
 ```sh
 cd frontend
