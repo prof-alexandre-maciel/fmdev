@@ -19,15 +19,23 @@ Framework for Educational Data Mining Developed By Universidade de Pernambuco.
 
 # 1. Installation
 
+## Download Repository
+
+```sh
+cd ~/
+
+git clone https://github.com/prof-alexandre-maciel/fmdev.git
+```
+
 ## 1.1 Nginx
 
-### 1.1.1 Install Nginx
+Install Nginx:
 
 ```sh
 sudo apt update
 sudo apt install nginx
 ```
-### 1.1.2 Adjusting the Firewall
+Adjusting the Firewall:
 
 ```sh
 sudo ufw app list
@@ -39,7 +47,7 @@ You can enable this by typing:
 sudo ufw allow 'Nginx HTTP'
 ```
 
-### 1.1.3 Checking your Web Server
+Checking your Web Server
 
 At the end of the installation process, Ubuntu 18.04 starts Nginx. The web server should already be up and running.
 
@@ -68,7 +76,7 @@ When you have your server’s IP address, enter it into your browser’s address
 http://your_server_ip
 ```
 
-### 2.1 Yarn
+### 1.2 Yarn
 
 ```sh 
 curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
@@ -80,7 +88,7 @@ sudo apt update
 sudo apt install yarn
 ```
 
-### 2.2 Node Version Manager
+### 1.3 Node Version Manager
 
 This tool, helps to install Node.js and NPM (Node Package Manager).
 
@@ -104,9 +112,44 @@ node --version
 npm --version
 ```
 
-### 2.3 Install Backend (Python)
+## 1.4 React.js
 
-#### 2.3.1 Prerequsiteis 
+Install Node Modules
+
+```sh
+cd ~/fmdev/frontend
+
+yarn install
+```
+
+Configure node memory limit to increase build
+
+```sh
+export NODE_OPTIONS=--max_old_space_size=3072
+```
+
+Build
+
+```sh
+cd ~/fmdev/frontend
+
+yarn build
+```
+
+Rollback Max Space After Build
+
+```sh
+export NODE_OPTIONS=--max_old_space_size=512
+```
+
+Rollback Max Space After Build
+
+```sh
+export NODE_OPTIONS=--max_old_space_size=512
+```
+
+### 1.5 Python
+
 
 Use the following command to install prerequisites for Python before installing it.
 
@@ -116,8 +159,6 @@ sudo apt-get install build-essential checkinstall
 sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev \
     libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev libffi-dev zlib1g-dev
 ```
-
-#### 2.3.2 Download Python 3.7 
 
 Download Python using following command from python official site. You can also download latest version in place of specified below.
 
@@ -133,8 +174,6 @@ Now extract the downloaded package.
 sudo tar xzf Python-3.7.6.tgz
 ```
 
-#### 2.3.3 Compile Python Source
-
 Use below set of commands to compile Python source code on your system using altinstall.
 
 ```sh
@@ -147,21 +186,13 @@ sudo make altinstall
 
 `make altinstall` is used to prevent replacing the default python binary file /usr/bin/python.
 
-#### 2.3.4 Check Python Version
+Check Python Version
 
 ```sh
 python3.7 -V
 ```
 
-### 2.4 Download Repository
-
-```sh
-cd ~/
-
-git clone https://github.com/prof-alexandre-maciel/fmdev.git
-```
-
-### 2.5 Install and Activate Virtualenv
+Install and Activate Virtualenv
 
 ```sh
 cd backend
@@ -171,27 +202,25 @@ python3.7 -m venv venv
 source venv/bin/activate
 ```
 
-### 2.6 Install Python Requirements
+Install Python Requirements
 
 ```sh
 pip install -r requirements.txt
 ```
 
-### 2.7 Enable Firewall UFW
+Enable Firewall UFW
 
 ```sh
 sudo ufw allow 5000
 ```
 
-### 2.8 Configure Gunicorn as Service
-
-Create service
+Configure Gunicorn as Service:
 
 ```sh
 nano /etc/systemd/system/fmdev.service
 ```
 
-Copy and Paste this code. Remember to check if FMDEV path is correct.
+Copy and Paste this code on `fmdev.service`. Remember to check if FMDEV path is correct.
 
 ```sh
 [Unit]
@@ -244,42 +273,6 @@ May 20 20:43:26 fmdev gunicorn[26626]: [2020-05-20 20:43:26 +0000] [26626] [INFO
 May 20 20:43:26 fmdev gunicorn[26626]: [2020-05-20 20:43:26 +0000] [26626] [INFO] Listening at: 
 May 20 20:43:26 fmdev gunicorn[26626]: [2020-05-20 20:43:26 +0000] [26626] [INFO] Using worker: 
 May 20 20:43:26 fmdev gunicorn[26626]: [2020-05-20 20:43:26 +0000] [26646] [INFO] Booting worker
-```
-
-## 2.4 Install Frontend (React.js)
-
-### 2.4.1 Install Yarn
-
-```sh
-cd ~/fmdev/frontend
-
-yarn install
-```
-
-### 2.4.2 Configure node memory limit to increase build
-
-```sh
-export NODE_OPTIONS=--max_old_space_size=3072
-```
-
-### 2.4.3 Build
-
-```sh
-cd ~/fmdev/frontend
-
-yarn build
-```
-
-### 2.4.4 Rollback Max Space After Build
-
-```sh
-export NODE_OPTIONS=--max_old_space_size=512
-```
-
-### 2.5 Rollback Max Space After Build
-
-```sh
-export NODE_OPTIONS=--max_old_space_size=512
 ```
 
 # 3. Deploy on Docker
