@@ -23,7 +23,7 @@ sudo apt update
 sudo apt install yarn
 ```
 
-### [1.2 Node Version Manager](#12-Node-Version-Manager)
+### 1.2 Node Version Manager
 
 This tool, helps to install Node.js and NPM (Node Package Manager).
 
