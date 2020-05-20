@@ -23,7 +23,7 @@ sudo apt update
 sudo apt install yarn
 ```
 
-### 1.2 NVM (Node Version Manager)
+### [1.2 NVM (Node Version Manager)](#nvm)
 
 This tool, helps to install Node.js and NPM (Node Package Manager).
 
@@ -173,7 +173,7 @@ Please check `1.1 Section`
 
 ## 2.3 Node.js and NPM
 
-Please check `1.2 Section`
+[Please check NVM Install Section](#nvm)
 
 # 3. Deploy on Docker
 
