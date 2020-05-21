@@ -100,6 +100,12 @@ server {
 
 ```
 
+Reload Services:
+
+```sh
+systemctl restart nginx
+```
+
 ### 1.2 Yarn
 
 ```sh 
