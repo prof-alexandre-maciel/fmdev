@@ -142,12 +142,6 @@ Rollback Max Space After Build
 export NODE_OPTIONS=--max_old_space_size=512
 ```
 
-Rollback Max Space After Build
-
-```sh
-export NODE_OPTIONS=--max_old_space_size=512
-```
-
 ### 1.5 Python
 
 
@@ -231,7 +225,7 @@ After=network.target
 User=root
 WorkingDirectory=/root/fmdev/backend
 Environment="PATH=/root/fmdev/backend/venv/bin"
-ExecStart=/root/fmdev/backend/venv/bin/gunicorn -b 127.0.0.1:5000 wsgi:app
+ExecStart=/root/fmdev/backend/venv/bin/gunicorn -b 127.0.0.1:5000 app:app
 Restart=always
 
 [Install]
