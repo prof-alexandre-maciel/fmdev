@@ -105,6 +105,12 @@ server {
 
 ```
 
+Enable UFW Nginx:
+
+```sh
+sudo ufw allow 'Nginx Full'
+```
+
 ### 1.2 Yarn
 
 ```sh 
@@ -229,12 +235,6 @@ Install Python Requirements
 
 ```sh
 pip install -r requirements.txt
-```
-
-Enable Firewall UFW
-
-```sh
-sudo ufw allow 5000
 ```
 
 Configure Gunicorn as Service:
