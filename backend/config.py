@@ -3,7 +3,7 @@ from environs import Env
 
 env = Env()
 
-if os.environ.get('FLASK_ENV') == 'production':
+if os.environ.get('FLASK_ENV') is None or os.environ.get('FLASK_ENV') == 'production':
     env.read_env()
 else:
     env.read_env('.env.development')
