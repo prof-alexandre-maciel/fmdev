@@ -225,7 +225,7 @@ After=network.target
 User=root
 WorkingDirectory=/root/fmdev/backend
 Environment="PATH=/root/fmdev/backend/venv/bin"
-ExecStart=/root/fmdev/backend/venv/bin/gunicorn -b 127.0.0.1:5000 app:app
+ExecStart=/root/fmdev/backend/venv/bin/gunicorn -b 127.0.0.1:5000 "run:create_app('config')"
 Restart=always
 
 [Install]
