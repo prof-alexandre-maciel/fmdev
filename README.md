@@ -76,6 +76,35 @@ When you have your server’s IP address, enter it into your browser’s address
 http://your_server_ip
 ```
 
+Replace file `/etc/nginx/sites-available/default` to this script:
+
+```sh
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server; 
+    root /var/www/html;
+    index index.html;
+
+    server_name _;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+        add_header Cache-Control "no-cache";
+    }
+
+    location /static {
+        expires 1y;
+        add_header Cache-Control "public";
+    }
+
+    location /api {
+        include proxy_params;
+        proxy_pass http://127.0.0.1:5000;
+    }
+}
+
+```
+
 ### 1.2 Yarn
 
 ```sh 
