@@ -39,7 +39,7 @@ class UserSchema(ma.Schema):
     updated_at = fields.DateTime(required=True)
 
 
-class Lms(TimestampMixin, db.Model):
+class Lms(db.Model, TimestampMixin):
     __tablename__ = 'lms'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(), nullable=False)
