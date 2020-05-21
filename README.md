@@ -27,12 +27,79 @@ cd ~/
 git clone https://github.com/prof-alexandre-maciel/fmdev.git
 ```
 
-## 1.1 Nginx
+### 1.1 Yarn
+
+```sh 
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+sudo apt update
+
+sudo apt install yarn
+```
+
+### 1.2 Node Version Manager
+
+This tool, helps to install Node.js and NPM (Node Package Manager).
+
+```sh
+sudo apt update
+
+curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh
+
+source ~/.nvm/nvm.sh
+
+nvm install 13.9.0
+
+nvm use 13.9.0
+```
+
+Check installation:
+
+```sh
+node --version
+
+npm --version
+```
+
+## 1.3 React.js
+
+Install Node Modules
+
+```sh
+cd ~/fmdev/frontend
+
+yarn install
+```
+
+Configure node memory limit to increase build
+
+```sh
+export NODE_OPTIONS=--max_old_space_size=3072
+```
+
+Build
+
+```sh
+cd ~/fmdev/frontend
+
+yarn build
+```
+
+Rollback Max Space After Build
+
+```sh
+export NODE_OPTIONS=--max_old_space_size=512
+```
+
+## 1.4 Nginx
 
 Install Nginx:
 
 ```sh
 sudo apt update
+
 sudo apt install nginx
 ```
 
@@ -100,76 +167,22 @@ server {
 
 ```
 
+Delete old data from default Nginx HTML Path:
+
+```sh
+rm -rf /var/www/html/*
+```
+
+Copy frontend build to HTML Path:
+
+```sh
+cp -R ~/fmdev/frontend/build/* /var/www/html
+```
+
 Reload Services:
 
 ```sh
 systemctl restart nginx
-```
-
-### 1.2 Yarn
-
-```sh 
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-
-sudo apt update
-
-sudo apt install yarn
-```
-
-### 1.3 Node Version Manager
-
-This tool, helps to install Node.js and NPM (Node Package Manager).
-
-```sh
-sudo apt update
-
-curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | sh
-
-source ~/.nvm/nvm.sh
-
-nvm install 13.9.0
-
-nvm use 13.9.0
-```
-
-Check installation:
-
-```sh
-node --version
-
-npm --version
-```
-
-## 1.4 React.js
-
-Install Node Modules
-
-```sh
-cd ~/fmdev/frontend
-
-yarn install
-```
-
-Configure node memory limit to increase build
-
-```sh
-export NODE_OPTIONS=--max_old_space_size=3072
-```
-
-Build
-
-```sh
-cd ~/fmdev/frontend
-
-yarn build
-```
-
-Rollback Max Space After Build
-
-```sh
-export NODE_OPTIONS=--max_old_space_size=512
 ```
 
 ### 1.5 Python
