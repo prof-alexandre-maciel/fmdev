@@ -3,7 +3,7 @@ from flask_cors import CORS
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager, create_access_token
 
-app = Flask(__name__, static_folder='../build', static_url_path='/')
+app = Flask(__name__)
 bcrypt = Bcrypt(app)
 jwt = JWTManager(app)
 
@@ -23,4 +23,4 @@ def create_app(config_filename):
 
 if __name__ == "__main__":
     app = create_app("config")
-    app.run(debug=True,host='0.0.0.0')
+    app.run(debug=True, host='0.0.0.0')
