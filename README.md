@@ -35,16 +35,11 @@ Install Nginx:
 sudo apt update
 sudo apt install nginx
 ```
+
 Adjusting the Firewall:
 
 ```sh
-sudo ufw app list
-```
-
-You can enable this by typing:
-
-```sh
-sudo ufw allow 'Nginx HTTP'
+sudo ufw allow 'Nginx Full'
 ```
 
 Checking your Web Server
@@ -103,12 +98,6 @@ server {
     }
 }
 
-```
-
-Enable UFW Nginx:
-
-```sh
-sudo ufw allow 'Nginx Full'
 ```
 
 ### 1.2 Yarn
