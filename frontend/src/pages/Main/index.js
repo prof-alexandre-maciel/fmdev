@@ -11,9 +11,10 @@ import Indicators from '../../components/Indicators';
 import PreProcessing from '../../components/PreProcessing';
 import { Creators as ScreenActions } from '../../store/ducks/screen';
 import { Creators as LmsActions } from '../../store/ducks/lms';
-import { DATASOURCE, INDICATORS, PRE_PROCESSING, TRAIN, TRAIN_MODEL } from '../../constants';
+import { DATASOURCE, INDICATORS, PRE_PROCESSING, TRAIN, TRAIN_MODEL, LAD } from '../../constants';
 import Train from '../../components/Train';
 import TrainModel from '../TrainModel';
+import Dashboard from '../../components/Dashboard';
 
 class Main extends Component {
 
@@ -42,6 +43,10 @@ class Main extends Component {
 
     if (activeComponent === TRAIN_MODEL) {
       return <TrainModel />;
+    }
+
+    if (activeComponent === LAD) {
+      return <Dashboard />;
     }
 
     return null;

@@ -377,6 +377,13 @@ export const DialogForm = styled.form`
   }
 `;
 
+export const SelectText = styled.div`
+  font-style: normal;
+  font-weight: normal;
+  color: #000000;
+  padding-bottom: .5vh;
+`;
+
 export const materialUIStyle = createMuiTheme({
   typography: {
     useNextVariants: true,
