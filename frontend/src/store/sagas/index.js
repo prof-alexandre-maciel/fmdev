@@ -14,6 +14,7 @@ import { Types as TrainMetricTypes } from '../ducks/train_metric';
 import { Types as ModelCopyTypes } from '../ducks/model_copy';
 import { Types as DownloadTypes } from '../ducks/download';
 import { Types as DataSourceTypes } from '../ducks/data_source';
+import { Types as PhenomenonTypes } from '../ducks/phenomenon';
 
 import { getChart } from './chart';
 import { getDownload } from './download';
@@ -30,6 +31,7 @@ import { postTrainMetric } from './train_metric';
 import { signInRequest, signOutRequest } from './auth';
 import { getPreProcessing, deletePreProcessing } from './pre_processing';
 import { getDataSource, postDataSource, deleteDataSource } from './data_source';
+import { getPhenomenon } from './phenomenon';
 
 export default function* rootSaga() {
   return yield all([
@@ -56,6 +58,7 @@ export default function* rootSaga() {
     takeLatest(TrainMetricTypes.POST_TRAIN_METRIC, postTrainMetric),
     takeLatest(DataSourceTypes.GET_DATA_SOURCE, getDataSource),
     takeLatest(DataSourceTypes.POST_DATA_SOURCE, postDataSource),
-    takeLatest(DataSourceTypes.DELETE_DATA_SOURCE, deleteDataSource)
+    takeLatest(DataSourceTypes.DELETE_DATA_SOURCE, deleteDataSource),
+    takeLatest(PhenomenonTypes.GET_PHENOMENON, getPhenomenon)
   ])
 }

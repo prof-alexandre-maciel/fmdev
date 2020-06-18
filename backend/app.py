@@ -18,6 +18,7 @@ from resources.Predict import Predict
 from resources.Download import Download
 from resources.Datasource import Datasource
 from resources.File import File
+from resources.Phenomenon import Phenomenon
 
 api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
@@ -41,3 +42,4 @@ api.add_resource(ModelCopy, '/model-copy/<string:key>')
 api.add_resource(Predict, '/predict/<string:key>')
 api.add_resource(Download, '/download/<string:key>')
 api.add_resource(Datasource, '/data-source', '/data-source/<string:key>')
+api.add_resource(Phenomenon, '/phenomenon')

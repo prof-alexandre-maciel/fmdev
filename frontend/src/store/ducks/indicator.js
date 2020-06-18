@@ -26,14 +26,21 @@ const INITIAL_STATE = Immutable({
   targetSelected: [],
   courseSelected: [],
   subjectSelected: [],
-  semesterSelected: []
+  semesterSelected: [],
+  phenomenonSelected: []
 });
 
 /* Reducers */
 
 export const init = state => state.merge({ data: [] });
 
-export const initFilter = state => state.merge({ targetSelected: [], courseSelected: [], subjectSelected: [], semesterSelected: [] });
+export const initFilter = state => state.merge({
+  targetSelected: [],
+  courseSelected: [],
+  subjectSelected: [],
+  semesterSelected: [],
+  phenomenonSelected: []
+});
 
 export const set = (state, { name, value }) => state.merge({ [name]: value });
 
