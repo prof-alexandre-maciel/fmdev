@@ -31,7 +31,7 @@ Jinja2==2.10.3
 joblib==0.14.1
 kiwisolver==1.1.0
 llvmlite==0.31.0
-Mako==1.1.0
+Mako==1.2.2
 MarkupSafe==1.1.1
 marshmallow==2.15.1
 marshmallow-sqlalchemy==0.13.2
