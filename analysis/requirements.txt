@@ -11,7 +11,7 @@ fsspec==0.6.3
 HeapDict==1.0.1
 idna==2.9
 Jinja2==2.11.1
-joblib==0.14.1
+joblib==1.2.0
 kiwisolver==1.1.0
 locket==0.2.0
 MarkupSafe==1.1.1
